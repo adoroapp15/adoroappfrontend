@@ -38,6 +38,8 @@ import SupportIcon from '../assets/svg/SupportIcon';
 import SettingIcon from '../assets/svg/SettingIcon';
 import {useTheme} from '@react-navigation/native';
 import FontFamily from '../common/components/FontFamily';
+import CreateMeme from '../CreatePost/CreateMeme';
+import PlusIcon from '../assets/svg/PlusIcon';
 
 const Drawer = createDrawerNavigator();
 const CustomDrawerIcon = () => {
@@ -242,6 +244,16 @@ const HomePageDrawer = () => {
           drawerIcon: () => <NoteFromAdoroIcon Color={colors.arrow} />,
         }}
         component={NoteFromAdoro}
+      />
+      <Drawer.Screen
+        name="CreateMeme"
+        options={{
+          headerShown: false,
+          drawerLabel: 'Create Meme',
+          // title: 'Note from adoro',
+          drawerIcon: () => <PlusIcon color={colors.arrow} />,
+        }}
+        component={CreateMeme}
       />
       <Drawer.Screen
         name="Wallet"

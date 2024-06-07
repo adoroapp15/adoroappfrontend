@@ -1,4 +1,4 @@
-package com.adoro;
+package com.adoro.creators;
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
 

@@ -73,14 +73,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.adoro"
+    namespace "com.adoro.creators"
     defaultConfig {
-        applicationId "com.adoro"
+        applicationId "com.adoro.creators"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode 3
-        versionName "1.5"
+        versionCode 4
+        versionName "1.7"
     }
     signingConfigs {
          release {

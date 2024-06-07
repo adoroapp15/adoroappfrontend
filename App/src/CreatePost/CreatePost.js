@@ -699,6 +699,32 @@ const CreatePost = ({navigation}) => {
                 </View>
               )}
             </View>
+            {/* <TouchableOpacity style={{marginTop:20, marginBottom:20}} onPress={() => navigation.navigate('CreateMeme')}>
+                <View
+                  style={{
+                    width: '80%',
+                    height: 200,
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                    borderRadius: 15,
+                    backgroundColor: colors.color_CardBgColor,
+                    borderWidth: 2,
+                    borderColor: colors.color_BorderColor,
+                    justifyContent: 'center',
+                  }}>
+                  <PlusIcon color={colors.color_CardIcon} />
+                  <Text
+                    style={{
+                      marginTop: 20,
+                      fontSize: Size.title,
+                      fontFamily: FontFamily.semibold,
+                      textAlignVertical: 'center',
+                      color: colors.color_CardTxtColor,
+                    }}>
+                    Click here to Create Meme
+                  </Text>
+                </View>
+              </TouchableOpacity> */}
           </View>
 
           <Modal

@@ -1,4 +1,4 @@
-package com.adoro;
+package com.adoro.creators;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
