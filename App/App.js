@@ -53,6 +53,7 @@ import TrendingTemplates from './src/Template/TrendingTemplates';
 import Setting from './src/Setting/Setting';
 import MyTemplates from './src/UserProfile/MyTemplates';
 import MyTemplatesPost from './src/UserProfile/MyTemplatesPost';
+import CreateMeme from './src/CreatePost/CreateMeme';
 const Stack = createStackNavigator();
 const App = () => {
   const unsubscribe = NetInfo.addEventListener(state => {
@@ -301,6 +302,11 @@ const App = () => {
           options={{headerShown: false, headerTitleAlign: 'center'}}
           name="MyTemplatesPost"
           component={MyTemplatesPost}
+        />
+        <Stack.Screen
+          options={{headerShown: false, headerTitleAlign: 'center'}}
+          name="CreateMeme"
+          component={CreateMeme}
         />
       </Stack.Navigator>
     </NavigationContainer>

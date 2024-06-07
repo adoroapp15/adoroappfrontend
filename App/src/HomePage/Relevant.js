@@ -122,7 +122,9 @@ const Relevant = ({navigation}) => {
     <>
       {data.length === 0 && (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text>No posts to show. Follow someone to see their posts here.</Text>
+          <Text style={{color: colors.color_Logintext}}>
+            No posts to show. Follow someone to see their posts here.
+          </Text>
         </View>
       )}
       {data.length > 0 && (
