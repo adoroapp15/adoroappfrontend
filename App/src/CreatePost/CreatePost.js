@@ -726,7 +726,14 @@ const CreatePost = ({navigation}) => {
                 </View>
               </TouchableOpacity> */}
           </View>
-
+          <View style={{flex:1, justifyContent:"flex-end", alignItems:"flex-end", marginRight:10,marginBottom:10}}>
+          <TouchableOpacity
+          onPress={() => navigation.navigate('CreateMeme')}
+          style={{borderColor:"black", borderWidth:1, height:"30%", width:"50%"}}
+          >
+            <Text style={{flex:1,alignSelf:"center",textAlignVertical:"center"}}>Create Meme</Text>
+            </TouchableOpacity>
+            </View>
           <Modal
             style={{width: '100%', marginLeft: 0, marginBottom: 0}}
             onBackButtonPress={() => {

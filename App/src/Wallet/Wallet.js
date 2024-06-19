@@ -22,7 +22,7 @@ const Wallet = ({navigation}) => {
   const [user, setUser] = useState({});
   const [amt, setAmt] = useState(0);
   const [profile, setProfile] = useState(null);
- 
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -37,11 +37,11 @@ const Wallet = ({navigation}) => {
             params: {mobileNo: users.mobileNo},
           },
         );
- 
+
         if (response.data.status === 200) {
           console.log(3);
           setProfile(response.data.data.ProfileDp);
- 
+
           const walletres = await await axios.get(
             `${config.production}/app/user/getbalance`,
             {
@@ -50,8 +50,8 @@ const Wallet = ({navigation}) => {
           );
           if (walletres.status == 200) {
             console.log('wallet response iss', walletres);
-            setAmt(walletres.data.balance.balance);
-            console.log('got the wallet amount', walletres);
+            setAmt(walletres.data.balance);
+            console.log('got the wallet amount', walletres.data.balance);
           }
         } else {
           setProfile(null);
@@ -62,7 +62,8 @@ const Wallet = ({navigation}) => {
     };
     getUser();
   }, []);
- 
+  console.log('waleet amount ttt', amt);
+
   return (
     <View style={{backgroundColor: colors.color_PageColor, height: '100%'}}>
       <View
@@ -128,14 +129,21 @@ const Wallet = ({navigation}) => {
             alignSelf: 'center',
             // fontWeight: '600',
             fontFamily: FontFamily.semibold,
- 
+
             top: 260,
           }}>
           {amt}C
         </Text>
         <TouchableOpacity
           style={{margin: 90, marginTop: 250}}
-          onPress={() => navigation.navigate('Wallet Withdraw',{amt})}>
+          onPress={() => {
+            if (amt === 0) {
+              Alert.alert('No Money to withdraw');
+            } else navigation.navigate('Wallet Withdraw', {amt});
+          }}
+
+          // onPress={() => navigation.navigate('Wallet Withdraw', {amt})}
+        >
           <LinearGradient
             colors={[
               'rgba(0,255,255,0.4)',
@@ -191,9 +199,9 @@ const Wallet = ({navigation}) => {
     </View>
   );
 };
- 
+
 export default Wallet;
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -218,4 +226,3 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 });
- 
