@@ -33,14 +33,15 @@ const WalletOTP = ({navigation, route}) => {
         console.error('Error fetching user data:', error);
       }
     };
- 
+
     fetchData();
   }, []);
- 
+
   const handleVerify = async () => {
+    console.log(inputOTP, otp);
     if (inputOTP == otp) {
       console.log('Verified Otp Successfully');
- 
+
       if (
         user.bankName !== '' &&
         user.ifscCode !== '' &&
@@ -62,13 +63,13 @@ const WalletOTP = ({navigation, route}) => {
       } else {
         Alert.alert('Please Fill Bank Details first');
       }
- 
+
       //  navigation.navigate('NextScreen');
     } else {
       Alert.alert('Invalid OTP', 'Please enter the correct OTP.');
     }
   };
-  console.log('otp isss,', otp);
+  console.log('otp isss,', otp, user);
   return (
     <View style={{height: '100%', backgroundColor: colors.color_PageColor}}>
       <Text
@@ -82,7 +83,7 @@ const WalletOTP = ({navigation, route}) => {
         }}>
         {user ? user.fullName : ''}
       </Text>
- 
+
       <Text
         style={{
           color: colors.color_TextNormal,
@@ -123,7 +124,7 @@ const WalletOTP = ({navigation, route}) => {
         keyboardType="numeric"
         placeholderTextColor={colors.color_TextNormal}
       />
- 
+
       <TouchableOpacity
         style={{margin: 140, marginTop: 150}}
         onPress={handleVerify}
@@ -204,9 +205,9 @@ const WalletOTP = ({navigation, route}) => {
     </View>
   );
 };
- 
+
 export default WalletOTP;
- 
+
 const styles = StyleSheet.create({
   input: {
     height: 120,
@@ -232,4 +233,3 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 });
- 

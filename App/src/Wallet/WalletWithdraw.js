@@ -16,14 +16,14 @@ import {useTheme} from '@react-navigation/native';
 import useStore from '../store';
 import axios from 'axios';
 import {config} from '../config';
- 
+
 const WalletWithdraw = ({navigation, route}) => {
   const {amt} = route.params;
   const {colors} = useTheme();
   const {dark, toggleTheme} = useStore();
   const [user, setUser] = useState({});
   const [withdrawAmount, setWithdrawAmount] = useState('');
- 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,12 +36,12 @@ const WalletWithdraw = ({navigation, route}) => {
         console.error('Error fetching user data:', error);
       }
     };
- 
+
     fetchData();
   }, []);
- 
+
   const handleotp = async amount => {
-    console.log('amoutn isss', amt);
+    console.log('amoutn isss', amt, amount);
     if (amount > amt || amt == 0) {
       Alert.alert('Insufficient Balance');
     } else {
@@ -49,7 +49,7 @@ const WalletWithdraw = ({navigation, route}) => {
         `${config.production}/app/user/walletotp`,
         {mobileNo: user.mobileNo},
       );
- 
+
       if (response.status == 200) {
         console.log(response.data.otp, 'otp generated isss');
         navigation.navigate('WalletOTPScreen', {
@@ -59,7 +59,7 @@ const WalletWithdraw = ({navigation, route}) => {
       } else Alert.alert('Could not send the email');
     }
   };
- 
+
   return (
     <View style={{backgroundColor: colors.color_PageColor, height: '100%'}}>
       <View
@@ -178,9 +178,9 @@ const WalletWithdraw = ({navigation, route}) => {
     </View>
   );
 };
- 
+
 export default WalletWithdraw;
- 
+
 const styles = StyleSheet.create({
   input: {
     height: 100,
@@ -199,4 +199,3 @@ const styles = StyleSheet.create({
     lineHeight: 20.8,
   },
 });
- 
