@@ -62,6 +62,7 @@ const Post = ({
   Screen,
   handleHidePost,
   handleBlockPost,
+  profile,
 }) => {
   const [isPlaying, setIsPlaying] = React.useState({});
   const [follow, setFollow] = useState([]);
@@ -129,12 +130,10 @@ const Post = ({
     }
   };
 
-
   const handlePlay = () => {
     setTimeout(() => setShowControl(false), 500);
     setPlay(true);
   };
-
 
   const onLoadEnd = data => {
     setDuration(data.duration);
@@ -162,21 +161,16 @@ const Post = ({
     Alert.alert('Clipboard copied');
   };
   const LeftContent = ({profile, mobileNo}) => (
-    <View>
-      <TouchableOpacity onPress={() => handlenavigation(mobileNo, profile)}>
-        <Avatar.Image
-          size={40}
-          style={{}}
-          source={
-            profile
-              ? {
-                  uri: `https://www.adoro.social/UserProfilePic/${profile}`,
-                }
-              : require('../assets/Profile.png')
-          }
-        />
-      </TouchableOpacity>
-    </View>
+    <Avatar.Image
+      size={40}
+      source={
+        profile
+          ? {
+              uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+            }
+          : require('../assets/Profile.png')
+      }
+    />
   );
 
   useEffect(() => {
@@ -280,7 +274,7 @@ const Post = ({
     });
     const userString = await AsyncStorage.getItem('user');
     const parsedUser = JSON.parse(userString);
- 
+
     if (getlike.status === 200) {
       setlikes(getlike.data.likes);
       const Liked = getlike.data.likes.some(
@@ -376,29 +370,6 @@ const Post = ({
     }
   };
   const [dimensions, setDimensions] = useState({width: 0, height: 0});
-  // const aspectRatio = 0;
-  // const imageHeight = 0;
-
-  // const getImageSize = url => {
-  //   return new Promise((resolve, reject) => {
-  //     Image.getSize(
-  //       url,
-  //       (width, height) => {
-  //         const aspectRatio = width / height;
-  //         const imageHeight = windowWidth1 / aspectRatio;
-  //         setDimensions({windowWidth1, imageHeight});
-  //         console.log('Image dimensions:', width, height, url);
-  //         console.log('Prateek', dimensions.width, dimensions.imageHeight, url);
-  //         console.log('prone', windowWidth1, imageHeight, url);
-  //         resolve({windowWidth1, imageHeight});
-  //       },
-  //       error => {
-  //         console.error('Error getting image size:', error);
-  //         reject(error);
-  //       },
-  //     );
-  //   });
-  // };
   const getImageSize = url => {
     try {
       Image.getSize(url, (width, height) => {
@@ -410,22 +381,6 @@ const Post = ({
     } catch (error) {
       console.error('Error getting image size:', error);
     }
-    // return new Promise((resolve, reject) => {
-    //   Image.getSize(
-    //     url,
-    //     (width, height) => {
-    //       const aspectRatio = width / height;
-    //       const imageHeight = windowWidth1 / aspectRatio;
-    //       setDimensions({width: windowWidth1, height: imageHeight});
-    //       console.log('Image dimensions:', width, height, url);
-    //       resolve({width: windowWidth1, height: imageHeight});
-    //     },
-    //     error => {
-    //       console.error('Error getting image size:', error);
-    //       reject(error);
-    //     },
-    //   );
-    // });
   };
   useEffect(() => {
     getImageSize(`https://www.adoro.social/UserPost/${post.fileName}`);
@@ -481,29 +436,12 @@ const Post = ({
       }
     }
   };
-
-  // const handleblock = async () => {
-
-  //   const blockres = await axios.post(`${config.production}/app/user/block`, {
-  //     BlockedUserName: post.userName,
-  //     UserId: user.Id,
-  //   });
-
-  //   if (blockres.status == 200) {
-  //     console.log('Block Succesffully');
-
-  //   } else {
-  //     console.log('Facing Eroor ');
-  //   }
-  //   setDropdownVisible(false);
-  // };
-
   const handleblock = useCallback(async () => {
     const blockres = await axios.post(`${config.production}/app/user/block`, {
       BlockedUserName: post.userName,
       UserId: user.Id,
     });
- console.log('sushma', UserId);
+    console.log('sushma', UserId);
     if (blockres.status == 200) {
       console.log('Block Succesffully');
       console.log('sushma', UserId);
@@ -528,32 +466,6 @@ const Post = ({
     }
     setDropdownVisible(false);
   };
-
-  // const handlehide = useCallback(async () => {
-  //   console.log('handle hide ',user.Id)
-  //   const hideres = await axios.post(`${config.production}/app/user/hide`, {
-  //     PostId: post.Id,
-  //     UserId: user.Id,
-  //   });
-
-  //   if (hideres.status == 200) {
-  //     console.log('Hide  Succesffully');
-  //   } else {
-  //     console.log('Facing Eroor ');
-  //   }
-  //   setDropdownVisible(false);
-  // }, []);
-
-  // Function to handle like button click
-  // const handleLike = () => {
-  //   const updatedLikesCount = likesCount + 1;
-  //   setLikesCount(updatedLikesCount);
-  //   // Here, you may want to update the backend with the new like count as well.
-  //   // Example: send a request to the server to update the like count for this post.
-  // };
-
-  // console.log('userrrrrrrrrr isssss',user)
-
   return (
     <>
       <Card
@@ -567,11 +479,23 @@ const Post = ({
         <Card.Title
           left={props => (
             <View style={{flexDirection: 'row', flex: 1, gap: 10}}>
-              <LeftContent
-                {...props}
-                profile={post.profile}
-                mobileNo={post.mobileNo}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  handlenavigation(post.mobileNo, post.profile);
+                  console.log('ddddd');
+                }}>
+                <Image
+                  // size={40}
+                  style={{height:40,width:40, borderRadius:20}}
+                  source={
+                    post.profile
+                      ? {
+                          uri: `https://www.adoro.social/UserProfilePic/${post.profile}`,
+                        }
+                      : require('../assets/Profile.png')
+                  }
+                />
+              </TouchableOpacity>
               <View
                 style={{
                   flexDirection: 'column',
@@ -602,35 +526,6 @@ const Post = ({
             </View>
           )}
           leftStyle={{alignSelf: 'center', bottom: 2}}
-          // title={
-          //   <View>
-          //     <TouchableOpacity
-          //       onPress={() =>
-          //         navigation.navigate('Profile', {
-          //           mobileNo: post.mobileNo,
-          //           profile: post.fileName,
-          //         })
-          //       }>
-          //       <Text
-          //         style={{
-          //           fontWeight: '200',
-          //           fontFamily: FontFamily.semibold,
-          //           fontSize: 14,
-          //           color: 'black',
-          //           // marginRight: 10,
-          //         }}>
-          //         {post.fullName ? post.fullName : ''}
-          //       </Text>
-          //     </TouchableOpacity>
-          //     <Text style={{fontFamily: FontFamily.semibold}}>
-          //       25 min ago
-          //     </Text>
-          //   </View>
-          // }
-          // titleStyle={{
-          //   textAlignVertical: 'center',
-          //   flexDirection: 'column',
-          // }}
           right={() => (
             <TouchableOpacity
               onPress={() => toggleDropdown(post)}
@@ -662,31 +557,6 @@ const Post = ({
         {
           post.type === 'image' ? (
             <Pinchable style={styles.pinchable}>
-              {/* <Image
-                source={{
-                  uri: `https://www.adoro.social/UserPost/${post.fileName}`,
-                }}
-                // resizeMode="contain"
-                // borderRadius={20}
-                onLoad={() =>
-                  getImageSize(
-                    `https://www.adoro.social/UserPost/${post.fileName}`,
-                  )
-                }
-                style={{
-                  width: dimensions.width,
-                  height: dimensions.height,
-                  marginTop: 10,
-                  // top: 10,
-                  alignSelf: 'center',
-                  backgroundColor: 'red',
-                  // borderRadius: 5,
-                  //borderWidth: 0,
-                  // borderColor: 'red',
-                  resizeMode: 'contain', // Use 'cover' to make the image cover the entire container
-                  // width: '100%', // Set width to 100%
-                }}
-              /> */}
               <FastImage
                 style={{
                   width: dimensions.width || windowWidth,
@@ -694,12 +564,6 @@ const Post = ({
                   marginTop: 10,
                   // top: 10,
                   alignSelf: 'center',
-                  // backgroundColor: 'red',
-                  // borderRadius: 5,
-                  //borderWidth: 0,
-                  // borderColor: 'red',
-                  // resizeMode: 'contain', // Use 'cover' to make the image cover the entire container
-                  // width: '100%', // Set width to 100%
                 }}
                 source={{
                   uri: `https://www.adoro.social/UserPost/${post.fileName}`,
@@ -718,8 +582,7 @@ const Post = ({
                   alignItems: 'center',
                 }}>
                 <Video
-                ref={videoRef}
-
+                  ref={videoRef}
                   source={{
                     uri: `https://www.adoro.social/UserPost/${post.fileName}`,
                     // uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
@@ -733,63 +596,9 @@ const Post = ({
                   }}
                   controls={false}
                   resizeMode={'contain'}
-                  // onLoad={onLoadEnd}
-                  // onProgress={onProgress}
-                  // onEnd={onEnd}
-                  // paused={!play}
-                  // muted={true}
-      
-                  // paused={!isPlaying[post.Id]}
                   onLoad={event => handleVideoLoad(event, post.Id)}
                 />
               </View>
-              {/* {showControl && (
-            <View style={styles.controlOverlay}>
-              <Player
-                onPlay={handlePlay}
-                onPause={handlePlayPause}
-                playing={play}
-              />
-            </View>
-          )} */}
-
-              {/* <TouchableOpacity
-                style={{
-                  // top: 140,
-                  width: desiredWidth,
-                  height: desiredHeight,
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  marginLeft: -35, // Adjust based on the width of your button
-                  marginTop: -25,
-                }}
-                onPress={() => togglePlayPause(post.Id)}>
-                {isPlaying[post.Id] ? (
-                  <Image
-                    source={require('../assets/pause.png')}
-                    style={{
-                      width: 50,
-                      height: 50,
-                      backgroundColor: '#fff',
-                      borderRadius: 25,
-                    }}
-                  />
-                ) : (
-                  <Image
-                    source={require('../assets/play.png')}
-                    style={{
-                      width: 50,
-                      height: 50,
-                      backgroundColor: '#fff',
-                      borderRadius: 25,
-                    }}
-                  />
-                )}
-              </TouchableOpacity> */}
             </>
           ) : null /* Handle other content types as needed */
         }
@@ -805,16 +614,8 @@ const Post = ({
                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
                   <TouchableOpacity
                     onPress={() => {
-                      // const updatedHearts = {...imageHeart};
-                      // updatedHearts[post.Id] = !updatedHearts[post.Id];
-                      // setImageHeart(updatedHearts);
                       handleLike();
                     }}>
-                    {/* {imageHeart[post.Id] ? (
-                        <RedHeartIcon />
-                      ) : (
-                        <HeartIcon color={colors.arrow} />
-                      )} */}
                     {isliked ? (
                       <RedHeartIcon />
                     ) : (
@@ -829,16 +630,8 @@ const Post = ({
                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
                   <TouchableOpacity
                     onPress={() => {
-                      // const updatedHearts = {...imageHeart};
-                      // updatedHearts[post.Id] = !updatedHearts[post.Id];
-                      // setImageHeart(updatedHearts);
                       handleLike();
                     }}>
-                    {/* {imageHeart[post.Id] ? (
-                        <RedHeartIcon />
-                      ) : (
-                        <HeartIcon color={colors.arrow} />
-                      )} */}
                     {isliked ? (
                       <RedHeartIcon />
                     ) : (
@@ -884,52 +677,6 @@ const Post = ({
             </TouchableOpacity>
           </View>
         </Card.Actions>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            // alignSelf: 'center',
-            gap: 10,
-            margin: 10,
-          }}>
-          <View style={{flexDirection: 'row', position: 'relative'}}>
-            <Image
-              source={require('../assets/User1.jpeg')}
-              style={{
-                zIndex: 1,
-                height: 24,
-                width: 24,
-                borderRadius: 99,
-                borderWidth: 1,
-                borderColor: '#F1F1F1',
-              }} // Adjust margin as needed
-            />
-            <Image
-              source={require('../assets/User2.png')}
-              style={{marginLeft: -8, zIndex: 0}} // Adjust margin as needed
-            />
-            <Image
-              source={require('../assets/User3.png')}
-              style={{marginLeft: -8, zIndex: -1}} // Adjust margin as needed
-            />
-          </View>
-          <Text
-            style={{
-              color: colors.color_TextNormal,
-              fontFamily: FontFamily.semibold,
-            }}>
-            Liked by and 1,10 others
-          </Text>
-        </View> */}
-        {/* <View
-            style={{
-              marginTop: 10,
-              marginBottom: -40,
-              height: '0.3%',
-              width: '90%',
-              alignSelf: 'center',
-              backgroundColor: '#F1F1F1',
-            }}
-          /> */}
       </Card>
       <Modal
         style={{width: '100%', marginLeft: 0, marginBottom: 0}}
