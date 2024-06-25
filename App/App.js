@@ -55,6 +55,7 @@ import MyTemplates from './src/UserProfile/MyTemplates';
 import MyTemplatesPost from './src/UserProfile/MyTemplatesPost';
 import CreateMeme from './src/CreatePost/CreateMeme';
 import messaging from '@react-native-firebase/messaging';
+import NextScreen from './src/CreatePost/NextScreen';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -327,6 +328,11 @@ const App = () => {
           options={{headerShown: false, headerTitleAlign: 'center'}}
           name="CreateMeme"
           component={CreateMeme}
+        />
+         <Stack.Screen
+          options={{headerShown: false, headerTitleAlign: 'center'}}
+          name="NextScreen"
+          component={NextScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
