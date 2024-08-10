@@ -7,7 +7,6 @@ import {useTheme} from '@react-navigation/native';
 import Size from '../common/components/Size';
 
 const Followers = props => {
-  console.log('follower', props.follower);
   const [follower, setFollower] = useState([]);
   const {colors} = useTheme();
   useEffect(() => {
@@ -15,7 +14,6 @@ const Followers = props => {
   }, []);
 
   const getfollower = async () => {
-    console.log('hitt');
     const arr = props.follower.map(item => {
       return item.userName;
     });
@@ -27,17 +25,14 @@ const Followers = props => {
     if (res.data.status === 200) {
       setFollower(res.data.data);
     }
-    // console.log('response isss', res);
   };
   const navigateToProfile = (mobileNo, profile) => {
-    // Use navigation prop to navigate to 'Profile' screen
     props.navigation.navigate('Profile', {
       mobileNo,
       profile,
     });
   };
 
-  console.log('follower', follower);
   return (
     <View style={{backgroundColor: colors.color_PageColor, height:'100%'}}>
       {follower.map((followerData, index) => (
@@ -58,7 +53,7 @@ const Followers = props => {
                     uri: `https://www.adoro.social/UserProfilePic/${followerData.ProfileDp}`,
                   }
                 : require('../assets/image.png')
-            } // Default image from assets folder
+            }
           />
           <View style={{flexDirection: 'column', alignSelf:'center'}}>
             <TouchableOpacity
@@ -69,7 +64,6 @@ const Followers = props => {
                 style={{
                   color: colors.color_TextNormal,
                   fontSize: Size.tabtext,
-                  // fontWeight: '600',
                   fontFamily: FontFamily.semibold,
                 }}>
                 {followerData.fullName}
@@ -79,7 +73,6 @@ const Followers = props => {
               style={{
                 color: colors.color_TextSub,
                 fontSize: Size.title,
-                // fontWeight: '500',
                 fontFamily: FontFamily.medium,
               }}>
               @{followerData.userName}

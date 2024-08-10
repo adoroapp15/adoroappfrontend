@@ -8,7 +8,6 @@ const AllPostTemplatesTypeOptions = ({accountType, setaccountType, style}) => {
   const {colors} = useTheme();
   return (
     <View style={[styles.container, {...style}]}>
-      {/* Buy Button */}
       <PropertyTypeButton
         isActive={accountType === 1}
         onPress={() => setaccountType(1)}
@@ -20,11 +19,6 @@ const AllPostTemplatesTypeOptions = ({accountType, setaccountType, style}) => {
         activeIndicatorStyle={colors.color_TabIndicatorcolor}
         inactiveIndicatorStyle={colors.color_TabBarColor}
       />
-
-      {/* space */}
-      {/* <View width={5} /> */}
-
-      {/* Rent Button */}
       <PropertyTypeButton
         isActive={accountType === 2}
         onPress={() => setaccountType(2)}
@@ -45,7 +39,5 @@ export default AllPostTemplatesTypeOptions;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    //backgroundColor:'red'
-    // borderWidth: 1,
   },
 });

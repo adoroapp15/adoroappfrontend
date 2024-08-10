@@ -19,43 +19,37 @@ import {useTheme} from '@react-navigation/native';
 import useStore from '../store';
 import Size from '../common/components/Size';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const ReferEarn = ({navigation, route}) => {
   const {colors} = useTheme();
   const {dark, toggleTheme} = useStore();
   const {userName} = route.params;
   const [user, setUser] = useState({});
-  useEffect(() => {
-    const getuser = async () => {
-      const userString = await AsyncStorage.getItem('user');
-      const otherString = await AsyncStorage.getItem('token');
 
-      if (userString && otherString) {
-        const parsedUser = JSON.parse(userString, otherString);
+  useEffect(() => {
+    const getUser = async () => {
+      const userString = await AsyncStorage.getItem('user');
+      if (userString) {
+        const parsedUser = JSON.parse(userString);
         setUser(parsedUser);
       }
     };
-
-    getuser();
+    getUser();
   }, []);
 
-  // Replace this with your actual logic to generate unique referral links
   const generateReferralLink = () => {
-    // Example: Generate a unique referral link for the current user
-    const userId = '123'; // Replace with actual user ID or identifier
-    return 'https://play.google.com/store/apps/details?id=com.adoro&hl=en&gl=US';
+    return `https://play.google.com/store/apps/details?id=com.adoro.creators&hl=en-IN&ref=${user.userName}`;
   };
-  console.log('ppppppspsspsp', user.userName);
   const referralLink = generateReferralLink();
 
   const handleCopyToClipboard = () => {
     Clipboard.setString(referralLink);
     Alert.alert('Clipboard copied');
   };
-  const handleCopyToClipboards = () => {
+  const handleCopyUsernameToClipboard = () => {
     Clipboard.setString(user.userName);
     Alert.alert('Clipboard copied');
   };
-
   const shareOnWhatsApp = async () => {
     try {
       const shareOptions = {
@@ -67,43 +61,6 @@ const ReferEarn = ({navigation, route}) => {
       console.log('Error sharing on WhatsApp:', error);
     }
   };
-
-  // useEffect(() => {
-  //   const handleDeepLink = async () => {
-  //     try {
-  //       const url = await Linking.getInitialURL();
-  //       if (url) {
-  //         handleDeepLinkURL(url);
-  //       }
-  //     } catch (err) {
-  //       console.error('Error handling deep link:', err);
-  //     }
-  //   };
-
-  //   const handleDeepLinkURL = async url => {
-  //     console.log('Deep link URL:', url);
-  //     // Example: Parse the URL to extract user-specific information
-  //     // Example URL: https://www.adoro.social.net/?referral=123
-  //     const params = new URLSearchParams(url.split('?')[1]);
-  //     const userId = params.get('referral');
-  //     console.log('User ID:', userId);
-  //     // Example: Navigate user based on user ID
-  //     if (userId === '123') {
-  //       navigation.navigate('ReferPage');
-  //     }
-  //     // Handle other cases as needed
-  //   };
-
-  //   handleDeepLink();
-
-  //   Linking.addEventListener('url', ({url}) => {
-  //     handleDeepLinkURL(url);
-  //   });
-
-  //   return () => {
-  //     Linking.removeEventListener('url');
-  //   };
-  // }, []);
 
   return (
     <View style={{backgroundColor: colors.color_PageColor, height: '100%'}}>
@@ -174,7 +131,7 @@ const ReferEarn = ({navigation, route}) => {
                     textAlignVertical: 'center',
                     marginLeft: 10,
                   }}>
-                  Referral Code : {user.userName}
+                  Referral Code: {user.userName}
                 </Text>
                 <TouchableOpacity
                   style={{
@@ -182,7 +139,7 @@ const ReferEarn = ({navigation, route}) => {
                     marginRight: 10,
                     bottom: 2,
                   }}
-                  onPress={handleCopyToClipboards}>
+                  onPress={handleCopyUsernameToClipboard}>
                   <CopyTextIcon color={'black'} />
                 </TouchableOpacity>
               </View>
@@ -209,9 +166,9 @@ const ReferEarn = ({navigation, route}) => {
                   fontSize: Size.title,
                   marginTop: 20,
                 }}>
-                When your friends will download the app with the referral code
+                When your friends download the app with the referral code
                 provided above, both of you will get credit in your wallet worth
-                Rs.100
+                Rs.5
               </Text>
             </View>
           </View>
@@ -296,7 +253,6 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: 'center',
     fontFamily: FontFamily.medium,
-    // color: 'black',
     fontSize: Size.title,
     marginTop: 20,
   },

@@ -42,7 +42,6 @@ const Licenseds = ({route, navigation}) => {
   const {imageId} = route.params;
   const [selectedItem, setSelectedItem] = React.useState('');
   const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
-  console.log(razorpayKeyId, razorpayKeySecret);
   let razorpayKeyId = 'rzp_live_qTUOVmZMoxYeMC';
   let razorpayKeySecret = 'mxjPnHF0YptMXOFrgMSZ5mzS';
 
@@ -57,7 +56,7 @@ const Licenseds = ({route, navigation}) => {
       key: razorpayKeyId,
       amount: amount * 100,
       name: 'Licensed Template order',
-      order_id: '', //Replace this with an order_id created using Orders API. Learn more at https://razorpay.com/docs/api/orders.
+      order_id: '',
       prefill: {
         email: 'xyz@gmail.com',
         contact: '9999999999',
@@ -68,23 +67,18 @@ const Licenseds = ({route, navigation}) => {
 
     RazorpayCheckout.open(options)
       .then(data => {
-        // handle success
         alert(`Success: ${data.razorpay_payment_id}`);
         downloadImage();
       })
       .catch(error => {
-        // handle failure
         console.log(error);
         alert(`Error: ${error.code} | ${error.description}`);
       });
   };
   React.useEffect(() => {
-    // Check if imageId is a valid key in the Data object
     if (Data.hasOwnProperty(imageId)) {
-      // Set the selected item in the state using imageId
       setSelectedItem(Data[imageId]);
     } else {
-      // Handle the case where imageId is not a valid key
       console.error(`Invalid imageId: ${imageId}`);
     }
   }, [imageId]);
@@ -102,7 +96,6 @@ const Licenseds = ({route, navigation}) => {
           },
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('Storage Permission Granted.');
           downloadImage();
         } else {
           alert('Storage Permission not granted');
@@ -136,7 +129,6 @@ const Licenseds = ({route, navigation}) => {
     config(options)
       .fetch('GET', image_URL)
       .then(res => {
-        console.log('res ->', JSON.stringify(res));
         alert('Image Downloaded Success');
       });
   };
@@ -244,7 +236,6 @@ const Licenseds = ({route, navigation}) => {
           </View>
         </View>
 
-        {/* Modal for Payment */}
         <Modal
           animationType="slide"
           transparent={true}

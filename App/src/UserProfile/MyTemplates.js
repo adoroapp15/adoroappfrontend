@@ -28,31 +28,12 @@ const MyTemplates = ({item}) => {
         const aspectRatio = width / height;
         const imageHeight = windowWidth1 / aspectRatio;
         setDimensions({width: windowWidth1, height: imageHeight});
-        // console.log('Image dimensions:', width, height, url);
       });
     } catch (error) {
       console.error('Error getting image size:', error);
     }
-    // return new Promise((resolve, reject) => {
-    //   Image.getSize(
-    //     url,
-    //     (width, height) => {
-    //       const aspectRatio = width / height;
-    //       const imageHeight = windowWidth1 / aspectRatio;
-    //       setDimensions({width: windowWidth1, height: imageHeight});
-    //       console.log('Image dimensions:', width, height, url);
-    //       resolve({width: windowWidth1, height: imageHeight});
-    //     },
-    //     error => {
-    //       console.error('Error getting image size:', error);
-    //       reject(error);
-    //     },
-    //   );
-    // });
   };
-
   const deletetemplate = async Id => {
-    console.log('deleteddddd', Id);
     const response = await axios.delete(
       `${config.production}/app/user/deletetemplate`,
       {
@@ -68,13 +49,11 @@ const MyTemplates = ({item}) => {
   };
   React.useEffect(() => {
     getImageSize(`https://www.adoro.social/UserTemplate/${item.fileName}`);
-    // console.log('Updated dimensions:', dimensions.width, dimensions.height);
   }, [dimensions]);
   return (
     <ScrollView>
       <View style={{flex: 1}}>
         <Image
-          // key={index}
           source={{
             uri: `https://www.adoro.social/UserTemplate/${item.fileName}`,
           }}

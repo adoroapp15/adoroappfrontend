@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {
   View,
   Text,
@@ -7,13 +7,43 @@ import {
   Alert,
   Image,
   ScrollView,
+  TextInput,
+  PermissionsAndroid,
+  Dimensions,
 } from 'react-native';
 import PlusIcon from '../assets/svg/PlusIcon';
 import {useTheme} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Draggable from 'react-native-draggable';
+import RNFS from 'react-native-fs';
+import Share from 'react-native-share';
+import ViewShot from 'react-native-view-shot';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 
-const NextScreen = ({route}) => {
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const windowWidth1 = Dimensions.get('screen').width;
+const windowHeight1 = Dimensions.get('screen').height;
+const desiredWidth = 0.2 * windowWidth;
+const desiredHeight = 0.2 * windowHeight;
+
+const NextScreen = ({route, navigation}) => {
+  const [dimensions, setDimensions] = React.useState({width: 0, height: 0});
+
+  const getImageSize = url => {
+    try {
+      Image.getSize(url, (width, height) => {
+        const aspectRatio = width / height;
+        const imageHeight = windowWidth1 / aspectRatio;
+        setDimensions({width: windowWidth1, height: imageHeight});
+      });
+    } catch (error) {
+      console.error('Error getting image size:', error);
+    }
+  };
+  React.useEffect(() => {}, [dimensions]);
+
+  const viewShotRef = useRef();
   const {selectedLayout} = route.params;
   const {colors} = useTheme();
   const [textInputState, setTextInputState] = React.useState({
@@ -26,11 +56,39 @@ const NextScreen = ({route}) => {
     height: 50, // Initial height
   });
 
-  const handleTextInputChange = text => {
-    setTextInputState(prevState => ({
-      ...prevState,
-      text: text,
-    }));
+  const [textElements, setTextElements] = React.useState([
+    {id: 'top', text: 'Top Text', isEditing: false},
+    {id: 'bottom', text: 'Bottom Text', isEditing: false},
+    {id: 'text1', text: 'Text', isEditing: false},
+    {id: 'text2', text: 'Text', isEditing: false},
+  ]);
+
+  const handleTextPress = id => {
+    setTextElements(prevState =>
+      prevState.map(textElement =>
+        textElement.id === id
+          ? {...textElement, isEditing: true, text: ''}
+          : textElement,
+      ),
+    );
+  };
+
+  const handleTextInputChange = (id, text) => {
+    setTextElements(prevState =>
+      prevState.map(textElement =>
+        textElement.id === id ? {...textElement, text} : textElement,
+      ),
+    );
+  };
+
+  const saveEditedText = id => {
+    setTextElements(prevState =>
+      prevState.map(textElement =>
+        textElement.id === id
+          ? {...textElement, isEditing: false}
+          : textElement,
+      ),
+    );
   };
 
   const handleTextDrag = (x, y) => {
@@ -49,14 +107,6 @@ const NextScreen = ({route}) => {
     }));
   };
 
-  const handleTextPress = () => {
-    // Change text color
-    setTextInputState(prevState => ({
-      ...prevState,
-      color: 'red', // Example of changing color
-    }));
-  };
-
   const [selectedImage, setSelectedImage] = React.useState(null); // State to hold selected image URI
 
   const handleImagePicker = async () => {
@@ -67,6 +117,7 @@ const NextScreen = ({route}) => {
         cropping: true,
       });
       // Set the selected image URI to state
+      getImageSize(image.path);
       setSelectedImage(image.path);
     } catch (error) {
       console.log('Image picker error:', error);
@@ -83,6 +134,8 @@ const NextScreen = ({route}) => {
         cropping: true,
       });
       // Set the selected image URI to state
+      getImageSize(image.path);
+
       setSelectedImage1(image.path);
     } catch (error) {
       console.log('Image picker error:', error);
@@ -99,6 +152,8 @@ const NextScreen = ({route}) => {
         cropping: true,
       });
       // Set the selected image URI to state
+      getImageSize(image.path);
+
       setSelectedImage2(image.path);
     } catch (error) {
       console.log('Image picker error:', error);
@@ -115,6 +170,8 @@ const NextScreen = ({route}) => {
         cropping: true,
       });
       // Set the selected image URI to state
+      getImageSize(image.path);
+
       setSelectedImage3(image.path);
     } catch (error) {
       console.log('Image picker error:', error);
@@ -169,52 +226,60 @@ const NextScreen = ({route}) => {
   //       });
   //   }, []);
 
+  const renderTextElement = textElement => {
+    if (textElement.isEditing) {
+      return (
+        <TextInput
+          style={{alignSelf: 'center', textAlignVertical: 'center'}}
+          value={textElement.text}
+          onChangeText={text => handleTextInputChange(textElement.id, text)}
+          onBlur={() => saveEditedText(textElement.id)}
+        />
+      );
+    }
+
+    return (
+      <TouchableOpacity onPress={() => handleTextPress(textElement.id)}>
+        <Text style={styles.text}>{textElement.text}</Text>
+      </TouchableOpacity>
+    );
+  };
   const renderSelectedLayout = () => {
     switch (selectedLayout) {
       case 1:
         return (
           <View
             style={{
-              height: 450,
+              height: 600,
               width: '90%',
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: 'black',
+              // borderWidth: 1,
+              // borderRadius: 5,
+              // borderColor: 'black',
               marginLeft: 5,
               //   position: 'relative',
             }}>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 20,
-                  fontWeight: '600',
-                  marginBottom: 30,
-                }}>
-                Top text
-              </Text>
+              {renderTextElement(textElements[0])}
               {selectedImage ? (
                 <Image
                   source={{uri: selectedImage}}
-                  style={{width: 100, height: 100}}
+                  // style={{
+                  //   width: dimensions.width || windowWidth,
+                  //   height: dimensions.height || 300,
+                  // }}
+                  style={{width: '80%', height: 300}}
                 />
               ) : (
                 <TouchableOpacity onPress={handleImagePicker}>
-                  <View style={{borderWidth: 1, borderColor: 'black'}}>
-                    <PlusIcon color={colors.color_CardIcon} />
-                  </View>
+                  <Image
+                    source={require('../assets/gallery.png')}
+                    style={{height: 60, width: 60}}
+                  />
                 </TouchableOpacity>
               )}
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 20,
-                  fontWeight: '600',
-                  marginTop: 20,
-                }}>
-                Bottom Text
-              </Text>
+
+              {renderTextElement(textElements[1])}
             </View>
           </View>
         );
@@ -222,35 +287,32 @@ const NextScreen = ({route}) => {
         return (
           <View
             style={{
-              height: 450,
+              height: 600,
               width: '90%',
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: 'black',
+              // borderWidth: 1,
+              // borderRadius: 5,
+              // borderColor: 'black',
               marginLeft: 5,
               //   position: 'relative',
             }}>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 20,
-                  fontWeight: '600',
-                  marginBottom: 30,
-                }}>
-                Top text
-              </Text>
+              {renderTextElement(textElements[0])}
               {selectedImage ? (
                 <Image
                   source={{uri: selectedImage}}
-                  style={{width: 100, height: 100}}
+                  // style={{
+                  //   width: dimensions.width || windowWidth,
+                  //   height: dimensions.height || 300,
+                  // }}
+                  style={{width: '80%', height: 300}}
                 />
               ) : (
                 <TouchableOpacity onPress={handleImagePicker}>
-                  <View style={{borderWidth: 1, borderColor: 'black'}}>
-                    <PlusIcon color={colors.color_CardIcon} />
-                  </View>
+                  <Image
+                    source={require('../assets/gallery.png')}
+                    style={{height: 60, width: 60}}
+                  />
                 </TouchableOpacity>
               )}
             </View>
@@ -262,9 +324,9 @@ const NextScreen = ({route}) => {
             style={{
               height: 450,
               width: '90%',
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: 'black',
+              // borderWidth: 1,
+              // borderRadius: 5,
+              // borderColor: 'black',
               marginLeft: 5,
               //   position: 'relative',
             }}>
@@ -278,25 +340,27 @@ const NextScreen = ({route}) => {
               {selectedImage ? (
                 <Image
                   source={{uri: selectedImage}}
-                  style={{width: 100, height: 100}}
+                  style={{width: '80%', height: 300}}
                 />
               ) : (
                 <TouchableOpacity onPress={handleImagePicker}>
-                  <View style={{borderWidth: 1, borderColor: 'black'}}>
-                    <PlusIcon color={colors.color_CardIcon} />
-                  </View>
+                  <Image
+                    source={require('../assets/gallery.png')}
+                    style={{height: 60, width: 60}}
+                  />
                 </TouchableOpacity>
               )}
               {selectedImage1 ? (
                 <Image
                   source={{uri: selectedImage1}}
-                  style={{width: 100, height: 100}}
+                  style={{width: '80%', height: 300}}
                 />
               ) : (
                 <TouchableOpacity onPress={handleImagePicker1}>
-                  <View style={{borderWidth: 1, borderColor: 'black'}}>
-                    <PlusIcon color={colors.color_CardIcon} />
-                  </View>
+                  <Image
+                    source={require('../assets/gallery.png')}
+                    style={{height: 60, width: 60}}
+                  />
                 </TouchableOpacity>
               )}
             </View>
@@ -304,68 +368,119 @@ const NextScreen = ({route}) => {
         );
       case 4:
         return (
+          // <View
+          //   style={{
+          //     height: 600,
+          //     width: '90%',
+          //     // borderWidth: 1,
+          //     // borderRadius: 5,
+          //     // borderColor: 'black',
+          //     marginLeft: 5,
+          //     //   position: 'relative',
+          //   }}>
+          //   <View
+          //     style={{
+          //       flex: 1,
+          //       justifyContent: 'center',
+          //       alignItems: 'center',
+          //       // gap: 10,
+          //     }}>
+          //     <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+          //       {selectedImage ? (
+          //         <Image
+          //           source={{uri: selectedImage}}
+          //           style={{width: '60%', height: 300}}
+          //         />
+          //       ) : (
+          //         <TouchableOpacity onPress={handleImagePicker}>
+          //           <Image
+          //             source={require('../assets/gallery.png')}
+          //             style={{height: 60, width: 60}}
+          //           />
+          //         </TouchableOpacity>
+          //       )}
+          //       <View style={{alignSelf: 'center', marginBottom:20}}>
+          //         {renderTextElement(textElements[2])}
+          //       </View>
+          //     </View>
+          //     <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+          //       {selectedImage1 ? (
+          //         <Image
+          //           source={{uri: selectedImage1}}
+          //           style={{width: '60%', height: 300}}
+          //         />
+          //       ) : (
+          //         <TouchableOpacity onPress={handleImagePicker1}>
+          //           <Image
+          //             source={require('../assets/gallery.png')}
+          //             style={{height: 60, width: 60}}
+          //           />
+          //         </TouchableOpacity>
+          //       )}
+          //       <View style={{alignSelf: 'center', marginBottom:20}}>
+          //         {renderTextElement(textElements[3])}
+          //       </View>
+          //     </View>
+          //   </View>
+          // </View>
           <View
             style={{
-              height: 450,
+              height: 600,
               width: '90%',
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: 'black',
-              marginLeft: 5,
-              //   position: 'relative',
+              // marginLeft: 5,
+              gap: -20,
             }}>
             <View
               style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: 50,
               }}>
               <View
-                style={{flexDirection: 'row', alignSelf: 'center', gap: 50}}>
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
                 {selectedImage ? (
                   <Image
                     source={{uri: selectedImage}}
-                    style={{width: 100, height: 100}}
+                    style={{width: '60%', height: 300}}
                   />
                 ) : (
                   <TouchableOpacity onPress={handleImagePicker}>
-                    <View style={{borderWidth: 1, borderColor: 'black'}}>
-                      <PlusIcon color={colors.color_CardIcon} />
-                    </View>
+                    <Image
+                      source={require('../assets/gallery.png')}
+                      style={{height: 60, width: 60}}
+                    />
                   </TouchableOpacity>
                 )}
-                <Text
-                  style={{
-                    color: 'black',
-                    fontSize: 20,
-                    fontWeight: '600',
-                  }}>
-                  Text
-                </Text>
+                <View style={{marginLeft: 10}}>
+                  {renderTextElement(textElements[2])}
+                </View>
               </View>
               <View
-                style={{flexDirection: 'row', alignSelf: 'center', gap: 50}}>
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
                 {selectedImage1 ? (
                   <Image
                     source={{uri: selectedImage1}}
-                    style={{width: 100, height: 100}}
+                    style={{width: '60%', height: 300}}
                   />
                 ) : (
                   <TouchableOpacity onPress={handleImagePicker1}>
-                    <View style={{borderWidth: 1, borderColor: 'black'}}>
-                      <PlusIcon color={colors.color_CardIcon} />
-                    </View>
+                    <Image
+                      source={require('../assets/gallery.png')}
+                      style={{height: 60, width: 60}}
+                    />
                   </TouchableOpacity>
                 )}
-                <Text
-                  style={{
-                    color: 'black',
-                    fontSize: 20,
-                    fontWeight: '600',
-                  }}>
-                  Text
-                </Text>
+                <View style={{marginLeft: 10}}>
+                  {renderTextElement(textElements[3])}
+                </View>
               </View>
             </View>
           </View>
@@ -374,55 +489,50 @@ const NextScreen = ({route}) => {
         return (
           <View
             style={{
-              height: 450,
+              height: 600,
               width: '90%',
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: 'black',
+              // borderWidth: 1,
+              // borderRadius: 5,
+              // borderColor: 'black',
               marginLeft: 5,
               //   position: 'relative',
             }}>
             <View style={{}}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 20,
-                  fontWeight: '600',
-                  alignSelf: 'center',
-                  marginTop: 10,
-                }}>
-                Text
-              </Text>
+              <View style={{alignSelf: 'center', marginTop: 60}}>
+                {renderTextElement(textElements[0])}
+              </View>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  gap: 50,
+                  gap: 10,
                   marginTop: 70,
                 }}>
                 {selectedImage ? (
                   <Image
                     source={{uri: selectedImage}}
-                    style={{width: 100, height: 100}}
+                    style={{width: '45%', height: 300}}
                   />
                 ) : (
                   <TouchableOpacity onPress={handleImagePicker}>
-                    <View style={{borderWidth: 1, borderColor: 'black'}}>
-                      <PlusIcon color={colors.color_CardIcon} />
-                    </View>
+                    <Image
+                      source={require('../assets/gallery.png')}
+                      style={{height: 60, width: 60}}
+                    />
                   </TouchableOpacity>
                 )}
                 {selectedImage1 ? (
                   <Image
                     source={{uri: selectedImage1}}
-                    style={{width: 100, height: 100}}
+                    style={{width: '40%', height: 300}}
                   />
                 ) : (
                   <TouchableOpacity onPress={handleImagePicker1}>
-                    <View style={{borderWidth: 1, borderColor: 'black'}}>
-                      <PlusIcon color={colors.color_CardIcon} />
-                    </View>
+                    <Image
+                      source={require('../assets/gallery.png')}
+                      style={{height: 60, width: 60}}
+                    />
                   </TouchableOpacity>
                 )}
               </View>
@@ -435,9 +545,9 @@ const NextScreen = ({route}) => {
             style={{
               height: 600,
               width: '90%',
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: 'black',
+              // borderWidth: 1,
+              // borderRadius: 5,
+              // borderColor: 'black',
               marginLeft: 5,
               //   position: 'relative',
             }}>
@@ -451,37 +561,46 @@ const NextScreen = ({route}) => {
               {selectedImage ? (
                 <Image
                   source={{uri: selectedImage}}
-                  style={{width: '80%', height: 150}}
+                  style={{width: '80%', height: 170}}
                 />
               ) : (
                 <TouchableOpacity onPress={handleImagePicker}>
-                  <View style={{borderWidth: 1, borderColor: 'black'}}>
-                    <PlusIcon color={colors.color_CardIcon} />
-                  </View>
+                  <Image
+                    source={require('../assets/gallery.png')}
+                    style={{height: 60, width: 60}}
+                  />
                 </TouchableOpacity>
               )}
+              <View
+                style={{height: 1, width: '100%', backgroundColor: 'black'}}
+              />
               {selectedImage1 ? (
                 <Image
                   source={{uri: selectedImage1}}
-                  style={{width: '80%', height: 150}}
+                  style={{width: '80%', height: 170}}
                 />
               ) : (
                 <TouchableOpacity onPress={handleImagePicker1}>
-                  <View style={{borderWidth: 1, borderColor: 'black', marginTop:20}}>
-                    <PlusIcon color={colors.color_CardIcon} style={{alignSelf:"center"}} />
-                  </View>
+                  <Image
+                    source={require('../assets/gallery.png')}
+                    style={{height: 60, width: 60}}
+                  />
                 </TouchableOpacity>
               )}
+              <View
+                style={{height: 1, width: '100%', backgroundColor: 'black'}}
+              />
               {selectedImage2 ? (
                 <Image
                   source={{uri: selectedImage2}}
-                  style={{width: '80%', height: 150}}
+                  style={{width: '80%', height: 170}}
                 />
               ) : (
                 <TouchableOpacity onPress={handleImagePicker2}>
-                  <View style={{borderWidth: 1, borderColor: 'black',marginTop:20}}>
-                    <PlusIcon color={colors.color_CardIcon} />
-                  </View>
+                  <Image
+                    source={require('../assets/gallery.png')}
+                    style={{height: 60, width: 60}}
+                  />
                 </TouchableOpacity>
               )}
             </View>
@@ -491,50 +610,208 @@ const NextScreen = ({route}) => {
         return null;
     }
   };
+  const captureAndShareScreenshot = async () => {
+    try {
+      const uri = await viewShotRef.current.capture();
+      await Share.open({
+        url: uri,
+        type: 'image/jpeg',
+        message: 'Share this meme!',
+      });
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  };
+
+  const handleDownload = useCallback(async () => {
+    try {
+      const uri = await viewShotRef.current.capture();
+      const permission = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      );
+      if (
+        permission !== PermissionsAndroid.RESULTS.GRANTED &&
+        permission === PermissionsAndroid.RESULTS.GRANTED
+      ) {
+        Alert.alert(
+          'Permission Denied',
+          'Cannot save image without permission.',
+        );
+        return;
+      }
+
+      await CameraRoll.save(uri, {type: 'photo'});
+      Alert.alert('Success', 'Image has been saved to the gallery.');
+    } catch (error) {
+      console.log('Error capturing and saving view:', error);
+      Alert.alert('Error', 'Failed to capture and save the view.');
+    }
+  }, []);
+
+  const [screenshotUri, setScreenshotUri] = React.useState(null);
+
+  const handleSavePress = () => {
+    viewShotRef.current.capture().then(uri => {
+      setScreenshotUri(uri);
+      navigation.navigate('CreatePost', {screenshotUri: uri});
+    });
+  };
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>Selected Layout</Text>
-        {renderSelectedLayout()}
+        <ViewShot
+          style={{
+            height: 600,
+            width: '90%',
+            // borderWidth: 1,
+            // borderRadius: 5,
+            // borderColor: 'black',
+            marginLeft: 5,
+            backgroundColor: 'white',
+            //   position: 'relative',
+          }}
+          ref={viewShotRef}
+          options={{format: 'png', quality: 0.9, backgroundColor: 'white'}}>
+          {renderSelectedLayout()}
+        </ViewShot>
         <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
           <TouchableOpacity style={{flex: 1}} onPress={handleImagePicker3}>
-            <Text
+            <View
               style={{
-                //   flex: 1,
-                marginLeft: 20,
-                fontSize: 20,
-                color: 'black',
-                fontWeight: '700',
+                borderWidth: 1,
+                borderColor: 'black',
+                width: 100,
+                height: 30,
+                marginLeft: 10,
               }}>
-              Image
-            </Text>
+              <Text
+                style={{
+                  //   flex: 1,
+                  marginLeft: 20,
+                  fontSize: 20,
+                  color: 'black',
+                  fontWeight: '700',
+                }}>
+                Image
+              </Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text
+            <View
               style={{
-                marginRight: 75,
-                fontSize: 20,
-                color: 'black',
-                fontWeight: '700',
+                borderColor: 'black',
+                borderWidth: 1,
+                height: 30,
+                width: 70,
+                alignSelf: 'center',
+                marginRight: 40,
               }}>
-              Text
-            </Text>
+              <Text
+                style={{
+                  // marginRight: 75,
+                  fontSize: 20,
+                  color: 'black',
+                  fontWeight: '700',
+                  alignSelf: 'center',
+                }}>
+                Text
+              </Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity style={{}}>
-            <Text
+            <View
               style={{
-                // justifyContent: 'flex-end',
-                marginRight: 20,
-                fontSize: 20,
-                color: 'black',
-                fontWeight: '700',
+                marginRight: 10,
+                borderColor: 'black',
+                borderWidth: 1,
+                height: 30,
+                width: 100,
               }}>
-              Sticker
-            </Text>
+              <Text
+                style={{
+                  // justifyContent: 'flex-end',
+                  // marginRight: 20,
+                  fontSize: 20,
+                  alignSelf: 'center',
+                  color: 'black',
+                  fontWeight: '700',
+                }}>
+                Sticker
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
-        <Draggable x={75} y={100} >
+        <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
+          <TouchableOpacity style={{flex: 1}} onPress={handleDownload}>
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: 'black',
+                width: 120,
+                height: 30,
+                marginLeft: 10,
+              }}>
+              <Text
+                style={{
+                  // flex: 1,
+                  // marginLeft: 20,
+                  fontSize: 20,
+                  color: 'black',
+                  fontWeight: '700',
+                  alignSelf: 'center',
+                }}>
+                Download
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={captureAndShareScreenshot}>
+            <View
+              style={{
+                borderColor: 'black',
+                borderWidth: 1,
+                height: 30,
+                width: 70,
+                alignSelf: 'center',
+                marginRight: 40,
+              }}>
+              <Text
+                style={{
+                  // marginRight: 75,
+                  fontSize: 20,
+                  color: 'black',
+                  fontWeight: '700',
+                  alignSelf: 'center',
+                }}>
+                Share
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={{}} onPress={handleSavePress}>
+            <View
+              style={{
+                marginRight: 10,
+                borderColor: 'black',
+                borderWidth: 1,
+                height: 30,
+                width: 100,
+              }}>
+              <Text
+                style={{
+                  // justifyContent: 'flex-end',
+                  // marginRight: 20,
+                  fontSize: 20,
+                  alignSelf: 'center',
+                  color: 'black',
+                  fontWeight: '700',
+                }}>
+                Save
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <Draggable x={75} y={100}>
           <Image
             source={{uri: selectedImage3}}
             style={{width: 100, height: 100}}

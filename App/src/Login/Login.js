@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import OTP from '../OTP/OTP';
 import axios from 'axios';
 import {config} from '../config';
 import {
@@ -10,7 +9,6 @@ import {
   Alert,
   TouchableOpacity,
   Modal,
-  TouchableHighlight,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import FontFamily from '../common/components/FontFamily';
@@ -22,35 +20,26 @@ import Size from '../common/components/Size';
 const Login = ({navigation}) => {
   const {dark, toggleTheme} = useStore();
   const isFocused = useIsFocused();
-
   const {colors} = useTheme();
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const [number, onChangeNumber] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  // React.useEffect(() => {
-  //   handleGetOTP();
-  // }, [isFocused]);
-
   const handleGetOTP = async () => {
     try {
       setButtonDisabled(true);
 
-      console.log('URLLLLLLLLLLLL', `${config.production}/app/user/login`);
       const response = await axios.post(`${config.production}/app/user/login`, {
         mobileNo: number,
       });
 
-      console.log(response, 'response is');
       if (response.data.status == 200) {
-        // setModalVisible(true);
         setTimeout(() => {
-          // setModalVisible(false);
           navigation.navigate('OTPScreen', {
             mobileNo: number,
             username: '',
             fullName: '',
           });
-        }, 2000); // Adjust the duration as needed (2000 milliseconds = 2 seconds)
+        }, 2000);
       } else {
         Alert.alert('Error', response.data.msg);
       }
@@ -70,9 +59,6 @@ const Login = ({navigation}) => {
       <Text style={[styles.text2, {color: colors.color_Logintext1}]}>
         You Have Been Missed For Long Time
       </Text>
-      {/* <Text style={[styles.text3, {color: colors.color_Logintext1}]}>
-        Mobile Number
-      </Text> */}
       <TextInput
         style={[
           styles.input,
@@ -117,10 +103,7 @@ const Login = ({navigation}) => {
           </LinearGradient>
         </TouchableOpacity>
       </View>
-
-      {/* Modal */}
       <Modal
-        // animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -130,7 +113,6 @@ const Login = ({navigation}) => {
           <View
             style={{
               backgroundColor: colors.color_CardBgColor,
-              // height: 200,
               margin: 20,
               borderRadius: 20,
               padding: 30,
@@ -158,15 +140,6 @@ const Login = ({navigation}) => {
                 backgroundColor: '#2196F3',
               }}>
               <TouchableOpacity
-                // style={{
-                //   borderRadius: 10,
-                //   paddingLeft: 5,
-                //   paddingRight: 5,
-                //   paddingTop: 10,
-                //   paddingBottom: 10,
-                //   elevation: 2,
-                //   backgroundColor: '#2196F3',
-                // }}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                 }}>
@@ -199,7 +172,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   text3: {
-    // color: '#000',
     fontSize: Size.title,
     fontFamily: FontFamily.semibold,
     textTransform: 'capitalize',
@@ -231,19 +203,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 22,
   },
-  // openButton: {
-  //   backgroundColor: 'red',
-  //   borderRadius: 10,
-  //   // padding: 10,
-  //   //paddingLeft: 15,
-  //   //paddingRight: 15,
-  //   paddingTop: 10,
-  //   paddingBottom: 10,
-  //   elevation: 2,
-  // },
   textStyle: {
     color: '#fff',
-    // fontWeight: 'bold',
     fontSize: Size.buttonText,
     textAlign: 'center',
     fontFamily: FontFamily.semibold,

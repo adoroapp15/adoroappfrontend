@@ -47,32 +47,11 @@ const MyTemplatesPost = ({navigation, route}) => {
   };
   const [imageSizes, setImageSizes] = useState({});
   const flatListRef = React.useRef(null);
-
-//   React.useEffect(() => {
-//     // Access the params passed during navigation
-//     // const indexToScroll = navigation.getParam('indexToScroll', 0);
-//     // Scroll the FlatList to the desired index
-//     if (route?.params?.indexToScroll !== null && flatListRef?.current) {
-//       flatListRef?.current?.scrollToIndex({
-//         animated: true,
-//         index: route?.params?.indexToScroll,
-//       });
-//     }
-//   }, [route?.params?.indexToScroll]);
-
   const getItemLayout = (data, index) => ({
     length: 50,
     offset: 350 * index,
     index,
   });
-
-
-
-
-
-// console.log('sssss', allData);
-// console.log('aass', selectedData);
-console.log('sssxcc', data)
   return (
     <>
     <View

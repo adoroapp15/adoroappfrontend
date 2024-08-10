@@ -6,10 +6,9 @@ import FontFamily from '../common/components/FontFamily';
 import BackArrow from '../assets/svg/BackArrow';
  
 const ViewResult = ({navigation, route}) => {
-  const {result} = route.params; // Assuming results is an array
+  const {result} = route.params;
   const {colors} = useTheme();
   const {dark, toggleTheme} = useStore();
-  console.log('resulttttttttttttt', result);
  
   return (
     <View style={{backgroundColor: colors.color_PageColor, height: '100%'}}>

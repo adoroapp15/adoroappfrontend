@@ -28,48 +28,11 @@ const Licensed = ({navigation}) => {
   const {dark, toggleTheme} = useStore();
 
   const [select, setSelect] = React.useState(Data);
-  //   const [leastCount, setLeastCount] = React.useState([]);
-  console.log('selectedItem', select.source);
   const handleOnpress = imageId => {
     navigation.navigate('Licenseds', {imageId});
-    // const newItem = select.map(val => {
-    //   if (val.id === item.id) {
-    //     return {...val, selected: !val.selected};
-    //   } else {
-    //     return val;
-    //   }
-    // });
-    // // setLeastCount(() => newItem.filter(data => data.selected === true));
-    // setSelect(newItem);
   };
   return (
-    // <ScrollView style={{flex: 1, backgroundColor: colors.color_PageColor}}>
-    //   <View style={styles.flatlist}>
-    //     <FlatList
-    //       data={select}
-    //       keyExtractor={item => item.id}
-    //       renderItem={({item}) => {
-    //         return (
-    //           <View style={{flex: 1}}>
-    //             {/* <TouchableOpacity onPress={() => handleOnpress(item.id)}>
-    //               <Image source={item.source} style={styles.image} />
-    //             </TouchableOpacity> */}
-    //             <Text
-    //               style={{alignSelf: 'center', color: colors.color_Logintext}}>
-    //               We're currenly expanding our licensed template library, but in
-    //               the meantime, let's explore a custom design solution
-    //             </Text>
-    //           </View>
-    //         );
-    //       }}
-    //       numColumns={3}
-    //     />
-    //   </View>
-    // </ScrollView>
     <View style={{height: '100%'}}>
-      {/* <TouchableOpacity onPress={() => handleOnpress(item.id)}>
-                <Image source={item.source} style={styles.image} />
-              </TouchableOpacity> */}
       <Text
         style={{
           flex: 1,
@@ -94,6 +57,5 @@ const styles = StyleSheet.create({
   },
   image: {
     margin: 2,
-    // flex: 1,
   },
 });

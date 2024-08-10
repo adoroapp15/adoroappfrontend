@@ -7,7 +7,6 @@ import {useTheme} from '@react-navigation/native';
 import Size from '../common/components/Size';
 
 const Following = props => {
-  console.log('following', props.following);
   const [following, setFollowing] = useState([]);
   const {colors} = useTheme();
   useEffect(() => {
@@ -26,7 +25,6 @@ const Following = props => {
     if (res.data.status === 200) {
       setFollowing(res.data.data);
     }
-    console.log('response isss', res);
   };
   return (
     <View style={{backgroundColor: colors.color_PageColor, height:'100%'}}>
@@ -48,14 +46,13 @@ const Following = props => {
                     uri: `https://www.adoro.social/UserProfilePic/${followerData.ProfileDp}`,
                   }
                 : require('../assets/image.png')
-            } // Default image from assets folder
+            }
           />
           <View style={{flexDirection: 'column', alignSelf:'center'}}>
             <Text
               style={{
                 color: colors.color_TextNormal,
                 fontSize: Size.tabtext,
-                // fontWeight: '600',
                 fontFamily: FontFamily.semibold,
               }}>
               {followerData.fullName}

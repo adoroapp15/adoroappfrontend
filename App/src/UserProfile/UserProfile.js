@@ -54,8 +54,6 @@ const UserProfile = ({navigation, route}) => {
   const [isPlaying, setIsPlaying] = React.useState({});
   const onRefresh = () => {
     setRefreshing(true);
-    // Perform data fetching or any other asynchronous operation
-    // Once the operation is complete, set refreshing to false
     handleRefresh();
     setRefreshing(false);
   };
@@ -70,13 +68,10 @@ const UserProfile = ({navigation, route}) => {
   const flatListRef = React.useRef(null);
 
   useEffect(() => {
-    // ... existing useEffect code
 
     if (route.params?.scrollToTop) {
-      // Scroll to the top of the FlatList when scrollToTop parameter is true
       flatListRef.current.scrollToOffset({animated: true, offset: 0});
       setScrollToTop(false);
-      console.log('pp');
       navigation.setParams({scrollToTop: false});
     }
   }, [route.params?.scrollToTop]);
@@ -252,7 +247,6 @@ const UserProfile = ({navigation, route}) => {
             getfollowers(response.data.data.userName);
             getfollowing(response.data.data.Id);
           } else {
-            console.log('Profile Pic not Found');
             setProfile(null);
           }
 
@@ -270,7 +264,6 @@ const UserProfile = ({navigation, route}) => {
           }
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
       }
     };
 
@@ -278,7 +271,6 @@ const UserProfile = ({navigation, route}) => {
   }, []);
 
   const getfollowers = async Id => {
-    console.log('followers');
     try {
       const res = await axios.get(`${config.production}/app/user/getfollow`, {
         params: {Id},
@@ -287,7 +279,6 @@ const UserProfile = ({navigation, route}) => {
       if (res.status == 200) {
         const follower = res.data.followers;
         setFollowing(res.data.followers);
-        console.log('userrr name and ', Id);
       }
     } catch (err) {
       console.log('Facing the errors ', err);
@@ -295,7 +286,6 @@ const UserProfile = ({navigation, route}) => {
   };
 
   const getfollowing = async Id => {
-    console.log('Followings', Id);
     try {
       const res = await axios.get(
         `${config.production}/app/user/getfollowers`,
@@ -370,7 +360,6 @@ const UserProfile = ({navigation, route}) => {
           name: 'profile.jpg',
         });
         formData.append('mobileNo', user.mobileNo);
-        console.log('formm dataaaa', formData);
         try {
           const response = await axios.post(
             `${config.production}/app/user/updatewallpaper`,
@@ -383,7 +372,6 @@ const UserProfile = ({navigation, route}) => {
             },
           );
 
-          console.log('response is', response);
           if (response.data.status === 200) {
             console.log('Wallpaper updated successfully');
           } else {
@@ -416,7 +404,6 @@ const UserProfile = ({navigation, route}) => {
           params: {user: parsedUser.userName},
         },
       );
-      console.log(res);
       if (res.status == 200) {
         // Alert.alert(JSON.stringify(res.data.templates.length));
         setData(res.data.templates);
@@ -426,8 +413,6 @@ const UserProfile = ({navigation, route}) => {
       console.log('Getting Error');
     }
   };
-  console.log('my templatesss iss', data);
-  console.log('jsjsxopsp[', posts, posts.length);
   return (
     <View style={{backgroundColor: colors.color_PageColor}}>
       <FlatList
@@ -783,13 +768,6 @@ const UserProfile = ({navigation, route}) => {
                     })
                   }>
                   <View
-                  // style={{
-                  //   flex: 1,
-                  //   flexDirection: 'column',
-                  //   alignItems: 'center',
-                  //   alignSelf: 'flex-end',
-                  //   marginHorizontal: 10,
-                  // }}
                   >
                     <Text
                       style={{
@@ -801,7 +779,6 @@ const UserProfile = ({navigation, route}) => {
                     <Text
                       style={{
                         color: colors.color_TextNormal,
-                        // fontWeight: '800',
                         alignSelf: 'center',
                         fontFamily: FontFamily.semibold,
                       }}>
@@ -841,35 +818,16 @@ const UserProfile = ({navigation, route}) => {
                     marginHorizontal: 5,
                   }}
                 />
-                {/* <View
-                style={{
-                  // flex: 1,
-                  height: '100%',
-                  // marginHorizontal: 12,
-                  marginTop: 10,
-                  borderRadius: 0,
-                  // marginTop: -130,
-                  backgroundColor: colors.color_TabBarColor,
-                }}>
-                <TabView
-                  navigationState={{index, routes}}
-                  renderScene={props => renderScene({...props, posts})}
-                  initialLayout={{width: layout.width}}
-                  onIndexChange={setIndex}
-                  renderTabBar={renderTabBar}
-                />
-              </View> */}
               </View>
             </View>
           </>
         )}
         refreshControl={
-          // Add this refreshControl prop
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={['#242760']} // Set the colors of the refresh indicator
-            progressBackgroundColor="#ffffff" // Set the background color of the refresh indicator
+            colors={['#242760']}
+            progressBackgroundColor="#ffffff"
           />
         }
       />
@@ -881,10 +839,9 @@ const UserProfile = ({navigation, route}) => {
         <View style={styles.modalContainer}>
           <TouchableOpacity
             style={styles.overlay}
-            activeOpacity={1} // This ensures the touch doesn't propagate to components behind the overlay
+            activeOpacity={1} 
           >
             <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
-              {/* <Text style={styles.closeText}>Close</Text> */}
               <CancelIcon color={'white'} />
             </TouchableOpacity>
             <View style={styles.imageContainer}>
@@ -947,16 +904,14 @@ const styles = StyleSheet.create({
       Math.min(
         Dimensions.get('window').width,
         Dimensions.get('window').height,
-      ) * 0.4, // Make the image circular
+      ) * 0.4, 
   },
   backgroundContainer: {
     position: 'relative',
   },
   chooseButtonContainer: {
     position: 'absolute',
-    // bottom: 10,
     width: '100%',
-    // alignSelf: 'center',
   },
   chooseButtonText: {
     height: 30,

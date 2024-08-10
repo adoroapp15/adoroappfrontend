@@ -1,4 +1,4 @@
-// import React, {useState, useEffect} from 'react';
+// import React, {useState, useEffect, useRef} from 'react';
 // import {
 //   StyleSheet,
 //   Text,
@@ -32,22 +32,47 @@
 //   const [userName, setUserName] = useState('');
 //   const [replyingToComment, setReplyingToComment] = useState(null);
 //   const [chat, setChat] = useState('');
-
 //   const [submittedReply, setSubmittedReply] = useState('');
-//   const [isTextInputEmpty, setIsTextInputEmpty] = useState(true); // State to track whether TextInput is empty
+//   const [isTextInputEmpty, setIsTextInputEmpty] = useState(true);
+//   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
-//   // Handler to update isTextInputEmpty state when TextInput changes
 //   const handleTextInputChange = text => {
-//     setChat(text); // Update chat state with the text
-//     setIsTextInputEmpty(text.trim().length === 0); // Check if TextInput is empty
+//     setChat(text);
+//     setIsTextInputEmpty(text.trim().length === 0);
 //   };
+
+//   const textInputRef = useRef(null);
+
+//   useEffect(() => {
+//     if (replyTextInput && !isKeyboardOpen) {
+//       textInputRef.current.focus();
+//     }
+//   }, [replyTextInput, isKeyboardOpen]);
+
 //   const replyTo = item => {
 //     setReplyingToComment(item);
 //     setReplyTextInput(true);
 //     setUserName(item?.userName);
-//     // Populate the text input with "Replying to @username"
 //     setChat(`Replying to @${userName}`);
 //   };
+
+//   const keyboardDidShow = () => {
+//     setIsKeyboardOpen(true);
+//   };
+
+//   const keyboardDidHide = () => {
+//     setIsKeyboardOpen(false);
+//   };
+
+//   useEffect(() => {
+//     Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+//     Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+
+//     return () => {
+//       Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
+//       Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
+//     };
+//   }, []);
 
 //   const postcomment = async commentText => {
 //     try {
@@ -58,7 +83,7 @@
 //           post_Id: Id,
 //           user,
 //           profile,
-//           parent_id: replyingToComment, // Include parent_id if replying to a comment
+//           parent_id: replyingToComment,
 //         },
 //       );
 
@@ -67,7 +92,7 @@
 //         setChat('');
 //         setIsTextInputEmpty(true);
 //         if (replyingToComment) {
-//           setSubmittedReply(commentText); // Set submitted reply to show below replied comment
+//           setSubmittedReply(commentText);
 //         }
 //       }
 //     } catch (error) {
@@ -92,13 +117,7 @@
 //   useEffect(() => {
 //     getcomment();
 //   }, []);
-//   const textInputRef = React.useRef(null);
 
-//   useEffect(() => {
-//     if (replyTextInput) {
-//       textInputRef.current.focus();
-//     }
-//   }, [replyTextInput]);
 //   const CommentItem = ({item}) => {
 //     const [heart, setHeart] = useState(false);
 //     const [profile, setProfile] = useState(null);
@@ -156,14 +175,12 @@
 //                     alignSelf: 'center',
 //                     flex: 1,
 //                     fontSize: Size.title,
-//                     // fontWeight: '600',
 //                     fontFamily: FontFamily.semibold,
 //                   }}>
 //                   {'@' + item.userName}
 //                 </Text>
 //                 <Text
 //                   style={{
-//                     // flex: 1,
 //                     alignSelf: 'center',
 //                     fontFamily: FontFamily.medium,
 //                     fontSize: Size.subtitle,
@@ -185,25 +202,23 @@
 //               {item.text}
 //             </Text>
 //             <View style={{flexDirection: 'row', gap: 20}}>
-//               <View
-//                 style={{
-//                   left: 10,
-//                   flexDirection: 'row',
-//                   backgroundColor: 'white',
-//                   borderRadius: 6,
-//                   width: 60,
-//                   height: 35,
-//                   justifyContent: 'center',
-//                   alignItems: 'center',
-//                   // bottom: 20,
-//                   marginTop: 10,
-//                 }}>
-//                 <TouchableOpacity onPress={handleHeartPress}>
+//               <TouchableOpacity onPress={handleHeartPress}>
+//                 <View
+//                   style={{
+//                     left: 10,
+//                     flexDirection: 'row',
+//                     backgroundColor: 'white',
+//                     borderRadius: 6,
+//                     width: 60,
+//                     height: 35,
+//                     justifyContent: 'center',
+//                     alignItems: 'center',
+//                     marginTop: 10,
+//                   }}>
 //                   <Image
 //                     style={{
 //                       height: 12,
 //                       width: 12,
-//                       // margin: 8,
 //                       marginRight: 8,
 //                       borderColor: heart ? 'red' : '#6F7F92',
 //                     }}
@@ -213,16 +228,17 @@
 //                         : require('../assets/Heart.png')
 //                     }
 //                   />
-//                 </TouchableOpacity>
-//                 <Text
-//                   style={{
-//                     color: colors.color_commentText,
-//                     fontFamily: FontFamily.medium,
-//                     fontSize: Size.subtitle,
-//                   }}>
-//                   {counter}
-//                 </Text>
-//               </View>
+//                   <Text
+//                     style={{
+//                       color: colors.color_commentText,
+//                       fontFamily: FontFamily.medium,
+//                       fontSize: Size.subtitle,
+//                     }}>
+//                     {counter}
+//                   </Text>
+//                 </View>
+//               </TouchableOpacity>
+
 //               <View style={{flex: 1}}>
 //                 <TouchableOpacity
 //                   style={{
@@ -232,7 +248,6 @@
 //                     width: 60,
 //                     height: 35,
 //                     borderRadius: 6,
-//                     // bottom: 20,
 //                     marginTop: 10,
 //                   }}
 //                   onPress={() => {
@@ -241,8 +256,6 @@
 //                   }}>
 //                   <Text
 //                     style={{
-//                       // alignSelf: 'center',
-//                       // top: 3,
 //                       color: colors.color_commentText,
 //                       fontFamily: FontFamily.medium,
 //                     }}>
@@ -255,19 +268,12 @@
 //                       <View
 //                         style={{
 //                           flexDirection: 'column',
-//                           // backgroundColor: 'blue',
-//                           // marginBottom: 20,
-//                           // width: 'auto',
-//                           // marginRight: 30,
 //                         }}>
 //                         <View style={{flexDirection: 'column'}}>
 //                           <View
 //                             key={reply.reply}
 //                             style={{
 //                               flexDirection: 'row',
-//                               // margin: 15,
-//                               // width: '100%',
-//                               // backgroundColor: 'yellow',
 //                             }}>
 //                             <Image
 //                               style={{
@@ -292,14 +298,12 @@
 //                                 alignSelf: 'center',
 //                                 flex: 1,
 //                                 fontSize: Size.title,
-//                                 // fontWeight: '600',
 //                                 fontFamily: FontFamily.semibold,
 //                               }}>
 //                               {'@' + reply.userName}
 //                             </Text>
 //                             <Text
 //                               style={{
-//                                 // flex: 1,
 //                                 alignSelf: 'center',
 //                                 fontFamily: FontFamily.medium,
 //                                 fontSize: Size.subtitle,
@@ -309,160 +313,17 @@
 //                               }}>
 //                               1 min ago
 //                             </Text>
-//                             {/* <Text
-//                             style={{
-//                               top: 10,
-//                               // right: 50,
-//                               fontFamily: FontFamily.semibold,
-//                               fontSize: Size.subtitle,
-//                               color: colors.color_commentText,
-//                             }}>
-//                             {reply.text}
-//                           </Text> */}
-//                             {/* <View
-//                             style={{
-//                               flexDirection: 'column',
-//                               backgroundColor: 'green',
-//                               width: '70%',
-//                             }}>
-//                             <View style={{flexDirection: 'row'}}>
-//                               <Image
-//                                 style={{
-//                                   width: 40,
-//                                   height: 40,
-//                                   margin: 10,
-//                                   borderRadius: 20,
-//                                   justifyContent: 'flex-start',
-//                                 }}
-//                                 source={{
-//                                   uri: `https://www.adoro.social/UserProfilePic/${item.profile}`,
-//                                 }}
-//                                 onError={() =>
-//                                   console.log('Error loading image')
-//                                 }
-//                               />
-//                               <Text
-//                                 style={{
-//                                   color: colors.color_TextNormal,
-//                                   alignSelf: 'center',
-//                                   // flex: 1,
-//                                   fontSize: Size.title,
-//                                   // fontWeight: '600',
-//                                   fontFamily: FontFamily.semibold,
-//                                 }}>
-//                                 {'@' + reply.userName}
-//                               </Text>
-//                               <Text
-//                                 style={{
-//                                   // flex: 1,
-//                                   alignSelf: 'center',
-//                                   fontFamily: FontFamily.medium,
-//                                   fontSize: Size.subtitle,
-//                                   justifyContent: 'flex-end',
-//                                   marginRight: 10,
-//                                   color: colors.color_TextNormal,
-//                                 }}>
-//                                 1 min ago
-//                               </Text>
-//                             </View>
-//                             <Text
-//                               style={{
-//                                 top: 10,
-//                                 // right: 50,
-//                                 fontFamily: FontFamily.semibold,
-//                                 fontSize: Size.subtitle,
-//                                 color: colors.color_commentText,
-//                               }}>
-//                               {reply.text}
-//                             </Text>
-//                           </View> */}
 //                           </View>
-//                           {/* <Text
+//                         </View>
+//                         <Text
 //                           style={{
-//                             // top: 10,
-//                             // right: 50,
+//                             left: 10,
 //                             fontFamily: FontFamily.semibold,
 //                             fontSize: Size.subtitle,
 //                             color: colors.color_commentText,
 //                           }}>
 //                           {reply.text}
-//                         </Text> */}
-//                           <Text
-//                             style={{
-//                               // top: 10,
-//                               // right: 50,
-//                               left: 10,
-//                               fontFamily: FontFamily.semibold,
-//                               fontSize: Size.subtitle,
-//                               color: colors.color_commentText,
-//                             }}>
-//                             {reply.text}
-//                           </Text>
-//                         </View>
-//                         <View style={{flexDirection: 'row', gap: 30}}>
-//                           <View
-//                             style={{
-//                               left: 10,
-//                               flexDirection: 'row',
-//                               backgroundColor: 'white',
-//                               borderRadius: 6,
-//                               width: 60,
-//                               height: 35,
-//                               justifyContent: 'center',
-//                               alignItems: 'center',
-//                               // bottom: 20,
-//                               marginTop: 10,
-//                             }}>
-//                             <TouchableOpacity onPress={handleHeartPress1}>
-//                               <Image
-//                                 style={{
-//                                   height: 12,
-//                                   width: 12,
-//                                   marginRight: 8,
-//                                   borderColor: heart1 ? 'red' : '#6F7F92',
-//                                 }}
-//                                 source={
-//                                   heart1
-//                                     ? require('../assets/Heart1.png')
-//                                     : require('../assets/Heart.png')
-//                                 }
-//                               />
-//                             </TouchableOpacity>
-//                             <Text
-//                               style={{
-//                                 color: colors.color_commentText,
-//                                 fontFamily: FontFamily.medium,
-//                                 fontSize: Size.subtitle,
-//                               }}>
-//                               {counter1}
-//                             </Text>
-//                           </View>
-//                           <TouchableOpacity
-//                             style={{
-//                               backgroundColor: 'white',
-//                               justifyContent: 'center',
-//                               alignItems: 'center',
-//                               width: 60,
-//                               height: 35,
-//                               borderRadius: 6,
-//                               marginTop: 10,
-//                               // bottom: 20,
-//                               // top: 10,
-//                             }}
-//                             onPress={() => {
-//                               replyTo(item.Id);
-//                               setUserName(item?.userName);
-//                             }}>
-//                             <Text
-//                               style={{
-//                                 // alignSelf: 'center',
-//                                 // top: 3,
-//                                 fontFamily: FontFamily.medium,
-//                               }}>
-//                               Reply
-//                             </Text>
-//                           </TouchableOpacity>
-//                         </View>
+//                         </Text>
 //                       </View>
 //                     );
 //                   }
@@ -524,7 +385,6 @@
 //               onPress={() => {
 //                 setReplyingToComment(null);
 //                 setReplyTextInput(false);
-//                 // Clear the text input when canceling reply
 //                 setChat('');
 //               }}>
 //               <CancelIcon color={colors.arrow} />
@@ -568,7 +428,6 @@
 //                 disabled={isTextInputEmpty}>
 //                 <Text
 //                   style={{
-//                     // color: colors.color_PostTextColor,
 //                     color: isTextInputEmpty
 //                       ? colors.color_DisabledText
 //                       : colors.color_PostTextColor,
@@ -616,7 +475,7 @@
 // export default Comment;
 
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -632,71 +491,66 @@ import {
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
-import { config } from '../config';
+import {config} from '../config';
 import FontFamily from '../common/components/FontFamily';
-import { useTheme } from '@react-navigation/native';
+import {useTheme} from '@react-navigation/native';
 import useStore from '../store';
 import Size from '../common/components/Size';
 import CancelIcon from '../assets/svg/CancelIcon';
 import BackArrow from '../assets/svg/BackArrow';
-
-const Comment = ({ navigation, route }) => {
-  const { Id, user, profile } = route.params;
-  const { dark, toggleTheme } = useStore();
-  const { colors } = useTheme();
-
+ 
+const Comment = ({navigation, route}) => {
+  const {Id, user, profile} = route.params;
+  const {dark, toggleTheme} = useStore();
+  const {colors} = useTheme();
+ 
   const [comment, setComment] = useState([]);
   const [replyTextInput, setReplyTextInput] = useState(false);
   const [userName, setUserName] = useState('');
   const [replyingToComment, setReplyingToComment] = useState(null);
   const [chat, setChat] = useState('');
   const [submittedReply, setSubmittedReply] = useState('');
-  const [isTextInputEmpty, setIsTextInputEmpty] = useState(true); // State to track whether TextInput is empty
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false); // State to track whether keyboard is open
-
-  // Handler to update isTextInputEmpty state when TextInput changes
+  const [isTextInputEmpty, setIsTextInputEmpty] = useState(true);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+ 
   const handleTextInputChange = text => {
-    setChat(text); // Update chat state with the text
-    setIsTextInputEmpty(text.trim().length === 0); // Check if TextInput is empty
+    setChat(text);
+    setIsTextInputEmpty(text.trim().length === 0);
   };
-
+ 
   const textInputRef = useRef(null);
-
+ 
   useEffect(() => {
     if (replyTextInput && !isKeyboardOpen) {
       textInputRef.current.focus();
     }
   }, [replyTextInput, isKeyboardOpen]);
-
+ 
   const replyTo = item => {
     setReplyingToComment(item);
     setReplyTextInput(true);
     setUserName(item?.userName);
-    // Populate the text input with "Replying to @username"
     setChat(`Replying to @${userName}`);
   };
-
-  // Function to handle keyboard opening
+ 
   const keyboardDidShow = () => {
     setIsKeyboardOpen(true);
   };
-
-  // Function to handle keyboard closing
+ 
   const keyboardDidHide = () => {
     setIsKeyboardOpen(false);
   };
-
+ 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', keyboardDidShow);
     Keyboard.addListener('keyboardDidHide', keyboardDidHide);
-
-    // Clean up event listeners
+ 
     return () => {
       Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
       Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
     };
   }, []);
-
+ 
   const postcomment = async commentText => {
     try {
       const res = await axios.post(
@@ -706,29 +560,29 @@ const Comment = ({ navigation, route }) => {
           post_Id: Id,
           user,
           profile,
-          parent_id: replyingToComment, // Include parent_id if replying to a comment
+          parent_id: replyingToComment,
         },
       );
-
+ 
       if (res.status === 200) {
         getcomment();
         setChat('');
         setIsTextInputEmpty(true);
         if (replyingToComment) {
-          setSubmittedReply(commentText); // Set submitted reply to show below replied comment
+          setSubmittedReply(commentText);
         }
       }
     } catch (error) {
       console.error('Error posting comment:', error);
     }
   };
-
+ 
   const getcomment = async () => {
     try {
       const res = await axios.get(
         `${config.production}/app/user/getallcomment`,
         {
-          params: { post_id: Id },
+          params: {post_id: Id},
         },
       );
       setComment(res.data.comments);
@@ -736,12 +590,12 @@ const Comment = ({ navigation, route }) => {
       console.error('Error fetching comments:', error);
     }
   };
-
+ 
   useEffect(() => {
     getcomment();
   }, []);
-
-  const CommentItem = ({ item }) => {
+ 
+  const CommentItem = ({item}) => {
     const [heart, setHeart] = useState(false);
     const [profile, setProfile] = useState(null);
     const [counter, setCounter] = useState(0);
@@ -749,7 +603,7 @@ const Comment = ({ navigation, route }) => {
     const [reply, setReply] = useState('');
     const [heart1, setHeart1] = useState(false);
     const [counter1, setCounter1] = useState(0);
-
+ 
     const handleHeartPress = () => {
       setHeart(!heart);
       setCounter(heart ? counter - 1 : counter + 1);
@@ -761,20 +615,62 @@ const Comment = ({ navigation, route }) => {
     const handleReplyPress = () => {
       setShowReplyInput(true);
     };
-
+ 
+    const getTimeDifference = postDateTime => {
+      // Split the date-time string into date and time parts
+      const [datePart, timePart] = postDateTime.split('_');
+      // Split the date part into year, month, and day
+      const [year, month, day] = datePart.split('-').map(Number);
+      // Split the time part into hours, minutes, and seconds
+      const [hoursPart, minutesPart, secondsPart] = timePart
+        .split(':')
+        .map(Number);
+      // Create a Date object using the extracted date and time components
+      const postDate = new Date(
+        year,
+        month - 1,
+        day,
+        hoursPart,
+        minutesPart,
+        secondsPart,
+      );
+ 
+      // Get current date and time in IST
+      const currentDate = new Date();
+      const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
+      const currentIST = new Date(currentDate.getTime() + istOffset);
+ 
+      const differenceInSeconds = Math.floor((currentIST - postDate) / 1000);
+      const days = Math.floor(differenceInSeconds / (24 * 3600));
+      const remainingHours = Math.floor(
+        (differenceInSeconds % (24 * 3600)) / 3600,
+      );
+      const remainingMinutes = Math.floor((differenceInSeconds % 3600) / 60);
+      const remainingSeconds = differenceInSeconds % 60;
+      if (days > 0) {
+        return `${days} day${days > 1 ? 's' : ''} ago`;
+      } else if (remainingHours > 0) {
+        return `${remainingHours} hour${remainingHours > 1 ? 's' : ''} ago`;
+      } else if (remainingMinutes > 0) {
+        return `${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''} ago`;
+      } else {
+        return `${remainingSeconds} second${remainingSeconds > 1 ? 's' : ''} ago`;
+      }
+    };
+ 
     return (
       <>
-        <View style={{ marginBottom: 45 }}>
+        <View style={{marginBottom: 45}}>
           <View key={item.commentId}>
             <TouchableOpacity
-              style={{ flex: 1 }}
+              style={{flex: 1}}
               onPress={() => {
                 navigation.navigate('Profile', {
                   mobileNo: item.mobileNo,
                   profile: item.profile,
                 });
               }}>
-              <View style={{ flexDirection: 'row', flex: 1 }}>
+              <View style={{flexDirection: 'row', flex: 1}}>
                 <Image
                   style={{
                     width: 40,
@@ -811,7 +707,7 @@ const Comment = ({ navigation, route }) => {
                     marginRight: 10,
                     color: colors.color_TextNormal,
                   }}>
-                  1 min ago
+                 {getTimeDifference(item.Date)}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -824,20 +720,20 @@ const Comment = ({ navigation, route }) => {
               }}>
               {item.text}
             </Text>
-            <View style={{ flexDirection: 'row', gap: 20 }}>
-              <View
-                style={{
-                  left: 10,
-                  flexDirection: 'row',
-                  backgroundColor: 'white',
-                  borderRadius: 6,
-                  width: 60,
-                  height: 35,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 10,
-                }}>
-                <TouchableOpacity onPress={handleHeartPress}>
+            <View style={{flexDirection: 'row', gap: 20}}>
+              <TouchableOpacity onPress={handleHeartPress}>
+                <View
+                  style={{
+                    left: 10,
+                    flexDirection: 'row',
+                    backgroundColor: 'white',
+                    borderRadius: 6,
+                    width: 60,
+                    height: 35,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 10,
+                  }}>
                   <Image
                     style={{
                       height: 12,
@@ -851,17 +747,18 @@ const Comment = ({ navigation, route }) => {
                         : require('../assets/Heart.png')
                     }
                   />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    color: colors.color_commentText,
-                    fontFamily: FontFamily.medium,
-                    fontSize: Size.subtitle,
-                  }}>
-                  {counter}
-                </Text>
-              </View>
-              <View style={{ flex: 1 }}>
+                  <Text
+                    style={{
+                      color: colors.color_commentText,
+                      fontFamily: FontFamily.medium,
+                      fontSize: Size.subtitle,
+                    }}>
+                    {counter}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+ 
+              <View style={{flex: 1}}>
                 <TouchableOpacity
                   style={{
                     backgroundColor: 'white',
@@ -891,7 +788,7 @@ const Comment = ({ navigation, route }) => {
                         style={{
                           flexDirection: 'column',
                         }}>
-                        <View style={{ flexDirection: 'column' }}>
+                        <View style={{flexDirection: 'column'}}>
                           <View
                             key={reply.reply}
                             style={{
@@ -957,7 +854,7 @@ const Comment = ({ navigation, route }) => {
       </>
     );
   };
-
+ 
   return (
     <>
       <View
@@ -968,7 +865,7 @@ const Comment = ({ navigation, route }) => {
           height: 56,
         }}>
         <TouchableOpacity
-          style={{ flex: 0.5, paddingLeft: 10, alignSelf: 'center' }}
+          style={{flex: 0.5, paddingLeft: 10, alignSelf: 'center'}}
           onPress={() => navigation.navigate('HomePage')}>
           <BackArrow color={colors.arrow} />
         </TouchableOpacity>
@@ -982,11 +879,11 @@ const Comment = ({ navigation, route }) => {
           Comment
         </Text>
       </View>
-      <View style={{ flex: 1, backgroundColor: colors.color_PageColor }}>
-        <ScrollView style={{ flex: 1 }}>
+      <View style={{flex: 1, backgroundColor: colors.color_PageColor}}>
+        <ScrollView style={{flex: 1}}>
           <FlatList
             data={comment?.filter(item => item.reply === null)}
-            renderItem={({ item }) => <CommentItem item={item} />}
+            renderItem={({item}) => <CommentItem item={item} />}
             keyExtractor={item => item.Id.toString()}
           />
         </ScrollView>
@@ -1007,7 +904,6 @@ const Comment = ({ navigation, route }) => {
               onPress={() => {
                 setReplyingToComment(null);
                 setReplyTextInput(false);
-                // Clear the text input when canceling reply
                 setChat('');
               }}>
               <CancelIcon color={colors.arrow} />
@@ -1067,7 +963,7 @@ const Comment = ({ navigation, route }) => {
     </>
   );
 };
-
+ 
 const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
@@ -1094,5 +990,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
-
+ 
 export default Comment;
+ 

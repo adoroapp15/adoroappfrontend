@@ -24,7 +24,6 @@ const OTP = ({route, navigation}) => {
   const [action, setAction] = useState('');
   const [countdown, setCountdown] = useState(60);
   const [otp, setOtp] = useState('');
-  console.log('params sssssss', route.params);
  
   useEffect(() => {
     let interval;
@@ -51,7 +50,6 @@ const OTP = ({route, navigation}) => {
     try {
       await AsyncStorage.setItem('token', token);
       await AsyncStorage.setItem('user', JSON.stringify(user));
-      console.log('Token stored successfully');
     } catch (error) {
       console.error('Error storing token:', error);
     }
@@ -59,7 +57,7 @@ const OTP = ({route, navigation}) => {
  
   const restartTimer = useCallback(() => {
     setOtp('');
-    setCountdown(60); // Reset countdown instead of timer
+    setCountdown(60);
     setTimerActive(true);
   }, []);
  
@@ -78,27 +76,11 @@ const OTP = ({route, navigation}) => {
   const handleDone = async () => {
     let currentAction = '';
     if (userName === '' || fullName === '') {
-      console.log('Action is validateuser');
       currentAction = 'validateuser';
     } else {
-      console.log('Action is validatephone');
       currentAction = 'validatephone';
     }
     try {
-      console.log(
-        'Action is',
-        currentAction,
-        mobileNo,
-        otp,
-        userName,
-        fullName,
-        referral,
-        instaUsername
-      );
-      // 9899711138 3771 undefined d Sushmaa
-      // const response = await axios.post(
-      // `http://10.0.2.2:8000/app/user/${currentAction}`,
- 
       const response = await axios.post(
         `${config.production}/app/user/${currentAction}`,
         {
@@ -110,16 +92,13 @@ const OTP = ({route, navigation}) => {
           instaUsername
         },
       );
-      console.log('response iss ', response.data);
       if (response.data.status == 200) {
         const token = response.data.token;
         const user = response.data.data;
-        console.log('OTP Validated Successfully', token);
         storeToken(token, user);
         navigation.navigate('OTPSubmitScreen', currentAction);
       } else {
         Alert.alert(response.data.msg);
-        console.log('OTP Validation Failed');
       }
     } catch (error) {
       console.error('API Error:', error);
@@ -134,7 +113,6 @@ const OTP = ({route, navigation}) => {
     } else {
       currentAction = 'generateotp';
     }
-    console.log('ffffffff', mobileNo, otp, userName, fullName, referral);
  
     try {
       const response = await axios.post(
@@ -152,12 +130,10 @@ const OTP = ({route, navigation}) => {
       if (response.data.status) {
         showSuccessImage();
         setTimeout(() => {
-          restartTimer(); // Navigate after 2 seconds
+          restartTimer();
         }, 2000);
-        console.log('OTP Validated Successfully');
       } else {
         Alert.alert(response.data.msg);
-        console.log('OTP Validation Failed');
       }
     } catch (error) {
       console.error('API Error:', error);
@@ -198,21 +174,8 @@ const OTP = ({route, navigation}) => {
         codeInputHighlightStyle={styles.underlineStyleHighLighted}
         onCodeChanged={handleOTPChange}
         selectionColor={colors.color_TextNormal}
-        // onCodeFilled={handleSubmit}
         editable={true}
       />
-      {/* <CountDown
-        style={{marginTop: -50}}
-        until={timer}
-        onFinish={handleTimerFinish}
-        size={15}
-        digitStyle={{
-          backgroundColor: 'transparent',
-        }}
-        digitTxtStyle={{color: '#1CC625'}}
-        timeToShow={['M', 'S']}
-        timeLabels={{m: '', s: ''}}
-      /> */}
       <Text
         style={{
           marginTop: -50,
@@ -285,7 +248,6 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 20,
     fontFamily: FontFamily.bold,
-    // fontWeight: '600',
     lineHeight: 26,
     wordWrap: 'break-word',
     alignSelf: 'center',
@@ -295,8 +257,6 @@ const styles = StyleSheet.create({
     color: '#6F7F92',
     fontSize: 14,
     fontFamily: FontFamily.bold,
-    // fontWeight: '500',
-    // textTransform: 'capitalize',
     lineHeight: 20,
     wordWrap: 'break-word',
     alignSelf: 'center',

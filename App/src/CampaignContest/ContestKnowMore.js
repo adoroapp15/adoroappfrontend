@@ -26,7 +26,6 @@ const ContestKnowMore = ({navigation, route}) => {
         console.log('Image Picker error:', response.eror);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
-        console.log('image picker', imageUri);
         setProfile(imageUri);
         navigation.navigate('Contest Preview', {
           imageUri,
@@ -101,7 +100,6 @@ const ContestKnowMore = ({navigation, route}) => {
           <View style={{flexDirection: 'row'}}>
             <Image
               style={{height: 50, width: 50, borderRadius: 99}}
-              // size={50}
               source={{
                 uri: `https://www.adoro.social/Contest/${campaign.fileName}`,
               }}

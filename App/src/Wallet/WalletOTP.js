@@ -38,9 +38,7 @@ const WalletOTP = ({navigation, route}) => {
   }, []);
 
   const handleVerify = async () => {
-    console.log(inputOTP, otp);
     if (inputOTP == otp) {
-      console.log('Verified Otp Successfully');
 
       if (
         user.bankName !== '' &&
@@ -64,12 +62,10 @@ const WalletOTP = ({navigation, route}) => {
         Alert.alert('Please Fill Bank Details first');
       }
 
-      //  navigation.navigate('NextScreen');
     } else {
       Alert.alert('Invalid OTP', 'Please enter the correct OTP.');
     }
   };
-  console.log('otp isss,', otp, user);
   return (
     <View style={{height: '100%', backgroundColor: colors.color_PageColor}}>
       <Text
@@ -90,13 +86,11 @@ const WalletOTP = ({navigation, route}) => {
           fontSize: 20,
           alignSelf: 'center',
           fontFamily: FontFamily.semibold,
-          // fontWeight: '500',
           top: 100,
         }}>
         Enter the OTP
       </Text>
       <TextInput
-        // style={styles.input}
         style={{
           height: 100,
           width: 300,
@@ -106,18 +100,13 @@ const WalletOTP = ({navigation, route}) => {
           textAlign: 'center',
           fontSize: 20,
           borderWidth: 1,
-          // borderColor: '#818181',
-          // backgroundColor: '#ECECEC',
           borderRadius: 27,
           paddingRight: 10,
           fontWeight: '800',
           lineHeight: 20.8,
           borderColor: colors.color_BorderColor,
           backgroundColor: colors.color_CardBgColor,
-          // paddingLeft: 10,
         }}
-        //onChangeText={onChangeNumber}
-        //value={number}
         value={inputOTP}
         onChangeText={setInputOTP}
         placeholder="******"
@@ -128,7 +117,6 @@ const WalletOTP = ({navigation, route}) => {
       <TouchableOpacity
         style={{margin: 140, marginTop: 150}}
         onPress={handleVerify}
-        // onPress={() => Alert.alert('No Money Available to Withdraw')}
       >
         <LinearGradient
           colors={[
@@ -139,7 +127,6 @@ const WalletOTP = ({navigation, route}) => {
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
           style={{
-            // bottom: 25,
             paddingLeft: 15,
             paddingRight: 15,
             paddingTop: 10,
@@ -158,21 +145,12 @@ const WalletOTP = ({navigation, route}) => {
           </Text>
         </LinearGradient>
       </TouchableOpacity>
-      {/* <Image
-        style={{alignSelf: 'center'}}
-        source={require('../assets/Ellipse.png')}
-      />
-      <Image
-        style={styles.overlappingImage}
-        source={require('../assets/Frame.png')}
-      /> */}
       <View
         style={{
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
           marginBottom: -200,
-          // top: 80,
         }}>
         <LinearGradient
           colors={[
@@ -199,7 +177,6 @@ const WalletOTP = ({navigation, route}) => {
             }}>
             adoro
           </Text>
-          {/* Your content goes here */}
         </LinearGradient>
       </View>
     </View>
@@ -226,10 +203,8 @@ const styles = StyleSheet.create({
   },
   overlappingImage: {
     position: 'absolute',
-    bottom: 100, // Adjust the top position as needed
-    left: 110, // Adjust the left position as needed
-    //width: 100, // Adjust the width as needed
-    //height: 100, // Adjust the height as needed
+    bottom: 100,
+    left: 110,
     resizeMode: 'cover',
   },
 });

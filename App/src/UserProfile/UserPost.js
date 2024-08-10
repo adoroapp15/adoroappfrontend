@@ -84,25 +84,10 @@ const UserPost = ({route}) => {
       </TouchableOpacity>
     </View>
   );
-  // const flatlistRef = React.useRef();
-  // const scrollToIndex = () => {
-  //   console.log('scroll to index called !');
-  //   let index = 3;
-  //   flatlistRef.current.scrollToIndex({animated: true, index: index});
-  // };
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     scrollToIndex();
-  //   }, []),
-  // );
   const flatListRef = React.useRef(null);
   const navigation = useNavigation();
 
   React.useEffect(() => {
-    // Access the params passed during navigation
-    // const indexToScroll = navigation.getParam('indexToScroll', 0);
-    // Scroll the FlatList to the desired index
     if (route.params.indexToScroll !== null && flatListRef.current) {
       flatListRef?.current?.scrollToIndex({
         animated: true,
@@ -119,29 +104,6 @@ const UserPost = ({route}) => {
 
   return (
     <>
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          backgroundColor: colors.color_TabBarColor,
-          zIndex: 1,
-          height: 56,
-        }}>
-        <TouchableOpacity
-          style={{flex: 0.5, paddingLeft: 10, alignSelf: 'center'}}
-          onPress={() => navigation.navigate('User profile')}>
-          <BackArrow
-           color={colors.arrow} />
-        </TouchableOpacity>
-        <Text
-          style={{
-            color: colors.color_TextNormal,
-            fontFamily: FontFamily.semibold,
-            alignSelf: 'center',
-            fontSize: 20,
-          }}>
-          All post
-        </Text>
-      </View> */}
       <View style={{backgroundColor: colors.color_PageColor}}>
         <FlatList
           ref={flatListRef}
@@ -154,218 +116,11 @@ const UserPost = ({route}) => {
               index={index}
               Screen={'User Profile'}
             />
-            // <Card key={index} style={styles.cardBox}>
-            //   <Card.Title
-            //     title={
-            //       <TouchableOpacity
-            //         onPress={() => {
-            //           navigation.navigate('Profile', {
-            //             mobileNo: post.mobileNo,
-            //             profile: post.fileName,
-            //           });
-            //         }}>
-            //         <Text
-            //           style={{
-            //             fontWeight: '500',
-            //             fontSize: 18,
-            //             color: 'black',
-            //             right: 10,
-            //           }}>
-            //           {post.fullName ? post.fullName : ''}
-            //         </Text>
-            //       </TouchableOpacity>
-            //     }
-            //     // subtitle={post.date}
-            //     left={props => (
-            //       <LeftContent
-            //         {...props}
-            //         profile={post.profile}
-            //         mobileNo={post.mobileNo}
-            //       />
-            //     )}
-            //     right={() => (
-            //       <TouchableOpacity
-            //         style={{height: 50}}
-            //         onPress={() => toggleModal(post)}>
-            //         <Image
-            //           style={{top: 10, right: 10}}
-            //           source={require('../assets/cardtitle.png')}
-            //         />
-            //       </TouchableOpacity>
-            //     )}
-            //     rightStyle={{right: 8}}
-            //   />
-            //   <Card.Content>
-            //     <Text variant="titleLarge" style={{color: 'black'}}>
-            //       {post.content}
-            //     </Text>
-            //   </Card.Content>
-            //   {
-            //     post.type === 'image' ? (
-            //       <Image
-            //         source={{
-            //           uri: `https://www.adoro.social/UserPost/${post.fileName}`,
-            //         }}
-            //         style={{
-            //           height: 350, // Set height dynamically
-            //           // margin: 10,
-            //           resizeMode: 'cover', // Use 'cover' to make the image cover the entire container
-            //           width: windowWidth * 0.99, // Set width to 100%
-            //         }}
-            //       />
-            //     ) : post.type === 'video' ? (
-            //       // Display video if content type is 'video'
-            //       <>
-            //         <View
-            //           style={{
-            //             flex: 1,
-            //             justifyContent: 'center',
-            //             alignItems: 'center',
-            //           }}>
-            //           <Video
-            //             source={{
-            //               uri: `https://www.adoro.social/UserPost/${post.fileName}`,
-            //             }}
-            //             style={{
-            //               height: videoDimensions[post.Id]?.height || 200,
-            //               resizeMode: 'contain',
-            //               width: '70%', // Set width to 100% to occupy the entire card width
-            //             }}
-            //             paused={!isPlaying[post.Id]}
-            //             onLoad={event => handleVideoLoad(event, post.Id)}
-            //           />
-            //         </View>
-            //         <TouchableOpacity
-            //           style={{
-            //             // top: 140,
-            //             width: desiredWidth,
-            //             height: desiredHeight,
-            //             flex: 1,
-            //             justifyContent: 'center',
-            //             alignItems: 'center',
-            //             position: 'absolute',
-            //             top: '50%',
-            //             left: '50%',
-            //             marginLeft: -35, // Adjust based on the width of your button
-            //             marginTop: -25,
-            //           }}
-            //           onPress={() => togglePlayPause(post.Id)}>
-            //           {isPlaying[post.Id] ? (
-            //             <Image
-            //               source={require('../assets/pause.png')}
-            //               style={{
-            //                 width: 50,
-            //                 height: 50,
-            //                 backgroundColor: '#fff',
-            //                 borderRadius: 25,
-            //               }}
-            //             />
-            //           ) : (
-            //             <Image
-            //               source={require('../assets/play.png')}
-            //               style={{
-            //                 width: 50,
-            //                 height: 50,
-            //                 backgroundColor: '#fff',
-            //                 borderRadius: 25,
-            //               }}
-            //             />
-            //           )}
-            //         </TouchableOpacity>
-            //       </>
-            //     ) : null /* Handle other content types as needed */
-            //   }
-            //   <Card.Actions>
-            //     <View style={{flexDirection: 'row', gap: 5}}>
-            //       <View style={{gap: 10, right: 180, flexDirection: 'row'}}>
-            //         {
-            //           post.type === 'image' ? (
-            //             <TouchableOpacity
-            //               onPress={() => {
-            //                 const updatedHearts = {...imageHeart};
-            //                 updatedHearts[post.Id] = !updatedHearts[post.Id];
-            //                 setImageHeart(updatedHearts);
-            //               }}>
-            //               {imageHeart[post.Id] ? (
-            //                 <Image
-            //                   style={{
-            //                     height: 18,
-            //                     width: 18,
-            //                     borderColor: '#6F7F92',
-            //                   }}
-            //                   source={require('../assets/Heart1.png')}
-            //                 />
-            //               ) : (
-            //                 <Image
-            //                   style={{height: 18, width: 18, color: '#6F7F92'}}
-            //                   source={require('../assets/Heart.png')}
-            //                 />
-            //               )}
-            //             </TouchableOpacity>
-            //           ) : post.type === 'video' ? (
-            //             <TouchableOpacity
-            //               onPress={() => {
-            //                 const updatedHearts = {...videoHeart};
-            //                 updatedHearts[post.Id] = !updatedHearts[post.Id];
-            //                 setVideoHeart(updatedHearts);
-            //               }}>
-            //               {videoHeart[post.Id] ? (
-            //                 <Image
-            //                   style={{height: 18, width: 18}}
-            //                   source={require('../assets/Heart1.png')}
-            //                 />
-            //               ) : (
-            //                 <Image
-            //                   style={{height: 18, width: 18, color: '#6F7F92'}}
-            //                   source={require('../assets/Heart.png')}
-            //                 />
-            //               )}
-            //             </TouchableOpacity>
-            //           ) : null /* Handle other content types as needed */
-            //         }
-            //         <TouchableOpacity
-            //           onPress={() =>
-            //             navigation.navigate('Comments', {
-            //               Id: post.Id,
-            //               user: user.userName,
-            //               profile: user.ProfileDp,
-            //             })
-            //           }>
-            //           <Image
-            //             style={{
-            //               height: 20,
-            //               width: 20,
-            //               bottom: 2,
-            //               color: '#6F7F92',
-            //             }}
-            //             source={require('../assets/Chat.png')}
-            //           />
-            //         </TouchableOpacity>
-            //         <TouchableOpacity onPress={() => navigation.navigate('Send')}>
-            //           <Image
-            //             style={{
-            //               height: 20,
-            //               width: 20,
-            //               bottom: 2,
-            //               right: 2,
-            //               color: '#6F7F92',
-            //             }}
-            //             source={require('../assets/Send.png')}
-            //           />
-            //         </TouchableOpacity>
-            //       </View>
-            //       <Text style={{color: '#6F7F92'}}>
-            //         {post.comments ? post.comments.length : 0} comments
-            //       </Text>
-            //     </View>
-            //   </Card.Actions>
-            // </Card>
           )}
           ListEmptyComponent={<Text />}
-          // onRefresh={handleRefresh}
           refreshing={loading}
           onEndReached={onEndReached}
-          onEndReachedThreshold={0.1} // Adjust the threshold as needed
+          onEndReachedThreshold={0.1} 
           ListFooterComponent={() =>
             loading && (
               <View style={{padding: 10}}>
@@ -387,7 +142,6 @@ const styles = StyleSheet.create({
     color: '#07142E',
     fontSize: 20,
     fontFamily: FontFamily.bold,
-    // fontWeight: '600',
     textTransform: 'capitalize',
     wordWrap: 'break-word',
   },

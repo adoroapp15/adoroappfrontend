@@ -33,6 +33,8 @@ import PhotoIcon from '../assets/svg/PhotoIcon';
 import {useTheme} from '@react-navigation/native';
 import useStore from '../store';
 import Size from '../common/components/Size';
+import {useRoute} from '@react-navigation/native';
+
 const photos = [
   {id: '1', source: 'Savage', selected: false},
   {id: '2', source: 'Relatable', selected: false},
@@ -60,6 +62,9 @@ const windowHeight1 = Dimensions.get('screen').height;
 const desiredWidth = 0.2 * windowWidth;
 const desiredHeight = 0.2 * windowHeight;
 const CreatePost = ({navigation}) => {
+  const route = useRoute();
+  const {screenshotUri} = route.params || {};
+
   const [talk, setTalk] = React.useState('');
   const {dark, toggleTheme} = useStore();
   const {colors} = useTheme();
@@ -122,7 +127,6 @@ const CreatePost = ({navigation}) => {
         setButtonDisabled(false);
         return;
       }
-      console.log('selectedddd post', selectedpost);
 
       const formData = new FormData();
       formData.append('file', {
@@ -136,8 +140,6 @@ const CreatePost = ({navigation}) => {
       formData.append('profile', pro.ProfileDp);
       formData.append('fullName', pro.fullName),
         formData.append('userName', pro.userName);
-
-      console.log('formmmm dataaaaaaaa iss', formData);
       const response = await axios.post(
         `${config.production}/app/user/createpost`,
         formData,
@@ -169,23 +171,12 @@ const CreatePost = ({navigation}) => {
         const aspectRatio = width / height;
         const imageHeight = windowWidth1 / aspectRatio;
         setDimensions({width: windowWidth1, height: imageHeight});
-        console.log(
-          'Image dimensions:',
-          width,
-          height,
-          url,
-          windowWidth1,
-          imageHeight,
-        );
       });
     } catch (error) {
       console.error('Error getting image size:', error);
     }
   };
-  useEffect(() => {
-    // getImageSize(profile);
-    console.log('Updated dimensions:', dimensions.width, dimensions.height);
-  }, [dimensions]);
+  useEffect(() => {}, [dimensions]);
 
   const imagePick = useCallback(() => {
     ImagePicker.openPicker({
@@ -218,7 +209,6 @@ const CreatePost = ({navigation}) => {
           }
           getImageSize(imageUri);
           setProfile(imageUri);
-          console.log('profileeeeeeeeee imggggg', imageUri, image);
           setSelectedpost({
             uri: imageUri,
             type: image.mime,
@@ -327,7 +317,6 @@ const CreatePost = ({navigation}) => {
           },
         );
 
-        console.log('responseeee', response);
         if (response.data.status === 200) {
           setPro(response.data.data);
         } else {
@@ -339,7 +328,6 @@ const CreatePost = ({navigation}) => {
     };
     fetchProfilePicture();
   }, [isFocused]);
-  console.log('profileee dp iss', pro, user);
 
   const [videoDimensions, setVideoDimensions] = React.useState({
     width: windowWidth * 0.95,
@@ -469,43 +457,14 @@ const CreatePost = ({navigation}) => {
                     color: colors.color_TextNormal,
                     fontSize: Size.tabtext,
                     fontFamily: FontFamily.semibold,
-                    // fontWeight: 600,
                   }}>
                   {user ? user.fullName : ''}
                 </Text>
                 <View
                   style={{
                     flexDirection: 'row',
-                    // backgroundColor: 'white',
-                    // borderRadius: 10,
                     gap: 15,
                   }}>
-                  {/* <Modal isVisible={successImageVisible}>
-                    <View
-                      style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <View
-                        style={{
-                          backgroundColor: 'white',
-                          // padding: 20,
-                          borderRadius: 10,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          height: 200,
-                          width: 200,
-                        }}>
-                        <LottieView
-                          style={{height: '50%', width: '50%'}}
-                          source={require('../assets/success lottie.json')} // Provide the path to your JSON animation file
-                          autoPlay
-                          loop={false} // Play only once
-                        />
-                      </View>
-                    </View>
-                  </Modal> */}
                   <Modal
                     animationType="fade"
                     style={{
@@ -547,13 +506,13 @@ const CreatePost = ({navigation}) => {
                       {
                         backgroundColor:
                           selectedPhoto === item.source
-                            ? colors.color_SelectedTabColor // Set transparent background for selected button
-                            : colors.color_ListBgUnselected, // Set white background for unselected buttons
+                            ? colors.color_SelectedTabColor
+                            : colors.color_ListBgUnselected,
                       },
                     ]}
                     onPress={() => {
                       setSelectedPhoto(item.source);
-                      setClicked(false); // Close the dropdown after selecting a category
+                      setClicked(false);
                       onSearch('');
                       setSearch('');
                     }}>
@@ -597,7 +556,7 @@ const CreatePost = ({navigation}) => {
             {fullNameError && !isTextInputFocused ? (
               <Text style={styles.errorText}>Please fill this field*</Text>
             ) : null}
-            {!profile && !videoUri && !gif && (
+            {!profile && !videoUri && !gif && !screenshotUri && (
               <TouchableOpacity onPress={() => setVisible(true)}>
                 <View
                   style={{
@@ -626,7 +585,7 @@ const CreatePost = ({navigation}) => {
               </TouchableOpacity>
             )}
             <View>
-              {(!profile || !videoUri || !gif) && (
+              {(!profile || !videoUri || !gif || !screenshotUri) && (
                 <View>
                   {profile && (
                     <Image
@@ -636,6 +595,12 @@ const CreatePost = ({navigation}) => {
                         alignSelf: 'center',
                       }}
                       source={profile ? {uri: profile} : null}
+                    />
+                  )}
+                  {screenshotUri && (
+                    <Image
+                      source={{uri: screenshotUri}}
+                      style={{width: '100%', height: 300, alignSelf:"center"}}
                     />
                   )}
                   {videoUri && (
@@ -699,41 +664,34 @@ const CreatePost = ({navigation}) => {
                 </View>
               )}
             </View>
-            {/* <TouchableOpacity style={{marginTop:20, marginBottom:20}} onPress={() => navigation.navigate('CreateMeme')}>
-                <View
-                  style={{
-                    width: '80%',
-                    height: 200,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    borderRadius: 15,
-                    backgroundColor: colors.color_CardBgColor,
-                    borderWidth: 2,
-                    borderColor: colors.color_BorderColor,
-                    justifyContent: 'center',
-                  }}>
-                  <PlusIcon color={colors.color_CardIcon} />
-                  <Text
-                    style={{
-                      marginTop: 20,
-                      fontSize: Size.title,
-                      fontFamily: FontFamily.semibold,
-                      textAlignVertical: 'center',
-                      color: colors.color_CardTxtColor,
-                    }}>
-                    Click here to Create Meme
-                  </Text>
-                </View>
-              </TouchableOpacity> */}
           </View>
-          <View style={{flex:1, justifyContent:"flex-end", alignItems:"flex-end", marginRight:10,marginBottom:10}}>
-          <TouchableOpacity
-          onPress={() => navigation.navigate('CreateMeme')}
-          style={{borderColor:"black", borderWidth:1, height:"30%", width:"50%"}}
-          >
-            <Text style={{flex:1,alignSelf:"center",textAlignVertical:"center"}}>Create Meme</Text>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              marginRight: 10,
+              marginBottom: 10,
+            }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CreateMeme')}
+              style={{
+                borderColor: 'black',
+                borderWidth: 1,
+                height: '30%',
+                width: '50%',
+              }}>
+              <Text
+                style={{
+                  color: colors.color_Logintext,
+                  flex: 1,
+                  alignSelf: 'center',
+                  textAlignVertical: 'center',
+                }}>
+                Create Meme
+              </Text>
             </TouchableOpacity>
-            </View>
+          </View>
           <Modal
             style={{width: '100%', marginLeft: 0, marginBottom: 0}}
             onBackButtonPress={() => {

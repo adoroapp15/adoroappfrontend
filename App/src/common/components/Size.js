@@ -1,5 +1,4 @@
 export default Size = {
-  //   primary: 'Montserrat-Regular',
   amountText: 64,
   welcomeText: 24,
   share: 20,
@@ -11,6 +10,4 @@ export default Size = {
   subtitle: 12,
   paragraph: 10,
   small: 8,
-  //   semiBold: 'Montserrat-SemiBold',
-  //   light: 'Montserrat-Light',
 };

@@ -41,7 +41,6 @@ const TemplateItem = ({item, index}) => {
         const aspectRatio = width / height;
         const imageHeight = windowWidth1 / aspectRatio;
         setDimensions({width: windowWidth1, height: imageHeight});
-        console.log('Image dimensions:', width, height, url);
       });
     } catch (error) {
       console.error('Error getting image size:', error);
@@ -49,12 +48,7 @@ const TemplateItem = ({item, index}) => {
   };
   React.useEffect(() => {
     getImageSize(`https://www.adoro.social/Template/Image/${item.fileName}`);
-    console.log('Updated dimensions:', dimensions.width, dimensions.height);
   }, [dimensions]);
-  console.log(
-    'ssssuusshmmaaa',
-    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-  );
   const checkAndRequestPermission = async () => {
     try {
       const permission =
@@ -110,7 +104,6 @@ const TemplateItem = ({item, index}) => {
           } else {
             Alert.alert('Error', 'Failed to save image to gallery.');
           }
-          console.log('Download successful:', result);
         })
         .catch(error => {
           console.error('Error downloading file:', error);
@@ -164,85 +157,10 @@ const TemplateItem = ({item, index}) => {
                 marginTop: 20,
                 marginBottom: 20,
               }}>
-              {/* <TouchableOpacity
-                onPress={() =>
-                  shareOnWhatsApp(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-                  )
-                }>
-                <LinearGradient
-                  colors={[
-                    'rgba(0,255,255,0.4)',
-                    'rgba(255,192,203,1)',
-                    'rgba(255,255,0,0.5)',
-                  ]}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 1}}
-                  style={{
-                    paddingLeft: 15,
-                    paddingRight: 15,
-                    paddingBottom: 6,
-                    paddingTop: 6,
-                    justifyContent: 'center',
-                    borderRadius: 15,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
- 
-                      fontFamily: FontFamily.semibold,
-                      textAlign: 'center',
-                      fontSize: 20,
-                    }}>
-                    Share
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  handleDownload(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-                  )
-                }>
-                <LinearGradient
-                  colors={[
-                    'rgba(0,255,255,0.4)',
-                    'rgba(255,192,203,1)',
-                    'rgba(255,255,0,0.5)',
-                  ]}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 1}}
-                  style={{
-                    paddingLeft: 15,
-                    paddingRight: 15,
-                    paddingBottom: 6,
-                    paddingTop: 6,
-                    justifyContent: 'center',
-                    borderRadius: 15,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontFamily: FontFamily.semibold,
-                      textAlign: 'center',
-                      fontSize: 20,
-                    }}>
-                    Download
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity> */}
             </View>
           </>
         )}
         {item.type === 'video' && (
-          //   <Video
-          //     source={{
-          //       uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-          //     }}
-          //     style={{width: '80%', aspectRatio: 16 / 9}}
-          //     resizeMode="contain"
-          //     controls={true}
-          //   />
           <>
             <Video
               key={index}
@@ -297,82 +215,6 @@ const TemplateItem = ({item, index}) => {
                 />
               )}
             </TouchableOpacity>
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                alignSelf: 'center',
-                gap: 20,
-                marginTop: 20,
-                marginBottom: 20,
-              }}>
-              <TouchableOpacity
-                onPress={() =>
-                  shareOnWhatsApp(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-                  )
-                }>
-                <LinearGradient
-                  colors={[
-                    'rgba(0,255,255,0.4)',
-                    'rgba(255,192,203,1)',
-                    'rgba(255,255,0,0.5)',
-                  ]}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 1}}
-                  style={{
-                    paddingLeft: 15,
-                    paddingRight: 15,
-                    paddingBottom: 6,
-                    paddingTop: 6,
-                    justifyContent: 'center',
-                    borderRadius: 15,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
- 
-                      fontFamily: FontFamily.semibold,
-                      textAlign: 'center',
-                      fontSize: 20,
-                    }}>
-                    Share
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  handleDownload(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-                  )
-                }>
-                <LinearGradient
-                  colors={[
-                    'rgba(0,255,255,0.4)',
-                    'rgba(255,192,203,1)',
-                    'rgba(255,255,0,0.5)',
-                  ]}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 1}}
-                  style={{
-                    paddingLeft: 15,
-                    paddingRight: 15,
-                    paddingBottom: 6,
-                    paddingTop: 6,
-                    justifyContent: 'center',
-                    borderRadius: 15,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontFamily: FontFamily.semibold,
-                      textAlign: 'center',
-                      fontSize: 20,
-                    }}>
-                    Download
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View> */}
           </>
         )}
       </View>
@@ -384,7 +226,6 @@ export default TemplateItem;
  
 const styles = StyleSheet.create({
   image: {
-    // resizeMode: 'contain',
     backgroundColor: 'gray',
     marginTop: 10,
   },

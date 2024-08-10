@@ -70,9 +70,6 @@ const TrendingTemplate = ({navigation}) => {
     {id: '18', source: require('../assets/Politics.png'), selected: false},
   ];
   const [select, setSelect] = React.useState(Data);
-  console.log('selectedItem', select);
-
-  console.log('data isss ', data);
   return (
     <>
       <View
@@ -198,7 +195,6 @@ const styles = StyleSheet.create({
   },
   image: {
     margin: 5,
-    // flex: 1,
   },
   templateItem: {
     flex: 1,

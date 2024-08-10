@@ -17,7 +17,7 @@ const OnBoardingScreen = ({navigation}) => {
 
   return (
     <Onboarding
-      DotComponent={CustomDot} // Use CustomDot component for swiper dots
+      DotComponent={CustomDot}
       pages={[
         {
           backgroundColor: '#3efdf4',
@@ -29,7 +29,6 @@ const OnBoardingScreen = ({navigation}) => {
             fontFamily: FontFamily.bold,
             color: 'gray',
             fontSize: 22,
-            // fontWeight: 'bold',
           },
           subTitleStyles: {
             color: 'gray',
@@ -46,7 +45,6 @@ const OnBoardingScreen = ({navigation}) => {
           titleStyles: {
             color: 'gray',
             fontSize: 20,
-            // fontWeight: 'bold',
             fontFamily: FontFamily.bold,
           },
           subTitleStyles: {
@@ -60,11 +58,10 @@ const OnBoardingScreen = ({navigation}) => {
           image: <Screen3 />,
           title: 'Empowering Creators, Igniting Culture',
           subtitle:
-            '-super easy content creation tool \n -largest template library\n -og content marketplace\n -campaign section to monetize content\n-royalty earning model\n-wallet for easy withdrawal of money',
+            '-Super easy content creation tool. \n -Largest template library.\n -Og content marketplace.\n -Campaign section to monetize content.\n-Royalty earning model.\n-Wallet for easy withdrawal of money.',
           titleStyles: {
             color: 'gray',
             fontSize: 17,
-            // fontWeight: 'bold',
             fontFamily: FontFamily.bold,
           },
           subTitleStyles: {

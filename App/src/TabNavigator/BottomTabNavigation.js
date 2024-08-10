@@ -54,7 +54,6 @@ const BottomTabNavigation = ({navigation}) => {
           tabBarIcon: ({focused}) => (
             <TouchableOpacity
               onPress={() => {
-                console.log('ss');
                 // Trigger the scroll to the top of the FlatList in the HomePage component
                 navigation.navigate('Home', {
                   screen: 'HomePage',
@@ -119,18 +118,9 @@ const BottomTabNavigation = ({navigation}) => {
         component={UserProfile}
         options={{
           headerShown: false,
-          // headerTitleAlign: 'center',
-          // headerLeft: () => (
-          //   <TouchableOpacity
-          //     style={{left: 10}}
-          //     onPress={() => navigation.navigate('Home')}>
-          //     <BackArrow />
-          //   </TouchableOpacity>
-          // ),
           tabBarIcon: ({focused}) => (
             <TouchableOpacity
               onPress={() => {
-                console.log('ss');
                 // Trigger the scroll to the top of the FlatList in the HomePage component
                 navigation.navigate('User profile', {
                   screen: 'User profile',

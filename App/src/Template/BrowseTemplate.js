@@ -41,36 +41,17 @@ const BrowseTemplate = ({navigation, item, index}) => {
         const aspectRatio = width / height;
         const imageHeight = windowWidth1 / aspectRatio;
         setDimensions({width: windowWidth1, height: imageHeight});
-        console.log('Image dimensions:', width, height, url);
       });
     } catch (error) {
       console.error('Error getting image size:', error);
     }
-    // return new Promise((resolve, reject) => {
-    //   Image.getSize(
-    //     url,
-    //     (width, height) => {
-    //       const aspectRatio = width / height;
-    //       const imageHeight = windowWidth1 / aspectRatio;
-    //       setDimensions({width: windowWidth1, height: imageHeight});
-    //       console.log('Image dimensions:', width, height, url);
-    //       resolve({width: windowWidth1, height: imageHeight});
-    //     },
-    //     error => {
-    //       console.error('Error getting image size:', error);
-    //       reject(error);
-    //     },
-    //   );
-    // });
   };
   useEffect(() => {
     getImageSize(`https://www.adoro.social/Template/Image/${item.fileName}`);
-    console.log('Updated dimensions:', dimensions.width, dimensions.height);
   }, [dimensions]);
   const onEndReached = () => {
     if (hasMore && !loading) {
       setLoading(true);
-      //fetchUserData(page + 1);
       setPage(page + 1);
     }
   };
@@ -90,7 +71,6 @@ const BrowseTemplate = ({navigation, item, index}) => {
         if (requestResult === RESULTS.GRANTED) {
           return true;
         } else {
-          console.log('Permission request denied:', requestResult);
           return false;
         }
       }
@@ -129,7 +109,6 @@ const BrowseTemplate = ({navigation, item, index}) => {
           } else {
             Alert.alert('Error', 'Failed to save image to gallery.');
           }
-          console.log('Download successful:', result);
         })
         .catch(error => {
           console.error('Error downloading file:', error);
@@ -162,18 +141,12 @@ const BrowseTemplate = ({navigation, item, index}) => {
         <TouchableOpacity
           onPress={() => {
             setSelectedItem(item);
-            //   flatListRef.current.scrollToIndex({
-            //     index: allData.findIndex(img => img.id === item.id),
-            //     animated: true,
-            //   });
           }}>
           <View>
             <Image
               style={[
                 styles.image,
                 {
-                  // width: imageSizes[index]?.width,
-                  // height: imageSizes[index]?.height,
                   width: dimensions.width || windowWidth1,
                   height: dimensions.height || 300,
                 },

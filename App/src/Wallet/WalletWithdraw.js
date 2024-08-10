@@ -41,7 +41,6 @@ const WalletWithdraw = ({navigation, route}) => {
   }, []);
 
   const handleotp = async amount => {
-    console.log('amoutn isss', amt, amount);
     if (amount > amt || amt == 0) {
       Alert.alert('Insufficient Balance');
     } else {
@@ -51,7 +50,6 @@ const WalletWithdraw = ({navigation, route}) => {
       );
 
       if (response.status == 200) {
-        console.log(response.data.otp, 'otp generated isss');
         navigation.navigate('WalletOTPScreen', {
           withdrawAmount: amount,
           otp: response.data.otp,
