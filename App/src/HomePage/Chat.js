@@ -23,7 +23,6 @@ const Chat = () => {
       height: 400,
       cropping: true,
     }).then(image => {
-      console.log(image);
       setProfile(image.path);
     });
   };
@@ -86,9 +85,6 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     height: 40,
-    // borderColor: '#000000',
-    // borderBottomWidth: 1,
-    // marginBottom: 20,
     marginLeft: 10,
   },
 });

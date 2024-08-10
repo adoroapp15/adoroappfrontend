@@ -150,7 +150,6 @@ const Interest = ({navigation}) => {
     const other = await AsyncStorage.getItem('token');
 
     const parsedUser = JSON.parse(user, other);
-    console.log('Selected is', selectedInterests);
     const response = await axios.post(
       `${config.production}/app/user/saveInterest`,
       {
@@ -160,7 +159,6 @@ const Interest = ({navigation}) => {
     );
     if (response.status === 200) {
       Alert.alert('Interest Done');
-      console.log('NAvigaing   gggggggggggg');
       navigation.navigate('BottomTabScreen');
     }
   };

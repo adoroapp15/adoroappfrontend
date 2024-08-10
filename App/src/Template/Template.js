@@ -18,24 +18,6 @@ function Template({navigation}) {
   const {dark, toggleTheme} = useStore();
   return (
     <View style={{backgroundColor:colors.color_PageColor, height:'100%'}}>
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          margin: 10,
-          backgroundColor: 'white',
-          borderRadius: 15,
-        }}>
-        <Image
-          style={{top: 12, height: 20, width: 20}}
-          source={require('../assets/Search.png')}
-        />
-        <TextInput
-          style={styles.input}
-          //onChangeText={setTalk}
-          //value={talk}
-          placeholder="  Search templates.."
-        />
-      </View> */}
       <View style={{flexDirection: 'row', backgroundColor: colors.color_TabBarColor,height:56}}>
         <TouchableOpacity
           style={{flex: 0.5, paddingLeft: 10,alignSelf:'center'}}
@@ -60,7 +42,6 @@ function Template({navigation}) {
 }
 const styles = StyleSheet.create({
   image: {
-    // backgroundColor: 'gray',
     margin: 10,
     marginTop: 50,
     alignItems: 'center',

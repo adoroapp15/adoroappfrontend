@@ -20,10 +20,7 @@ function Navigation() {
 }
 const styles = StyleSheet.create({
   image: {
-    // backgroundColor: 'gray',
     margin: 30,
-    // gap: 50,
-    // marginTop: 60,
     alignItems: 'center',
   },
 });

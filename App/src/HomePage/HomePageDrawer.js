@@ -46,7 +46,7 @@ const CustomDrawerIcon = () => {
   const navigation = useNavigation();
 
   const handleDrawerIconPress = () => {
-    navigation.toggleDrawer(); // Toggle the drawer on press
+    navigation.toggleDrawer();
   };
 
   return (
@@ -80,9 +80,9 @@ const HomePageDrawer = () => {
     const getUser = async () => {
       try {
         const user = await AsyncStorage.getItem('user');
-        const other = await AsyncStorage.getItem('token');
+        const others = await AsyncStorage.getItem('token');
 
-        const users = JSON.parse(user, other);
+        const users = JSON.parse(user, others);
 
         setParsedUser(users);
 
@@ -106,14 +106,9 @@ const HomePageDrawer = () => {
     getUser();
   }, []);
   const handleHeaderTitlePress = async () => {
-    // Trigger refresh in 'HomePage'
     navigation.navigate('HomePage', {refresh: true});
-    // Simulate loading with a delay
     await new Promise(resolve => setTimeout(resolve, 1000));
-    // Automatically scroll to the top (adjust as needed)
-    // homePageRef.current.scrollToIndex({ index: 0, animated: true });
   };
-  console.log('pppapsss', parsedUser.userName);
   return (
     <Drawer.Navigator
       drawerContent={props => {
@@ -210,27 +205,11 @@ const HomePageDrawer = () => {
           component={HomePage}
         />
       }
-      {/* <Drawer.Screen
-        name="Notification"
-        options={{
-          drawerLabel: 'Notification',
-          title: 'Notification',
-          drawerIcon: () => (
-            <Image
-              source={require('../assets/Notification.png')}
-              size={20}
-              Color="#808080"
-            />
-          ),
-        }}
-        component={Notification}
-      /> */}
       <Drawer.Screen
         name="Result"
         options={{
           headerShown: false,
           drawerLabel: 'Result',
-          // title: 'Result',
           drawerIcon: () => <ResultIcon Color={colors.arrow} />,
         }}
         component={Result}
@@ -240,27 +219,24 @@ const HomePageDrawer = () => {
         options={{
           headerShown: false,
           drawerLabel: 'Note from adoro',
-          // title: 'Note from adoro',
           drawerIcon: () => <NoteFromAdoroIcon Color={colors.arrow} />,
         }}
         component={NoteFromAdoro}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="CreateMeme"
         options={{
           headerShown: false,
           drawerLabel: 'Create Meme',
-          // title: 'Note from adoro',
           drawerIcon: () => <PlusIcon color={colors.arrow} />,
         }}
         component={CreateMeme}
-      />
+      /> */}
       <Drawer.Screen
         name="Wallet"
         options={{
           headerShown: false,
           drawerLabel: 'Wallet',
-          // title: 'Wallet',
           drawerIcon: () => <WalletIcon Color={colors.arrow} />,
         }}
         component={Wallet}
@@ -270,18 +246,15 @@ const HomePageDrawer = () => {
         options={{
           headerShown: false,
           drawerLabel: 'Template',
-          // title: 'Template',
           drawerIcon: () => <TemplateICon Color={colors.arrow} />,
         }}
         component={MemeTemplate}
       />
-
       <Drawer.Screen
         name="ReferEarn"
         options={{
           headerShown: false,
           drawerLabel: 'Refer & earn',
-          // title: 'Refer & earn',
           drawerIcon: () => <ReferAndEarnIcon Color={colors.arrow} />,
         }}
         initialParams={{userName: parsedUser.userName}}
@@ -292,7 +265,6 @@ const HomePageDrawer = () => {
         options={{
           headerShown: false,
           drawerLabel: 'Support',
-          // title: 'Support',
           drawerIcon: () => <SupportIcon Color={colors.arrow} />,
         }}
         component={Support}
@@ -302,7 +274,6 @@ const HomePageDrawer = () => {
         options={{
           headerShown: false,
           drawerLabel: 'Settings',
-          // title: 'Settings',
           drawerIcon: () => <SettingIcon Color={colors.arrow} />,
         }}
         component={Setting}

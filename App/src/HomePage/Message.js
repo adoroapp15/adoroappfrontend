@@ -11,7 +11,6 @@ const Message = ({navigation}) => {
           height: 65,
           width: 355,
           flexDirection: 'row',
-          // borderWidth: 0.25,
           margin: 2,
         }}>
         <Image style={{margin: 10}} source={require('../assets/User.png')} />
@@ -21,7 +20,6 @@ const Message = ({navigation}) => {
               style={{
                 color: '#07142E',
                 fontSize: 16,
-                // fontWeight: '600',
                 fontFamily: FontFamily.bold,
               }}>
               username
@@ -32,14 +30,12 @@ const Message = ({navigation}) => {
               style={{
                 color: '#6F7F92',
                 fontSize: 14,
-                // fontWeight: '500',
                 fontFamily: FontFamily.semibold,
               }}>
               Don't know
             </Text>
             <View
               style={{
-                // position: 'absolute',
                 backgroundColor: '#6F7F92',
                 alignSelf: 'center',
                 width:3,
@@ -51,7 +47,6 @@ const Message = ({navigation}) => {
               style={{
                 color: '#6F7F92',
                 fontSize: 14,
-                // fontWeight: '500',
                 fontFamily: FontFamily.semibold,
               }}>
               21h
@@ -74,7 +69,6 @@ const Message = ({navigation}) => {
           height: 65,
           width: 355,
           flexDirection: 'row',
-          // borderWidth: 0.25,
           margin: 2,
         }}>
         <Image style={{margin: 10}} source={require('../assets/User.png')} />
@@ -84,7 +78,6 @@ const Message = ({navigation}) => {
               style={{
                 color: '#07142E',
                 fontSize: 16,
-                // fontWeight: '600',
                 fontFamily: FontFamily.bold,
               }}>
               username
@@ -94,7 +87,6 @@ const Message = ({navigation}) => {
             style={{
               color: '#6F7F92',
               fontSize: 14,
-              // fontWeight: '500',
               fontFamily: FontFamily.semibold,
             }}>
             Don't know .21h
@@ -117,7 +109,6 @@ const Message = ({navigation}) => {
           margin: 2,
           width: 355,
           flexDirection: 'row',
-          // borderWidth: 0.25,
         }}>
         <Image style={{margin: 10}} source={require('../assets/User.png')} />
         <View style={{flexDirection: 'column', top: 8}}>
@@ -159,7 +150,6 @@ const Message = ({navigation}) => {
           height: 65,
           width: 355,
           flexDirection: 'row',
-          // borderWidth: 0.25,
         }}>
         <Image style={{margin: 10}} source={require('../assets/User.png')} />
         <View style={{flexDirection: 'column', top: 8}}>

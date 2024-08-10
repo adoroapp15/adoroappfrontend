@@ -35,6 +35,28 @@ const Result = ({navigation}) => {
  
   return (
     <View style={{flex: 1, backgroundColor: colors.color_PageColor}}>
+       <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: colors.color_TabBarColor,
+          zIndex: 1,
+          height: 56,
+        }}>
+        <TouchableOpacity
+          style={{flex: 0.5, paddingLeft: 10, alignSelf: 'center'}}
+          onPress={() => navigation.navigate('HomePage')}>
+          <BackArrow color={colors.arrow} />
+        </TouchableOpacity>
+        <Text
+          style={{
+            color: colors.color_TextNormal,
+            fontFamily: FontFamily.semibold,
+            alignSelf: 'center',
+            fontSize: 20,
+          }}>
+          Result
+        </Text>
+      </View>
       {result.map((resultItem, index) => {
         const resultDataArray = JSON.parse(resultItem.data)["Array"];
  

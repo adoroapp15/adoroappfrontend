@@ -9,8 +9,8 @@ const useStore = create(
       toggleTheme: () => set(state => ({dark: !state.dark})),
     }),
     {
-      name: 'local-storage', // unique name
-      getStorage: () => AsyncStorage, // Add this here!
+      name: 'local-storage',
+      getStorage: () => AsyncStorage,
     },
   ),
 );

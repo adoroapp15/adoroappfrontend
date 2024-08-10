@@ -23,38 +23,83 @@ const Wallet = ({navigation}) => {
   const [amt, setAmt] = useState(0);
   const [profile, setProfile] = useState(null);
 
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const userdetail = await AsyncStorage.getItem('user');
+  //       const other = await AsyncStorage.getItem('token');
+
+  //       const users = JSON.parse(userdetail, other);
+  //       //setUser(users);
+  //       const response = await axios.get(
+  //         `${config.production}/app/user/userdetails`,
+  //         {
+  //           params: {mobileNo: users.mobileNo},
+  //         },
+  //       );
+
+  //       if (response.data.status === 200) {
+  //         setProfile(response.data.data.ProfileDp);
+  //         setUser(response.data.data)
+
+  //         const walletres = await await axios.get(
+  //           `${config.production}/app/user/getbalance`,
+  //           {
+  //             params: {userId: users.Id},
+  //           },
+  //         );
+  //         if (walletres.status == 200) {
+  //           setAmt(walletres.data.balance);
+  //         }
+  //       } else {
+  //         setProfile(null);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error reading user from AsyncStorage:', error);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
   useEffect(() => {
     const getUser = async () => {
       try {
-        const user = await AsyncStorage.getItem('user');
-        const other = await AsyncStorage.getItem('token');
-
-        const users = JSON.parse(user, other);
-        setUser(users);
-        const response = await axios.get(
-          `${config.production}/app/user/userdetails`,
-          {
-            params: {mobileNo: users.mobileNo},
-          },
-        );
-
-        if (response.data.status === 200) {
-          console.log(3);
-          setProfile(response.data.data.ProfileDp);
-
-          const walletres = await await axios.get(
-            `${config.production}/app/user/getbalance`,
+        const userdetail = await AsyncStorage.getItem('user');
+        const token = await AsyncStorage.getItem('token');
+  
+        console.log('User Detail:', userdetail);
+        console.log('Token:', token);
+  
+        if (userdetail) {
+          const user = JSON.parse(userdetail);
+  
+          console.log('Parsed User:', user);
+  
+          const response = await axios.get(
+            `${config.production}/app/user/userdetails`,
             {
-              params: {userId: users.Id},
+              params: {mobileNo: user.mobileNo},
             },
           );
-          if (walletres.status == 200) {
-            console.log('wallet response iss', walletres);
-            setAmt(walletres.data.balance);
-            console.log('got the wallet amount', walletres.data.balance);
+  
+          if (response.data.status === 200) {
+            setProfile(response.data.data.ProfileDp);
+            setUser(response.data.data);
+  
+            const walletres = await axios.get(
+              `${config.production}/app/user/getbalance`,
+              {
+                params: {userId: userdetail.Id},
+              },
+            );
+  console.log(walletres.data.balance, 'sssssjjj');
+            if (walletres.status === 200) {
+              setAmt(walletres.data.balance);
+            }
+          } else {
+            setProfile(null);
           }
         } else {
-          setProfile(null);
+          console.error('User details not found in AsyncStorage');
         }
       } catch (error) {
         console.error('Error reading user from AsyncStorage:', error);
@@ -62,8 +107,7 @@ const Wallet = ({navigation}) => {
     };
     getUser();
   }, []);
-  console.log('waleet amount ttt', amt);
-
+  
   return (
     <View style={{backgroundColor: colors.color_PageColor, height: '100%'}}>
       <View
@@ -87,6 +131,7 @@ const Wallet = ({navigation}) => {
           Wallet
         </Text>
       </View>
+  
       <Text
         style={{
           color: colors.color_TextNormal,
@@ -95,8 +140,9 @@ const Wallet = ({navigation}) => {
           top: 70,
           fontFamily: FontFamily.semibold,
         }}>
-        {user ? user.fullName : ''}
+        {user && user.fullName ? user.fullName : ''}
       </Text>
+  
       <View style={styles.container}>
         <Image
           source={require('../assets/wallet2.png')}
@@ -111,6 +157,7 @@ const Wallet = ({navigation}) => {
           style={styles.image1}
         />
       </View>
+  
       <View>
         <Text
           style={{
@@ -127,23 +174,20 @@ const Wallet = ({navigation}) => {
             color: colors.color_TextNormal,
             fontSize: 64,
             alignSelf: 'center',
-            // fontWeight: '600',
             fontFamily: FontFamily.semibold,
-
             top: 260,
           }}>
-          {amt}C
+          {`${amt}C`}
         </Text>
         <TouchableOpacity
           style={{margin: 90, marginTop: 250}}
           onPress={() => {
             if (amt === 0) {
               Alert.alert('No Money to withdraw');
-            } else navigation.navigate('Wallet Withdraw', {amt});
-          }}
-
-          // onPress={() => navigation.navigate('Wallet Withdraw', {amt})}
-        >
+            } else {
+              navigation.navigate('Wallet Withdraw', {amt});
+            }
+          }}>
           <LinearGradient
             colors={[
               'rgba(0,255,255,0.4)',
@@ -153,7 +197,6 @@ const Wallet = ({navigation}) => {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 1}}
             style={{
-              // bottom: 25,
               paddingTop: 10,
               paddingBottom: 10,
               paddingLeft: 15,
@@ -179,7 +222,6 @@ const Wallet = ({navigation}) => {
             alignSelf: 'center',
             fontWeight: '400',
             fontFamily: FontFamily.semibold,
-            // top: 280,
             bottom: 60,
           }}>
           Withdraw Minimum limit Rs. 100
@@ -189,7 +231,6 @@ const Wallet = ({navigation}) => {
             color: colors.color_TextNormal,
             fontSize: 14,
             alignSelf: 'center',
-            // fontWeight: '400',
             bottom: 55,
             fontFamily: FontFamily.semibold,
           }}>

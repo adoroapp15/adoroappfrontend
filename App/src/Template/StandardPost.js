@@ -42,7 +42,6 @@ const StandardPost = ({navigation, item, index}) => {
         const aspectRatio = width / height;
         const imageHeight = windowWidth1 / aspectRatio;
         setDimensions({width: windowWidth1, height: imageHeight});
-        // console.log('Image dimensions:', width, height, url);
       });
     } catch (error) {
       console.error('Error getting image size:', error);
@@ -50,12 +49,10 @@ const StandardPost = ({navigation, item, index}) => {
   };
   useEffect(() => {
     getImageSize(`https://www.adoro.social/Template/Image/${item.fileName}`);
-    // console.log('Updated dimensions:', dimensions.width, dimensions.height);
   }, [dimensions]);
   const onEndReached = () => {
     if (hasMore && !loading) {
       setLoading(true);
-      //fetchUserData(page + 1);
       setPage(page + 1);
     }
   };
@@ -75,7 +72,6 @@ const StandardPost = ({navigation, item, index}) => {
         if (requestResult === RESULTS.GRANTED) {
           return true;
         } else {
-          console.log('Permission request denied:', requestResult);
           return false;
         }
       }
@@ -114,7 +110,6 @@ const StandardPost = ({navigation, item, index}) => {
           } else {
             Alert.alert('Error', 'Failed to save image to gallery.');
           }
-          console.log('Download successful:', result);
         })
         .catch(error => {
           console.error('Error downloading file:', error);
@@ -173,8 +168,6 @@ const StandardPost = ({navigation, item, index}) => {
             style={[
               styles.image,
               {
-                // width: imageSizes[index]?.width,
-                // height: imageSizes[index]?.height,
                 width: dimensions.width || windowWidth1,
                 height: dimensions.height || 300,
               },
@@ -182,10 +175,6 @@ const StandardPost = ({navigation, item, index}) => {
             source={{
               uri: `https://www.adoro.social/Template/Image/${item.fileName}`,
             }}
-            // onLoad={e => {
-            //   const {width, height} = e.nativeEvent.source;
-            //   // handleImageSize(index, width, height);
-            // }}
           />
 
           <View

@@ -144,19 +144,6 @@ const EditProfile = ({route, navigation}) => {
   };
 
   const handleUpdate = async () => {
-    // if (
-    //   !updatedUser.fullName &&
-    //   !updatedUser.userName &&
-    //   !updatedUser.Email &&
-    //   !updatedUser.bankName &&
-    //   !updatedUser.benificiaryName &&
-    //   !updatedUser.accountNo &&
-    //   !updatedUser.ifscCode
-    // ) {
-    //   Alert.alert('Nothing to update');
-    //   return;
-    // }
-
     try {
       const response = await axios.put(
         `${config.production}/app/user/updatedetails`,
@@ -492,7 +479,6 @@ const EditProfile = ({route, navigation}) => {
                 textAlignVertical: 'center',
                 paddingRight: 10,
                 paddingLeft: 10,
-                // height: 40,
                 borderRadius: 10,
               }}
               onChangeText={value =>
@@ -587,7 +573,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalText: {
-    // marginBottom: 15,
     textAlign: 'center',
     fontFamily: FontFamily.semibold,
     fontSize: Size.title,

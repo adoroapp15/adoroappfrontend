@@ -41,7 +41,6 @@ const Standards = ({navigation, route}) => {
   const onEndReached = () => {
     if (hasMore && !loading) {
       setLoading(true);
-      //fetchUserData(page + 1);
       setPage(page + 1);
     }
   };
@@ -61,7 +60,6 @@ const Standards = ({navigation, route}) => {
         if (requestResult === RESULTS.GRANTED) {
           return true;
         } else {
-          console.log('Permission request denied:', requestResult);
           return false;
         }
       }
@@ -100,7 +98,6 @@ const Standards = ({navigation, route}) => {
           } else {
             Alert.alert('Error', 'Failed to save image to gallery.');
           }
-          console.log('Download successful:', result);
         })
         .catch(error => {
           console.error('Error downloading file:', error);
@@ -131,9 +128,6 @@ const Standards = ({navigation, route}) => {
   const flatListRef = React.useRef(null);
 
   React.useEffect(() => {
-    // Access the params passed during navigation
-    // const indexToScroll = navigation.getParam('indexToScroll', 0);
-    // Scroll the FlatList to the desired index
     if (route?.params?.indexToScroll !== null && flatListRef?.current) {
       flatListRef?.current?.scrollToIndex({
         animated: true,
@@ -174,7 +168,6 @@ const Standards = ({navigation, route}) => {
           ref={flatListRef}
           data={allData}
           keyExtractor={(item, index) => item && item.id ? item.id.toString() : index.toString()}
-          // renderItem={renderItem}
           renderItem={({ item, index }) => (
             <StandardPost navigation={navigation} item={item} index={index} />
           )}

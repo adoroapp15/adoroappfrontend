@@ -14,10 +14,8 @@ const Apply = ({navigation}) => {
       style={{
         flex: 1,
         borderRadius: 40,
-        // backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        // top: '30%',
       }}>
       <Image
         style={{
@@ -27,11 +25,8 @@ const Apply = ({navigation}) => {
         }}
         source={require('../assets/Tick.png')}
       />
-      <TouchableOpacity
-        style={{}}
-        // onPress={Alert.alert("Applied Successfully") }
-      >
-        {/*onPress={() => navigation.navigate('InterestScreen')}> */}
+      <TouchableOpacity style={{}}>
+        {' '}
         <Image
           style={{alignSelf: 'center', justifyContent: 'center', gap: 5}}
           source={require('../assets/Submit.png')}

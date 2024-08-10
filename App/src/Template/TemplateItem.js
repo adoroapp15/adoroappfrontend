@@ -1,33 +1,3 @@
-// import React from 'react';
-// import {Image, View, Video} from 'react-native';
-
-// const TemplateItem = ({item}) => {
-//   return (
-//     <View style={{justifyContent: 'center', alignItems: 'center'}}>
-//       {item.type === 'image' && (
-//         <Image
-//           source={{
-//             uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-//           }}
-//           style={{width: '80%', height: '80%', resizeMode: 'contain'}}
-//         />
-//       )}
-//       {item.type === 'video' && (
-//         <Video
-//           source={{
-//             uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-//           }}
-//           style={{width: '80%', aspectRatio: 16 / 9}}
-//           resizeMode="contain"
-//           controls={true}
-//         />
-//       )}
-//     </View>
-//   );
-// };
-
-// export default TemplateItem;
-
 import {
   StyleSheet,
   Text,
@@ -71,7 +41,6 @@ const TemplateItem = ({item, index}) => {
         const aspectRatio = width / height;
         const imageHeight = windowWidth1 / aspectRatio;
         setDimensions({width: windowWidth1, height: imageHeight});
-        console.log('Image dimensions:', width, height, url);
       });
     } catch (error) {
       console.error('Error getting image size:', error);
@@ -79,12 +48,7 @@ const TemplateItem = ({item, index}) => {
   };
   React.useEffect(() => {
     getImageSize(`https://www.adoro.social/Template/Image/${item.fileName}`);
-    console.log('Updated dimensions:', dimensions.width, dimensions.height);
   }, [dimensions]);
-  console.log(
-    'ssssuusshmmaaa',
-    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-  );
   const checkAndRequestPermission = async () => {
     try {
       const permission =
@@ -101,7 +65,6 @@ const TemplateItem = ({item, index}) => {
         if (requestResult === RESULTS.GRANTED) {
           return true;
         } else {
-          console.log('Permission request denied:', requestResult);
           return false;
         }
       }
@@ -140,7 +103,6 @@ const TemplateItem = ({item, index}) => {
           } else {
             Alert.alert('Error', 'Failed to save image to gallery.');
           }
-          console.log('Download successful:', result);
         })
         .catch(error => {
           console.error('Error downloading file:', error);
@@ -176,8 +138,6 @@ const TemplateItem = ({item, index}) => {
               style={[
                 styles.image,
                 {
-                  // width: imageSizes[index]?.width,
-                  // height: imageSizes[index]?.height,
                   width: dimensions.width || windowWidth1,
                   height: dimensions.height || 300,
                 },
@@ -265,14 +225,6 @@ const TemplateItem = ({item, index}) => {
           </>
         )}
         {item.type === 'video' && (
-          //   <Video
-          //     source={{
-          //       uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
-          //     }}
-          //     style={{width: '80%', aspectRatio: 16 / 9}}
-          //     resizeMode="contain"
-          //     controls={true}
-          //   />
           <>
             <Video
               key={index}
@@ -282,8 +234,6 @@ const TemplateItem = ({item, index}) => {
               style={[
                 styles.image,
                 {
-                  // width: imageSizes[index]?.width,
-                  // height: imageSizes[index]?.height,
                   width: dimensions.width || windowWidth1,
                   height: dimensions.height || 300,
                 },
@@ -415,7 +365,6 @@ export default TemplateItem;
 
 const styles = StyleSheet.create({
   image: {
-    // resizeMode: 'contain',
     backgroundColor: 'gray',
     marginTop: 10,
   },

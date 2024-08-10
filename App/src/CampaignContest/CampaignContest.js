@@ -25,7 +25,7 @@ const CampaignContest = ({navigation}) => {
         tabBarStyle: {
           backgroundColor: colors.color_TabBarColor,
         },
-        tabBarActiveTintColor: '#2F65B9', // Set the color for the active tab
+        tabBarActiveTintColor: '#2F65B9',
         tabBarInactiveTintColor: '#6F7F92',
         tabBarLabelStyle: {
           fontFamily: FontFamily.semibold,

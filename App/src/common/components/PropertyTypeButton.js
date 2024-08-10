@@ -43,8 +43,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
-    //marginVertical: 2,
-    //marginHorizontal: 2,
     fontSize: 16,
   },
 });

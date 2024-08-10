@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "264648169552",
-    "project_id": "adoro-creators",
-    "storage_bucket": "adoro-creators.appspot.com"
+    "project_number": "791462657159",
+    "project_id": "adoro-creators-4b29a",
+    "storage_bucket": "adoro-creators-4b29a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:264648169552:android:8b07c4f01593f899c59955",
+        "mobilesdk_app_id": "1:791462657159:android:bf16da3b26c611739a4c22",
         "android_client_info": {
           "package_name": "com.adoro.creators"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD-n9elgFyRO4Je_rpFS54sa7kqeESb2-U"
+          "current_key": "AIzaSyBpqC6hzKQ3iVAOG5WalXyakN76S9gzONc"
         }
       ],
       "services": {

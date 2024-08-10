@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {config} from '../config';
 import {useFocusEffect} from '@react-navigation/native';
-import _ from 'lodash'; // Import lodash for debounce
+import _ from 'lodash';
 import SearchIcon from '../assets/svg/Search';
 import FontFamily from '../common/components/FontFamily';
 import {useTheme} from '@react-navigation/native';
@@ -56,7 +56,6 @@ const Standard = ({navigation}) => {
   const handleOnPress = item => {
    
     const index = data.findIndex(dataItem => dataItem.Id === item.Id);
-    console.log('index isss', index)
     navigation.navigate('Standards', {
       selectedData: item,
       allData: data,

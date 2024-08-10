@@ -167,17 +167,15 @@ export default MemeTemplate;
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    // flex: 1,
     width: 120,
     height: 120,
-    resizeMode: 'cover', // or 'stretch' or 'contain'
+    resizeMode: 'cover',
     alignSelf: 'center',
   },
   foregroundImage: {
     alignSelf: 'center',
-    // top: 30,
-    width: 60, // Adjust the width as needed
-    height: 60, // Adjust the height as needed
-    resizeMode: 'contain', // or 'cover' or 'stretch'
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
   },
 });

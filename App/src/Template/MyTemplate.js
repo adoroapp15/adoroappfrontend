@@ -74,7 +74,6 @@ const MyTemplate = ({navigation}) => {
           params: {user: parsedUser.userName},
         },
       );
-      console.log(res);
       if (res.status == 200) {
         setData(res.data.templates);
         // setData([])
@@ -83,8 +82,6 @@ const MyTemplate = ({navigation}) => {
       console.log('Getting Error');
     }
   };
-
-  console.log('my templatesss iss', data);
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: colors.color_PageColor}}>

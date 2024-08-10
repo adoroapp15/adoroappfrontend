@@ -16,10 +16,8 @@ const CampaignKnowMore = ({navigation, route}) => {
         const userString = await AsyncStorage.getItem('user');
         const otherString = await AsyncStorage.getItem('token');
 
-        console.log('userrrr isssssssss', userString);
         if (userString && otherString) {
           const parsedUser = JSON.parse(userString, otherString);
-          console.log('parsed userrrr isss', parsedUser);
           setProfile(parsedUser);
         }
       } catch (err) {
@@ -43,8 +41,6 @@ const CampaignKnowMore = ({navigation, route}) => {
         console.log('Image Picker error:', response.eror);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
-        console.log('image picker', imageUri);
-        // setProfile(imageUri);
         navigation.navigate('Image Preview', {
           imageUri,
           mediaType: 'image',
@@ -55,7 +51,6 @@ const CampaignKnowMore = ({navigation, route}) => {
     });
   }, []);
   const {campaign} = route.params;
-  console.log('contest is ', profile);
   return (
     <ScrollView>
       <View
