@@ -81,8 +81,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode 13
-        versionName "1.96"
+        versionCode 20
+        versionName "1.985"
     }
     signingConfigs {
          release {
@@ -119,6 +119,9 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation platform('com.google.firebase:firebase-bom:33.1.0')
     implementation 'com.google.firebase:firebase-analytics'
+// implementation('com.google.firebase:firebase-analytics') {
+//     exclude group: 'com.google.android.gms', module: 'play-services-measurement-api'
+// }
  
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
