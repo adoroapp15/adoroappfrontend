@@ -130,7 +130,7 @@ const Search = ({navigation, post}) => {
                   source={
                     item.ProfileDp
                       ? {
-                          uri: `https://www.adoro.social/UserProfilePic/${item.ProfileDp}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${item.ProfileDp}`,
                         }
                       : require('../assets/Profile.png')
                   }
@@ -233,7 +233,7 @@ const Search = ({navigation, post}) => {
                 }}>
                 <Image
                   source={{
-                    uri: `https://marqueberry.com/marqueberrylogofiles/${item.Logo}`,
+                    uri: `https://marqueberrry.s3.ap-south-1.amazonaws.com/marqueberrylogofiles/${item.Logo}`,
                   }}
                   style={{
                     height: 50,
@@ -328,7 +328,7 @@ const Search = ({navigation, post}) => {
                 }}>
                 <Image
                   source={{
-                    uri: `https://www.adoro.social/Contest/${item.fileName}`,
+                    uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Contest/${item.fileName}`,
                   }}
                   style={{
                     height: 50,

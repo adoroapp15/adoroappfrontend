@@ -48,14 +48,14 @@ const MyTemplates = ({item}) => {
     }
   };
   React.useEffect(() => {
-    getImageSize(`https://www.adoro.social/UserTemplate/${item.fileName}`);
+    getImageSize(`https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserTemplate/${item.fileName}`);
   }, [dimensions]);
   return (
     <ScrollView>
       <View style={{flex: 1}}>
         <Image
           source={{
-            uri: `https://www.adoro.social/UserTemplate/${item.fileName}`,
+            uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserTemplate/${item.fileName}`,
           }}
           style={{
             width: dimensions.width || windowWidth,

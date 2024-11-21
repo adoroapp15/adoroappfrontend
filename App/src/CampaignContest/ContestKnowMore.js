@@ -13,7 +13,7 @@ const ContestKnowMore = ({navigation, route}) => {
   const [profile, setProfile] = React.useState({});
   const {colors} = useTheme();
 
-  const imagePick = (contestName, userName) => {
+  const imagePick = (contestName, userName, mobileNo) => {
     const options = {
       selectionLimit: 1,
       mediaType: 'image',
@@ -31,7 +31,9 @@ const ContestKnowMore = ({navigation, route}) => {
           imageUri,
           mediaType: 'image',
           contestName,
+          mobileNo,
           userName,
+          mediaOption: 'image',         
         });
       }
     });
@@ -101,7 +103,7 @@ const ContestKnowMore = ({navigation, route}) => {
             <Image
               style={{height: 50, width: 50, borderRadius: 99}}
               source={{
-                uri: `https://www.adoro.social/Contest/${campaign.fileName}`,
+                uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Contest/${campaign.fileName}`,
               }}
             />
             <View style={{flexDirection: 'column'}}>
@@ -138,7 +140,7 @@ const ContestKnowMore = ({navigation, route}) => {
             style={{
               margin: 10,
             }}
-            onPress={() => imagePick(campaign.contestName, profile.userName)}>
+            onPress={() => imagePick(campaign.contestName, profile.userName, profile.mobileNo)}>
             <LinearGradient
               colors={[
                 'rgba(0,255,255,0.4)',

@@ -112,7 +112,7 @@ const Standard = ({navigation}) => {
                 <Image
                   key={index}
                   source={{
-                    uri: `https://www.adoro.social/Template/Image/${item.fileName}`,
+                    uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Template/Image/${item.fileName}`,
                   }}
                   style={styles.templateImage}
                 />

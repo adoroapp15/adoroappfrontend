@@ -154,7 +154,7 @@
 //   // setIsliked(userlike.some(like => like.postId === post.Id))
 //   const handleCopyToClipboard = () => {
 //     Clipboard.setString(
-//       `https://www.adoro.social/UserPost/${selectedPost.fileName}`,
+//       `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${selectedPost.fileName}`,
 //     );
 //     Alert.alert('Clipboard copied');
 //   };
@@ -164,7 +164,7 @@
 //       source={
 //         profile
 //           ? {
-//               uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+//               uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
 //             }
 //           : require('../assets/Profile.png')
 //       }
@@ -321,7 +321,7 @@
 //   const handleShare = async () => {
 //     try {
 //       await Share.share({
-//         message: `https://www.adoro.social/UserPost/${post.fileName}`,
+//         message: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`,
 //       });
 //     } catch (error) {
 //       console.error('Error sharing:', error.message);
@@ -358,7 +358,7 @@
 //     }
 //   };
 //   useEffect(() => {
-//     getImageSize(`https://www.adoro.social/UserPost/${post.fileName}`);
+//     getImageSize(`https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`);
 //   }, [dimensions]);
 
 //   const handlenavigation = async (mobileNo, profile) => {
@@ -452,7 +452,7 @@
 //                   source={
 //                     post.profile
 //                       ? {
-//                           uri: `https://www.adoro.social/UserProfilePic/${post.profile}`,
+//                           uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${post.profile}`,
 //                         }
 //                       : require('../assets/Profile.png')
 //                   }
@@ -528,7 +528,7 @@
 //                   alignSelf: 'center',
 //                 }}
 //                 source={{
-//                   uri: `https://www.adoro.social/UserPost/${post.fileName}`,
+//                   uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`,
 //                   priority: FastImage.priority.high,
 //                 }}
 //                 // resizeMode={FastImage.resizeMode.contain}
@@ -546,7 +546,7 @@
 //                 <Video
 //                   ref={videoRef}
 //                   source={{
-//                     uri: `https://www.adoro.social/UserPost/${post.fileName}`,
+//                     uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`,
 //                     // uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
 //                   }}
 //                   style={{
@@ -999,7 +999,7 @@ const Post = ({
   // setIsliked(userlike.some(like => like.postId === post.Id))
   const handleCopyToClipboard = () => {
     Clipboard.setString(
-      `https://www.adoro.social/UserPost/${selectedPost.fileName}`,
+      `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${selectedPost.fileName}`,
     );
     Alert.alert('Clipboard copied');
   };
@@ -1009,7 +1009,7 @@ const Post = ({
       source={
         profile
           ? {
-              uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+              uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
             }
           : require('../assets/Profile.png')
       }
@@ -1057,47 +1057,124 @@ const Post = ({
     }
   };
 
-  const getTimeDifference = postDateTime => {
-    // Split the date-time string into date and time parts
-    const [datePart, timePart] = postDateTime.split('_');
-    // Split the date part into year, month, and day
-    const [year, month, day] = datePart.split('-').map(Number);
-    // Split the time part into hours, minutes, and seconds
-    const [hoursPart, minutesPart, secondsPart] = timePart
-      .split(':')
-      .map(Number);
-    // Create a Date object using the extracted date and time components
-    const postDate = new Date(
-      year,
-      month - 1,
-      day,
-      hoursPart,
-      minutesPart,
-      secondsPart,
-    );
+const getTimeDifference = postDateTime => {
 
-    // Get current date and time in IST
-    const currentDate = new Date();
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
-    const currentIST = new Date(currentDate.getTime() + istOffset);
+  // Split the date-time string into date and time parts
 
-    const differenceInSeconds = Math.floor((currentIST - postDate) / 1000);
-    const days = Math.floor(differenceInSeconds / (24 * 3600));
-    const remainingHours = Math.floor(
-      (differenceInSeconds % (24 * 3600)) / 3600,
-    );
-    const remainingMinutes = Math.floor((differenceInSeconds % 3600) / 60);
-    const remainingSeconds = differenceInSeconds % 60;
-    if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else if (remainingHours > 0) {
-      return `${remainingHours} hour${remainingHours > 1 ? 's' : ''} ago`;
-    } else if (remainingMinutes > 0) {
-      return `${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''} ago`;
-    } else {
-      return `${remainingSeconds} second${remainingSeconds > 1 ? 's' : ''} ago`;
-    }
-  };
+  const [datePart, timePart] = postDateTime.split('_');
+
+  // Split the date part into year, month, and day
+
+  const [year, month, day] = datePart.split('-').map(Number);
+
+  // Split the time part into hours, minutes, and seconds
+
+  const [hoursPart, minutesPart, secondsPart] = timePart.split(':').map(Number);
+
+  // Create a Date object using the extracted date and time components
+
+  const postDate = new Date(
+
+    year,
+
+    month - 1,
+
+    day,
+
+    hoursPart,
+
+    minutesPart,
+
+    secondsPart
+
+  );
+ 
+  // Get current date and time in IST
+
+  const currentDate = new Date();
+
+  const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
+
+  const currentIST = new Date(currentDate.getTime() + istOffset);
+ 
+  // Calculate the difference in total seconds
+
+  const differenceInSeconds = Math.floor((currentIST - postDate) / 1000);
+ 
+  // Constants for time calculations
+
+  const secondsInMinute = 60;
+
+  const secondsInHour = 3600;
+
+  const secondsInDay = 86400;
+
+  const secondsInWeek = 7 * secondsInDay;
+
+  const secondsInMonth = 30 * secondsInDay; // Approximation of a month
+ 
+  // Calculate months
+
+  const months = Math.floor(differenceInSeconds / secondsInMonth);
+
+  const remainingAfterMonths = differenceInSeconds % secondsInMonth;
+ 
+  // Calculate weeks
+
+  const weeks = Math.floor(remainingAfterMonths / secondsInWeek);
+
+  const remainingAfterWeeks = remainingAfterMonths % secondsInWeek;
+ 
+  // Calculate days
+
+  const days = Math.floor(remainingAfterWeeks / secondsInDay);
+
+  const remainingAfterDays = remainingAfterWeeks % secondsInDay;
+ 
+  // Calculate hours
+
+  const hours = Math.floor(remainingAfterDays / secondsInHour);
+
+  const remainingAfterHours = remainingAfterDays % secondsInHour;
+ 
+  // Calculate minutes
+
+  const minutes = Math.floor(remainingAfterHours / secondsInMinute);
+ 
+  // Calculate remaining seconds
+
+  const seconds = remainingAfterHours % secondsInMinute;
+ 
+  // Generate the appropriate time difference message
+
+  if (months > 0) {
+
+    return `${months} month${months > 1 ? 's' : ''} ago`;
+
+  } else if (weeks > 0) {
+
+    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+
+  } else if (days > 0) {
+
+    return `${days} day${days > 1 ? 's' : ''} ago`;
+
+  } else if (hours > 0) {
+
+    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+
+  } else if (minutes > 0) {
+
+    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+
+  } else {
+
+    return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+
+  }
+
+};
+
 
   const getlike = async () => {
     const getlike = await axios.get(`${config.production}/app/user/getlikes`, {
@@ -1168,7 +1245,7 @@ const Post = ({
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `https://www.adoro.social/UserPost/${post.fileName}`,
+        message: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`,
       });
     } catch (error) {
       console.error('Error sharing:', error.message);
@@ -1205,7 +1282,7 @@ const Post = ({
     }
   };
   useEffect(() => {
-    getImageSize(`https://www.adoro.social/UserPost/${post.fileName}`);
+    getImageSize(`https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`);
   }, [dimensions]);
 
   const handlenavigation = async (mobileNo, profile) => {
@@ -1220,35 +1297,21 @@ const Post = ({
   };
 
   const handleLike = async () => {
-    if (isliked) {
-      const unlikeres = await axios.delete(
-        `${config.production}/app/user/unlike`,
-        {
-          params: {
-            postId: post.Id,
-            userId: user.Id,
-          },
-        },
-      );
-      if (unlikeres.status == 200) {
-        setIsliked(false);
-        setLikecount(prevCount => prevCount - 1); // <-- Corrected line
+    // Only perform the hit-like action without checking if it's already liked
+    const likeres = await axios.post(
+      `${config.production}/app/user/hitlike`,
+      {
+        postId: post.Id,
+        userId: user.Id,
+        userName: user.userName,
       }
-    } else {
-      const unlikeres = await axios.post(
-        `${config.production}/app/user/hitlike`,
-        {
-          postId: post.Id,
-          userId: user.Id,
-          userName: user.userName,
-        },
-      );
-      if (unlikeres.status == 200) {
-        setIsliked(true); // <-- Corrected line
-        setLikecount(prevCount => prevCount + 1); // <-- Corrected line
-      }
+    );
+    if (likeres.status == 200) {
+      setIsliked(true); // Mark as liked
+      setLikecount(prevCount => prevCount + 1); // Increment like count
     }
   };
+  
   const handleblock = useCallback(async () => {
     const blockres = await axios.post(`${config.production}/app/user/block`, {
       BlockedUserName: post.userName,
@@ -1312,7 +1375,7 @@ const Post = ({
                   source={
                     post.profile
                       ? {
-                          uri: `https://www.adoro.social/UserProfilePic/${post.profile}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${post.profile}`,
                         }
                       : require('../assets/Profile.png')
                   }
@@ -1388,7 +1451,7 @@ const Post = ({
                   alignSelf: 'center',
                 }}
                 source={{
-                  uri: `https://www.adoro.social/UserPost/${post.fileName}`,
+                  uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`,
                   priority: FastImage.priority.high,
                 }}
                 // resizeMode={FastImage.resizeMode.contain}
@@ -1406,7 +1469,7 @@ const Post = ({
                 <Video
                   ref={videoRef}
                   source={{
-                    uri: `https://www.adoro.social/UserPost/${post.fileName}`,
+                    uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${post.fileName}`,
                     // uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
                   }}
                   style={{
@@ -1509,7 +1572,7 @@ const Post = ({
                       //  />
                       <Image 
                       source={require('../assets/clapping.png')}
-                      style={{height:24,width:24, color:colors.arrow}}
+                      style={{height:24,width:24, color: colors.color_TextNormal}}
                       />
                     )}
                   </TouchableOpacity>
@@ -1526,7 +1589,16 @@ const Post = ({
                     profile: user.ProfileDp,
                   })
                 }>
-                <CommentIcon color={colors.arrow} />
+                  <LottieView
+                        style={{height: 35, width: 35, bottom:5}}
+                        //  size={30}
+                        source={require('../assets/skull.json')}
+                        autoPlay
+                        // loop={false}
+                        //  loop // Play only once
+
+                        // loop
+                      />
               </TouchableOpacity>
               <TouchableOpacity onPress={handleShare}>
                 <ShareIcon color={colors.arrow} />
@@ -1546,7 +1618,7 @@ const Post = ({
                   marginRight: 8,
                   fontFamily: FontFamily.semibold,
                 }}>
-                {commentcount} comments
+                {commentcount} roasts
               </Text>
             </TouchableOpacity>
           </View>

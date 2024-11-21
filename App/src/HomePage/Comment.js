@@ -163,7 +163,7 @@
 //                   source={
 //                     profile
 //                       ? {
-//                           uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+//                           uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
 //                         }
 //                       : require('../assets/Profile.png')
 //                   }
@@ -286,7 +286,7 @@
 //                               source={
 //                                 profile
 //                                   ? {
-//                                       uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+//                                       uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
 //                                     }
 //                                   : require('../assets/Profile.png')
 //                               }
@@ -401,7 +401,7 @@
 //                 source={
 //                   profile
 //                     ? {
-//                         uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+//                         uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
 //                       }
 //                     : require('../assets/Profile.png')
 //                 }
@@ -682,7 +682,7 @@ const Comment = ({navigation, route}) => {
                   source={
                     profile
                       ? {
-                          uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                         }
                       : require('../assets/Profile.png')
                   }
@@ -805,7 +805,7 @@ const Comment = ({navigation, route}) => {
                               source={
                                 profile
                                   ? {
-                                      uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                                      uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                                     }
                                   : require('../assets/Profile.png')
                               }
@@ -876,7 +876,7 @@ const Comment = ({navigation, route}) => {
             alignSelf: 'center',
             fontSize: Size.tabtext,
           }}>
-          Comment
+          🔥 Roast section
         </Text>
       </View>
       <View style={{flex: 1, backgroundColor: colors.color_PageColor}}>
@@ -920,7 +920,7 @@ const Comment = ({navigation, route}) => {
                 source={
                   profile
                     ? {
-                        uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                       }
                     : require('../assets/Profile.png')
                 }
@@ -938,7 +938,7 @@ const Comment = ({navigation, route}) => {
                 autoFocus={true}
                 onChangeText={handleTextInputChange}
                 value={chat} // Bind the value of the text input
-                placeholder="Write A Comment.."
+                placeholder="Type your roast here!"
                 placeholderTextColor={colors.color_PlaceHolderColor}
               />
               <TouchableOpacity

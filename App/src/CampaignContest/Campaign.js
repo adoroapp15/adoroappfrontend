@@ -714,7 +714,7 @@ const Campaign = ({ navigation }) => {
   const [campaignData, setCampaignData] = useState([]); // Initialize with an empty array
 
   const imagePick = useCallback(
-    (campaign_name, userName) => {
+    (campaign_name, userName, mobileNo) => {
       const options = {
         selectionLimit: 1,
         mediaType: 'image',
@@ -731,6 +731,7 @@ const Campaign = ({ navigation }) => {
             imageUri,
             mediaType: 'image',
             campaign_name,
+            mobileNo,
             userName,
             mediaOption: 'image',
           });
@@ -745,7 +746,7 @@ const Campaign = ({ navigation }) => {
       style={{ marginLeft: -10 }}
       size={50}
       source={{
-        uri: `https://marqueberry.com/marqueberrylogofiles/${campaign.Logo}`,
+        uri: `https://marqueberrry.s3.ap-south-1.amazonaws.com/marqueberrylogofiles/${campaign.Logo}`,
       }}
     />
   );
@@ -774,6 +775,7 @@ const Campaign = ({ navigation }) => {
         if (userString && otherString) {
           const parsedUser = JSON.parse(userString, otherString);
           setProfile(parsedUser);
+          console.log('lmnop', parsedUser);    
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -798,7 +800,7 @@ const Campaign = ({ navigation }) => {
 
   const handleUploadImage = () => {
     setModalVisible(false);
-    imagePick(selectedcampaign.campaign_name, profile.userName);
+    imagePick(selectedcampaign.campaign_name, profile.userName, profile.mobileNo);
   };
 
   const handleUploadLink = () => {
@@ -841,6 +843,21 @@ const Campaign = ({ navigation }) => {
                   fontFamily: FontFamily.semibold,
                 }}>
                 {truncateText(campaign.brand_guidlines, 10)}
+              </Text>
+              <Text
+                variant="titleLarge"
+                style={{
+                  color: colors.color_TextNormal,
+                  fontFamily: FontFamily.semibold,
+                }}>
+              </Text>
+              <Text
+                variant="titleLarge"
+                style={{
+                  color: colors.color_TextNormal,
+                  fontFamily: FontFamily.semibold,
+                }}>
+                Number of applicants : 10
               </Text>
             </Card.Content>
             <Card.Actions>

@@ -328,7 +328,7 @@ import BackArrow from '../assets/svg/BackArrow';
 import FontFamily from '../common/components/FontFamily';
 
 const ImagePreview = ({ navigation, route }) => {
-  const { imageUri, mediaType, campaign_name, userName, mediaOption } = route.params;
+  const { imageUri, mediaType, campaign_name, mobileNo, userName, mediaOption } = route.params;
   const { dark, toggleTheme } = useStore();
   const { colors } = useTheme();
   const [submitted, setSubmitted] = useState(false);
@@ -352,6 +352,8 @@ const ImagePreview = ({ navigation, route }) => {
       }
       formData.append('campaign_name', campaign_name);
       formData.append('userName', userName);
+      formData.append('mobileNo', mobileNo);
+
 
       const response = await axios.post(
         `${config.production}/app/user/applycampaign`,

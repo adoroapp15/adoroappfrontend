@@ -77,7 +77,6 @@
 
 // export default TrendingTemplates;
 
-
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, ActivityIndicator} from 'react-native';
 import {useTheme} from '@react-navigation/native';
@@ -85,7 +84,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Post from './Post';
 import {config} from '../config';
- 
+
 const TrendingTemplates = React.forwardRef(
   ({navigation, userId}, ref, props) => {
     const [data, setData] = useState([]);
@@ -93,15 +92,16 @@ const TrendingTemplates = React.forwardRef(
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const {colors} = useTheme();
- 
+
     const PAGE_SIZE = 20; // Number of templates per page
- 
+
     const gettemplates = async (currentOffset = 0) => {
       console.log(`Fetching templates: offset ${currentOffset}`);
       setLoading(true);
       const userString = await AsyncStorage.getItem('user');
       if (userString) {
         const parsedUser = JSON.parse(userString);
+        console.log('parsed userrrrrrr', parsedUser);
         try {
           const response = await axios.get(
             `${config.production}/app/user/getallpost`,
@@ -116,6 +116,7 @@ const TrendingTemplates = React.forwardRef(
           if (response.status === 200) {
             const newPosts = response.data.posts;
             console.log(`Fetched ${newPosts.length} posts`);
+            console.log(userId, PAGE_SIZE, offset);
             setData(prevData =>
               currentOffset === 0 ? newPosts : [...prevData, ...newPosts],
             );
@@ -131,26 +132,26 @@ const TrendingTemplates = React.forwardRef(
       }
       setLoading(false);
     };
- 
+
     const handleHidePost = postId => {
       setData(data.filter(post => post.Id !== postId));
     };
- 
+
     const handleBlockPost = userName => {
       setData(data.filter(post => post.userName !== userName));
     };
- 
+
     const loadMoreData = () => {
       if (!loading && hasMore) {
         console.log('Loading more data');
         setOffset(prevOffset => prevOffset + PAGE_SIZE);
       }
     };
- 
+
     useEffect(() => {
       gettemplates(offset);
     }, [offset]);
- 
+
     return (
       <>
         <View
@@ -181,6 +182,5 @@ const TrendingTemplates = React.forwardRef(
     );
   },
 );
- 
+
 export default TrendingTemplates;
- 

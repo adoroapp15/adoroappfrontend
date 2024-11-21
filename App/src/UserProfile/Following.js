@@ -43,7 +43,7 @@ const Following = props => {
             source={
               followerData.ProfileDp
                 ? {
-                    uri: `https://www.adoro.social/UserProfilePic/${followerData.ProfileDp}`,
+                    uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${followerData.ProfileDp}`,
                   }
                 : require('../assets/image.png')
             }

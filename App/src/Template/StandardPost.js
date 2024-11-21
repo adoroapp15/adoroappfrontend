@@ -48,7 +48,7 @@ const StandardPost = ({navigation, item, index}) => {
     }
   };
   useEffect(() => {
-    getImageSize(`https://www.adoro.social/Template/Image/${item.fileName}`);
+    getImageSize(`https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Template/Image/${item.fileName}`);
   }, [dimensions]);
   const onEndReached = () => {
     if (hasMore && !loading) {
@@ -173,7 +173,7 @@ const StandardPost = ({navigation, item, index}) => {
               },
             ]}
             source={{
-              uri: `https://www.adoro.social/Template/Image/${item.fileName}`,
+              uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Template/Image/${item.fileName}`,
             }}
           />
 
@@ -188,7 +188,7 @@ const StandardPost = ({navigation, item, index}) => {
             <TouchableOpacity
               onPress={() =>
                 shareOnWhatsApp(
-                  `https://www.adoro.social/Template/Image/${item.fileName}`,
+                  `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Template/Image/${item.fileName}`,
                 )
               }>
               <LinearGradient
@@ -222,7 +222,7 @@ const StandardPost = ({navigation, item, index}) => {
             <TouchableOpacity
               onPress={() =>
                 handleDownload(
-                  `https://www.adoro.social/Template/Image/${item.fileName}`,
+                  `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Template/Image/${item.fileName}`,
                 )
               }>
               <LinearGradient

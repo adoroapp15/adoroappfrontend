@@ -96,7 +96,7 @@
  
 //   const handleCopyToClipboard = () => {
 //     Clipboard.setString(
-//       `https://www.adoro.social/UserPost/${selectedPost.fileName}`,
+//       `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${selectedPost.fileName}`,
 //     );
 //     Alert.alert('Clipboard copied');
 //   };
@@ -146,7 +146,7 @@
 //         <Avatar.Image
 //           size={40}
 //           style={{}}
-//           source={{uri: `https://www.adoro.social/UserProfilePic/${profile}`}}
+//           source={{uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`}}
 //         />
 //       </TouchableOpacity>
 //     </View>
@@ -575,7 +575,7 @@ const HomePage = ({navigation, route}) => {
 
   const handleCopyToClipboard = () => {
     Clipboard.setString(
-      `https://www.adoro.social/UserPost/${selectedPost.fileName}`,
+      `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${selectedPost.fileName}`,
     );
     Alert.alert('Clipboard copied');
   };
@@ -625,7 +625,7 @@ const HomePage = ({navigation, route}) => {
         <Avatar.Image
           size={40}
           style={{}}
-          source={{uri: `https://www.adoro.social/UserProfilePic/${profile}`}}
+          source={{uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`}}
         />
       </TouchableOpacity>
     </View>

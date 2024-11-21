@@ -52,7 +52,7 @@
 //       style={{marginLeft: -10}}
 //       size={50}
 //       source={{
-//         uri: `https://www.adoro.social/Contest/${campaign.fileName}`,
+//         uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Contest/${campaign.fileName}`,
 //       }}
 //     />
 //   );
@@ -367,7 +367,7 @@ const Contest = ({navigation}) => {
   const [campaignData, setCampaignData] = useState([]);
   const {colors} = useTheme();
 
-  const imagePick = (contestName, userName) => {
+  const imagePick = (contestName, userName, mobileNo) => {
     const options = {
       selectionLimit: 1,
       mediaType: 'image',
@@ -384,7 +384,9 @@ const Contest = ({navigation}) => {
           imageUri,
           mediaType: 'image',
           contestName,
+          mobileNo,
           userName,
+          mediaOption: 'image',
         });
       }
     });
@@ -395,7 +397,7 @@ const Contest = ({navigation}) => {
       style={{marginLeft: -10}}
       size={50}
       source={{
-        uri: `https://www.adoro.social/Contest/${campaign.fileName}`,
+        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Contest/${campaign.fileName}`,
       }}
     />
   );
@@ -462,7 +464,7 @@ const Contest = ({navigation}) => {
                 <TouchableOpacity
                   onPress={() => {
                     setSelectedcampaign(campaign);
-                    imagePick(campaign.contestName, profile.userName);
+                    imagePick(campaign.contestName, profile.userName, profile.mobileNo);
                   }}>
                   <LinearGradient
                     colors={[
