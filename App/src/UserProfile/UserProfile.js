@@ -142,7 +142,7 @@ const UserProfile = ({navigation, route}) => {
                   <Image
                     key={index}
                     source={{
-                      uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                      uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                     }}
                     style={{width: '100%', height: '100%', borderRadius: 12}}
                   />
@@ -155,7 +155,7 @@ const UserProfile = ({navigation, route}) => {
                     <Video
                       key={index}
                       source={{
-                        uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                       }}
                       style={{width: '100%', height: '100%', borderRadius: 12}}
                       resizeMode="cover"
@@ -454,7 +454,7 @@ const UserProfile = ({navigation, route}) => {
                       <Image
                         key={index}
                         source={{
-                          uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                         }}
                         style={{
                           width: '100%',
@@ -473,7 +473,7 @@ const UserProfile = ({navigation, route}) => {
                         <Video
                           key={index}
                           source={{
-                            uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                            uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                           }}
                           style={{
                             width: '100%',
@@ -559,7 +559,7 @@ const UserProfile = ({navigation, route}) => {
                       <Image
                         key={index}
                         source={{
-                          uri: `https://www.adoro.social/UserTemplate/${item.fileName}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserTemplate/${item.fileName}`,
                         }}
                         style={{
                           width: '100%',
@@ -593,7 +593,7 @@ const UserProfile = ({navigation, route}) => {
                   source={
                     user.wallPaper
                       ? {
-                          uri: `https://www.adoro.social/UserWallpaper/${user.wallPaper}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserWallpaper/${user.wallPaper}`,
                         }
                       : require('../assets/Background.png')
                   }
@@ -643,7 +643,7 @@ const UserProfile = ({navigation, route}) => {
                   source={
                     profile
                       ? {
-                          uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                         }
                       : require('../assets/Profile.png')
                   }
@@ -849,7 +849,7 @@ const UserProfile = ({navigation, route}) => {
                 source={
                   profile
                     ? {
-                        uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                       }
                     : require('../assets/Profile.png')
                 }

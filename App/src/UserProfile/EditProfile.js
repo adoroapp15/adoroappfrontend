@@ -217,7 +217,7 @@ const EditProfile = ({route, navigation}) => {
                   source={
                     profile
                       ? {
-                          uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                         }
                       : require('../assets/profileImage.png')
                   }

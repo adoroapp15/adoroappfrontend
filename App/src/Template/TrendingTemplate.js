@@ -116,7 +116,7 @@ const TrendingTemplate = ({navigation}) => {
                   <Image
                     key={index}
                     source={{
-                      uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                      uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
                     }}
                     style={styles.templateImage}
                   />
@@ -133,7 +133,7 @@ const TrendingTemplate = ({navigation}) => {
                     <Video
                       key={index}
                       source={{
-                        uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
                       }}
                       style={{width: '100%', height: '100%', borderRadius: 12}}
                       resizeMode="cover"

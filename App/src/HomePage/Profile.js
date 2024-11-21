@@ -51,7 +51,7 @@ const UserProfile = ({navigation,route}) => {
   const [hasMore, setHasMore] = useState(true);
   const [accountType, setaccountType] = useState(1);
   const [follow, setFollow] = useState(false);
-  const {mobileNo, profil} = route.params || {};
+  const {mobileNo} = route.params || {};
   const [follower, setFollower] = useState([]);
   const [following, setFollowing] = useState([]);
   const [isPlaying, setIsPlaying] = React.useState({});
@@ -106,7 +106,7 @@ const UserProfile = ({navigation,route}) => {
                   <Image
                     key={index}
                                         source={{
-                                          uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                                         }}
                                         style={{width: '100%', height: '100%', borderRadius: 12}}
                   />
@@ -119,7 +119,7 @@ const UserProfile = ({navigation,route}) => {
                     <Video
                       key={index}
                       source={{
-                        uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                       }}
                       style={{width: '100%', height: '100%', borderRadius: 12}}
                       resizeMode="cover"
@@ -427,7 +427,7 @@ const renderTabBar = props => (
                   <Image
                     key={index}
                     source={{
-                      uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                      uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                     }}
                     style={{width: '100%', height: '100%', borderRadius: 12}}
                   />
@@ -440,7 +440,7 @@ const renderTabBar = props => (
                     <Video
                       key={index}
                       source={{
-                        uri: `https://www.adoro.social/UserPost/${item.fileName}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserPost/${item.fileName}`,
                       }}
                       style={{width: '100%', height: '100%', borderRadius: 12}}
                       resizeMode="cover"
@@ -511,7 +511,7 @@ const renderTabBar = props => (
                   source={
                                       user.wallPaper
                                         ? {
-                                            uri: `https://www.adoro.social/UserWallpaper/${user.wallPaper}`,
+                                            uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserWallpaper/${user.wallPaper}`,
                                           }
                                         : require('../assets/Background.png')
                                     }
@@ -529,7 +529,7 @@ const renderTabBar = props => (
                 source={
                   profile
                     ? {
-                        uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                       }
                     : require('../assets/Profile.png')
                 }
@@ -768,7 +768,7 @@ const renderTabBar = props => (
                 source={
                   profile
                     ? {
-                        uri: `https://www.adoro.social/UserProfilePic/${profile}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`,
                       }
                     : require('../assets/Profile.png')
                 }

@@ -79,7 +79,7 @@ const UserPost = ({route}) => {
         <Avatar.Image
           size={50}
           style={{right: 10}}
-          source={{uri: `https://www.adoro.social/UserProfilePic/${profile}`}}
+          source={{uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`}}
         />
       </TouchableOpacity>
     </View>

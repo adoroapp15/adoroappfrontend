@@ -47,7 +47,7 @@ const TemplateItem = ({item, index}) => {
     }
   };
   React.useEffect(() => {
-    getImageSize(`https://www.adoro.social/Template/Image/${item.fileName}`);
+    getImageSize(`https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Template/Image/${item.fileName}`);
   }, [dimensions]);
   const checkAndRequestPermission = async () => {
     try {
@@ -143,7 +143,7 @@ const TemplateItem = ({item, index}) => {
                 },
               ]}
               source={{
-                uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
               }}
             />
             <View
@@ -157,7 +157,7 @@ const TemplateItem = ({item, index}) => {
               <TouchableOpacity
                 onPress={() =>
                   shareOnWhatsApp(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                    `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
                   )
                 }>
                 <LinearGradient
@@ -191,7 +191,7 @@ const TemplateItem = ({item, index}) => {
               <TouchableOpacity
                 onPress={() =>
                   handleDownload(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                    `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
                   )
                 }>
                 <LinearGradient
@@ -229,7 +229,7 @@ const TemplateItem = ({item, index}) => {
             <Video
               key={index}
               source={{
-                uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
               }}
               style={[
                 styles.image,
@@ -288,7 +288,7 @@ const TemplateItem = ({item, index}) => {
               <TouchableOpacity
                 onPress={() =>
                   shareOnWhatsApp(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                    `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
                   )
                 }>
                 <LinearGradient
@@ -322,7 +322,7 @@ const TemplateItem = ({item, index}) => {
               <TouchableOpacity
                 onPress={() =>
                   handleDownload(
-                    `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                    `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
                   )
                 }>
                 <LinearGradient

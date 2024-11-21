@@ -88,12 +88,14 @@ const Wallet = ({navigation}) => {
             const walletres = await axios.get(
               `${config.production}/app/user/getbalance`,
               {
-                params: {userId: userdetail.Id},
+                params: {userId: response.data.data.Id},
               },
             );
-  console.log(walletres.data.balance, 'sssssjjj');
-            if (walletres.status === 200) {
-              setAmt(walletres.data.balance);
+  console.log(walletres.data.balance, walletres.data, response.data.data.Id,'sssssjjj');
+  console.log('pfpfppfpf', walletres.data)         
+  if (walletres.status === 200) {
+              setAmt(walletres.data.balance.balance);
+              
             }
           } else {
             setProfile(null);
@@ -151,7 +153,7 @@ const Wallet = ({navigation}) => {
         <Image
           source={
             profile
-              ? {uri: `https://www.adoro.social/UserProfilePic/${profile}`}
+              ? {uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${profile}`}
               : require('../assets/Profile.png')
           }
           style={styles.image1}
@@ -178,6 +180,7 @@ const Wallet = ({navigation}) => {
             top: 260,
           }}>
           {`${amt}C`}
+          {console.log('ooo', `${amt}C`)}
         </Text>
         <TouchableOpacity
           style={{margin: 90, marginTop: 250}}

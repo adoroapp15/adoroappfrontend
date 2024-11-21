@@ -114,7 +114,7 @@ const Notification = ({navigation}) => {
                   source={
                     item.Dp
                       ? {
-                          uri: `https://www.adoro.social/UserProfilePic/${item.Dp}`,
+                          uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${item.Dp}`,
                         }
                       : require('../assets/Profile.png')
                   }

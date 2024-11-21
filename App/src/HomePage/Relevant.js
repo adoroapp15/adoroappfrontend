@@ -157,7 +157,8 @@ const Relevant = React.forwardRef(({navigation}, ref) => {
       {data.length === 0 && !loading && (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{color: colors.color_Logintext}}>
-            No posts to show. Follow someone to see their posts here.
+            Looks a little empty here! Follow creators to start seeing their
+            awesome posts
           </Text>
         </View>
       )}

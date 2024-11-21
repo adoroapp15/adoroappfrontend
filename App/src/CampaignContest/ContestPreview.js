@@ -18,7 +18,7 @@ import useStore from '../store';
 import BackArrow from '../assets/svg/BackArrow';
 
 const ContestPreview = ({navigation, route}) => {
-  const {imageUri, mediaType, contestName, userName} = route.params;
+  const {imageUri, mediaType, contestName, mobileNo, userName} = route.params;
   const {dark, toggleTheme} = useStore();
   const {colors} = useTheme();
 
@@ -34,6 +34,7 @@ const ContestPreview = ({navigation, route}) => {
       });
       formData.append('contestName', contestName);
       formData.append('userName', userName);
+      formData.append('mobileNo', mobileNo);
       const response = await axios.post(
         `${config.production}/app/user/applycontest`,
         formData,

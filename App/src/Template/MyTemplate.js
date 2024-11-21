@@ -122,7 +122,7 @@ const MyTemplate = ({navigation}) => {
                 {item && item.fileName && (
                   <Image
                     source={{
-                      uri: `https://www.adoro.social/UserTemplate/${item.fileName}`,
+                      uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserTemplate/${item.fileName}`,
                     }}
                     style={{height: 100, width: 100, margin: 5}}
                   />

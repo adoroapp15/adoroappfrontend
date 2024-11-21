@@ -147,6 +147,8 @@ const CreatePost = ({navigation}) => {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
         },
       );
 
@@ -225,31 +227,66 @@ const CreatePost = ({navigation}) => {
       });
   }, []);
 
+  // const openImagePicker = useCallback(() => {
+  //   ImagePicker.openPicker({
+  //     mediaType: 'video',
+  //     compressVideoPreset: 'MediumQuality', // Adjust compression quality if needed
+  //   })
+  //     .then(async video => {
+  //       if (!video) {
+  //         console.log('User Cancelled Video picker');
+  //         return;
+  //       }
+  //       const videoUri = video.path;
+  //       setVideoUri(videoUri);
+  //       setSelectedpost({
+  //         uri: videoUri,
+  //         type: video.mime,
+  //         fileName: 'vfdgfdgfd',
+  //       });
+  //       setVisible(false);
+  //     })
+  //     .catch(error => {
+  //       console.log('Video Picker error:', error);
+  //     });
+  // }, []);
+
   const openImagePicker = useCallback(() => {
     ImagePicker.openPicker({
       mediaType: 'video',
-      compressVideoPreset: 'MediumQuality', // Adjust compression quality if needed
+      compressVideoPreset: 'LowQuality',
     })
       .then(async video => {
         if (!video) {
           console.log('User Cancelled Video picker');
           return;
         }
+     
         const videoUri = video.path;
-
-        setVideoUri(videoUri);
-        setSelectedpost({
-          uri: videoUri,
-          type: video.mime,
-          fileName: 'vfdgfdgfd',
-        });
-        setVisible(false);
+        try {
+          const videoSize = await RNFS.stat(videoUri).then(fileStat => fileStat.size);
+     
+          if (videoSize > 1000000000) {
+            Alert.alert('Video size exceeds the limit (100MB). Please choose a smaller video.');
+            return;
+          }
+     
+          setVideoUri(videoUri);
+          setSelectedpost({
+            uri: videoUri,
+            type: video.mime,
+            fileName: 'vfdgfdgfd',
+          });
+          setVisible(false);
+        } catch (error) {
+          console.log('Error while validating video size:', error);
+        }
       })
       .catch(error => {
         console.log('Video Picker error:', error);
       });
   }, []);
-
+  
   const gifpick = useCallback(() => {
     ImagePicker.openPicker({
       mediaType: 'photo',
@@ -444,7 +481,7 @@ const CreatePost = ({navigation}) => {
                 source={
                   pro.ProfileDp
                     ? {
-                        uri: `https://www.adoro.social/UserProfilePic/${pro.ProfileDp}`,
+                        uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/UserProfilePic/${pro.ProfileDp}`,
                       }
                     : require('../assets/Profile.png')
                 }

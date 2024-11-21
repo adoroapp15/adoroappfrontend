@@ -18,14 +18,14 @@ import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import LinearGradient from 'react-native-linear-gradient';
 import FontFamily from '../common/components/FontFamily';
 const DownloadFileName = 'your_image.png';
- 
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const windowWidth1 = Dimensions.get('screen').width;
 const windowHeight1 = Dimensions.get('screen').height;
 const desiredWidth = 0.2 * windowWidth;
 const desiredHeight = 0.2 * windowHeight;
- 
+
 const TemplateItem = ({item, index}) => {
   const [isPlaying, setIsPlaying] = React.useState({});
   const togglePlayPause = postId => {
@@ -47,7 +47,9 @@ const TemplateItem = ({item, index}) => {
     }
   };
   React.useEffect(() => {
-    getImageSize(`https://www.adoro.social/Template/Image/${item.fileName}`);
+    getImageSize(
+      `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/Template/Image/${item.fileName}`,
+    );
   }, [dimensions]);
   const checkAndRequestPermission = async () => {
     try {
@@ -56,12 +58,12 @@ const TemplateItem = ({item, index}) => {
           ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
           : PERMISSIONS.IOS.PHOTO_LIBRARY;
       const result = await check(permission);
- 
+
       if (result === RESULTS.GRANTED) {
         return true;
       } else {
         const requestResult = await request(permission);
- 
+
         if (requestResult === RESULTS.GRANTED) {
           return true;
         } else {
@@ -74,11 +76,11 @@ const TemplateItem = ({item, index}) => {
       return false;
     }
   };
- 
+
   const handleDownload = React.useCallback(async imageUri => {
     try {
       const hasPermission = await checkAndRequestPermission();
- 
+
       if (!hasPermission) {
         Alert.alert(
           'Permission Denied',
@@ -86,19 +88,19 @@ const TemplateItem = ({item, index}) => {
         );
         return;
       }
- 
+
       const response = await RNFS.downloadFile({
         fromUrl: imageUri,
         toFile: `${RNFS.CachesDirectoryPath}/${DownloadFileName}`,
       });
- 
+
       response.promise
         .then(async result => {
           const savedUri = await CameraRoll.saveToCameraRoll(
             `file://${RNFS.CachesDirectoryPath}/${DownloadFileName}`,
             'photo',
           );
- 
+
           if (savedUri) {
             Alert.alert('Downloaded', `Image saved to gallery: ${savedUri}`);
           } else {
@@ -113,18 +115,18 @@ const TemplateItem = ({item, index}) => {
       Alert.alert('Error', 'Failed to download the image.');
     }
   }, []);
- 
+
   const shareOnWhatsApp = React.useCallback(async imageUrl => {
     try {
       const response = await fetch(imageUrl);
       const blob = await response.blob();
- 
+
       const shareOptions = {
         url: Platform.OS === 'android' ? imageUrl : blob.uri,
         type: response.headers.get('Content-Type'),
         social: Share.Social.WHATSAPP,
       };
- 
+
       await Share.open(shareOptions);
     } catch (error) {
       console.log('Error sharing on WhatsApp:', error);
@@ -146,7 +148,7 @@ const TemplateItem = ({item, index}) => {
                 },
               ]}
               source={{
-                uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
               }}
             />
             <View
@@ -156,8 +158,7 @@ const TemplateItem = ({item, index}) => {
                 gap: 20,
                 marginTop: 20,
                 marginBottom: 20,
-              }}>
-            </View>
+              }}></View>
           </>
         )}
         {item.type === 'video' && (
@@ -165,7 +166,7 @@ const TemplateItem = ({item, index}) => {
             <Video
               key={index}
               source={{
-                uri: `https://www.adoro.social/TrendingTemplate/${item.fileName}`,
+                uri: `https://adoro-data-storage.s3.ap-south-1.amazonaws.com/TrendingTemplate/${item.fileName}`,
               }}
               style={[
                 styles.image,
@@ -221,9 +222,9 @@ const TemplateItem = ({item, index}) => {
     </View>
   );
 };
- 
+
 export default TemplateItem;
- 
+
 const styles = StyleSheet.create({
   image: {
     backgroundColor: 'gray',
