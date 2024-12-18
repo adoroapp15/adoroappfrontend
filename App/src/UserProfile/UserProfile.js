@@ -31,6 +31,8 @@ import AllPostTemplatesTypeOptions from './AllPostTemplatesTypeOptions';
 import PencilIcon from '../assets/svg/PencilIcon';
 import CancelIcon from '../assets/svg/CancelIcon';
 import Size from '../common/components/Size';
+import LottieView from 'lottie-react-native';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const desiredWidth = 0.2 * windowWidth;
@@ -657,7 +659,7 @@ const UserProfile = ({navigation, route}) => {
                   }}
                 />
               </TouchableOpacity>
-
+<View style={{flexDirection:"row"}}>
               <Text
                 style={{
                   color: colors.color_TextNormal,
@@ -667,6 +669,14 @@ const UserProfile = ({navigation, route}) => {
                 }}>
                 {user ? user.fullName : ''}
               </Text>
+              {user.verified && (
+        <LottieView
+          style={{ height: 30, width: 30, bottom: 10 }}
+          source={require('../assets/Crown.json')}
+          autoPlay
+        />
+      )}
+                      </View>
               <Text
                 style={{
                   color: colors.color_TextNormal,

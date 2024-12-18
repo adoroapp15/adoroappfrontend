@@ -1,5 +1,5 @@
 const prod = {
-  //production: ' https://backend-seven-gules.vercel.app',
+  // production: 'https://wallet-eight-pied.vercel.app',
   production: 'https://api.adoro.social',
 };
 
