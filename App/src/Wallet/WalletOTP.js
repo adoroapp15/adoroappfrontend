@@ -39,7 +39,6 @@ const WalletOTP = ({navigation, route}) => {
 
   const handleVerify = async () => {
     if (inputOTP == otp) {
-
       if (
         user.bankName !== '' &&
         user.ifscCode !== '' &&
@@ -61,7 +60,6 @@ const WalletOTP = ({navigation, route}) => {
       } else {
         Alert.alert('Please Fill Bank Details first');
       }
-
     } else {
       Alert.alert('Invalid OTP', 'Please enter the correct OTP.');
     }
@@ -116,8 +114,7 @@ const WalletOTP = ({navigation, route}) => {
 
       <TouchableOpacity
         style={{margin: 140, marginTop: 150}}
-        onPress={handleVerify}
-      >
+        onPress={() => navigation.navigate('Upload Invoice')}>
         <LinearGradient
           colors={[
             'rgba(0,255,255,0.4)',

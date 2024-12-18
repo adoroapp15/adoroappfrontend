@@ -40,6 +40,7 @@ import {useTheme} from '@react-navigation/native';
 import FontFamily from '../common/components/FontFamily';
 import CreateMeme from '../CreatePost/CreateMeme';
 import PlusIcon from '../assets/svg/PlusIcon';
+import GetVerified from '../GetVerified/GetVerified';
 
 const Drawer = createDrawerNavigator();
 const CustomDrawerIcon = () => {
@@ -277,6 +278,15 @@ const HomePageDrawer = () => {
           drawerIcon: () => <SettingIcon Color={colors.arrow} />,
         }}
         component={Setting}
+      />
+      <Drawer.Screen
+        name="GetVerified"
+        options={{
+          headerShown: false,
+          drawerLabel: 'Get Verified',
+          drawerIcon: () => <NoteFromAdoroIcon Color={colors.arrow} />,
+        }}
+        component={GetVerified}
       />
     </Drawer.Navigator>
   );

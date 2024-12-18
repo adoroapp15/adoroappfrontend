@@ -394,6 +394,12 @@ import MyTemplatesPost from './src/UserProfile/MyTemplatesPost';
 import CreateMeme from './src/CreatePost/CreateMeme';
 import messaging from '@react-native-firebase/messaging';
 import NextScreen from './src/CreatePost/NextScreen';
+import UploadInvoice from './src/Wallet/UploadInvoice';
+import MakeInvoice from './src/Wallet/MakeInvoice';
+import Confirmation from './src/Wallet/Confirmation';
+import Form from './src/GetVerified/Form';
+import Thanks from './src/GetVerified/Thanks';
+import VerificationCode from './src/GetVerified/VerificationCode';
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -529,6 +535,27 @@ const App = () => {
           component={ViewResult}
         />
         <Stack.Screen
+          // options={{headerShown: true, headerTitleAlign: 'center'}}
+          name="Make Invoice"
+          component={MakeInvoice}
+        />
+        <Stack.Screen
+          // options={{headerShown: true, headerTitleAlign: 'center'}}
+          name="Form"
+          component={Form}
+        />
+        <Stack.Screen
+          // options={{headerShown: true, headerTitleAlign: 'center'}}
+          name="Thanks"
+          component={Thanks}
+        />
+        <Stack.Screen
+          // options={{headerShown: true, headerTitleAlign: 'center'}}
+          name="Verification"
+          component={VerificationCode}
+        />
+
+        <Stack.Screen
           options={{
             headerShown: false,
             headerTitleAlign: 'center',
@@ -538,6 +565,17 @@ const App = () => {
           }}
           name="Browse Template"
           component={Template}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontFamily: FontFamily.semibold,
+            },
+          }}
+          name="Upload Invoice"
+          component={UploadInvoice}
         />
         <Stack.Screen
           options={{
@@ -585,6 +623,11 @@ const App = () => {
           options={{headerShown: false, headerTitleAlign: 'center'}}
           name="Licenseds"
           component={Licenseds}
+        />
+         <Stack.Screen
+          options={{headerShown: false, headerTitleAlign: 'center'}}
+          name="Confirmation"
+          component={Confirmation}
         />
         <Stack.Screen
           options={{headerShown: true, headerTitleAlign: 'center'}}
