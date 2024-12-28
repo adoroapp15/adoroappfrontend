@@ -66,6 +66,7 @@
     "react-native-share": "^10.0.2",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^14.1.0",
+    "react-native-swiper": "^1.6.0",
     "react-native-switch": "^1.5.1",
     "react-native-tab-view": "^3.5.2",
     "react-native-thumbnail-video": "^0.1.2",

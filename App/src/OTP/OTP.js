@@ -81,6 +81,15 @@ const OTP = ({route, navigation}) => {
       currentAction = 'validatephone';
     }
     try {
+      console.log('yuugjgjgjgj',
+        mobileNo,
+        otp,
+        userName,
+        fullName,
+        referral,
+        instaUsername,
+        currentAction
+      )
       const response = await axios.post(
         `${config.production}/app/user/${currentAction}`,
         {

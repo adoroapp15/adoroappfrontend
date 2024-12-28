@@ -831,43 +831,18 @@ const HomePage = ({navigation, route}) => {
           backgroundColor: colors.color_TabBarColor,
           height: 56,
         }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{left: 10, alignSelf: 'center'}}
           onPress={handleDrawerIconPress}>
           <HamBurger color={colors.arrow} />
-        </TouchableOpacity>
-        <View style={{flex: 1, left: 20, alignSelf: 'center'}}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Home', {
-                screen: 'HomePage',
-                params: {scrollToTop: true},
-              });
-            }}>
-            <AdoroLogos />
-          </TouchableOpacity>
-        </View>
-        <View style={{flexDirection: 'row', gap: 10}}>
-          <>
-            <TouchableOpacity
-              style={{marginRight: 12, alignSelf: 'center'}}
-              onPress={() => navigation.navigate('Notification')}>
-              <Notifications color={colors.arrow} />
-            </TouchableOpacity>
-            {hasNewNotifications && (
-              <View
-                style={{
-                  position: 'absolute',
-                  backgroundColor: 'red',
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  top: -5,
-                  right: -5,
-                }}
-              />
-            )}
-          </>
+        </TouchableOpacity> */}
+        <View style={{flex: 1,alignSelf: 'center', alignItems:"center"}}>
+          <Text style={{ color: colors.color_TextNormal,
+            fontFamily: FontFamily.medium,
+          fontSize:20,
+          }}>
+            Categories
+            </Text>
         </View>
       </View>
       <View style={{backgroundColor: colors.color_TabBarColor}}>

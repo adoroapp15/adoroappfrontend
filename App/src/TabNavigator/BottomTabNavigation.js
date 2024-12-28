@@ -40,33 +40,22 @@ const BottomTabNavigation = ({navigation}) => {
         tabBarStyle: {
           backgroundColor: colors.color_PostBgColor,
         },
-        tabBarShowLabel: false,
+        // tabBarShowLabel: false,
         tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'white',
         tabBarHideOnKeyboard: true,
       }}>
       <Tab.Screen
-        name="Home"
-        component={HomePageDrawer}
-        initialParams={{openDrawer: false}}
+        name="Campaign"
+        component={CampaignContest}
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <TouchableOpacity
-              onPress={() => {
-                // Trigger the scroll to the top of the FlatList in the HomePage component
-                navigation.navigate('Home', {
-                  screen: 'HomePage',
-                  params: {scrollToTop: true},
-                });
-              }}>
-              {focused ? (
-                <Home1 color={colors.arrow} />
-              ) : (
-                <Home color={colors.arrow} />
-              )}
-            </TouchableOpacity>
-          ),
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <CampaignContest1 color={colors.arrow} />
+            ) : (
+              <CampaignContests color={colors.arrow} />
+            ),
         }}
       />
       <Tab.Screen
@@ -98,19 +87,31 @@ const BottomTabNavigation = ({navigation}) => {
             ) : (
               <CreatePosts color={colors.arrow} />
             ),
+          tabBarLabel: 'Create Post',
         }}
       />
       <Tab.Screen
-        name="Campaign"
-        component={CampaignContest}
+        name="Home"
+        component={HomePageDrawer}
+        initialParams={{openDrawer: false}}
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) =>
-            focused ? (
-              <CampaignContest1 color={colors.arrow} />
-            ) : (
-              <CampaignContests color={colors.arrow} />
-            ),
+          tabBarIcon: ({focused}) => (
+            <TouchableOpacity
+              onPress={() => {
+                // Trigger the scroll to the top of the FlatList in the HomePage component
+                navigation.navigate('Home', {
+                  screen: 'HomePage',
+                  params: {scrollToTop: true},
+                });
+              }}>
+              {focused ? (
+                <Home1 color={colors.arrow} />
+              ) : (
+                <Home color={colors.arrow} />
+              )}
+            </TouchableOpacity>
+          ),
         }}
       />
       <Tab.Screen
