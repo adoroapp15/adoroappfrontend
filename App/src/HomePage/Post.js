@@ -881,7 +881,7 @@ import HideIcon from '../assets/svg/HideIcon';
 import BlockIcon from '../assets/svg/BlockIcon';
 import LottieView from 'lottie-react-native';
 import Orientation from 'react-native-orientation-locker';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '/Ionicons';
 import Player from './Player';
 import HeartIcon from '../assets/svg/HeartIcon';
 // import ClappingIcon from '../assets/svg/HeartIcon';

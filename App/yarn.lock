@@ -9871,7 +9871,7 @@ prompts@^2.0.1, prompts@^2.3.2, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@*, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@*, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -10258,6 +10258,13 @@ react-native-svg@^14.1.0:
     css-select "^5.1.0"
     css-tree "^1.1.3"
 
+react-native-swiper@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/react-native-swiper/-/react-native-swiper-1.6.0.tgz"
+  integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-switch@^1.5.1:
   version "1.5.1"
   resolved "https://registry.npmjs.org/react-native-switch/-/react-native-switch-1.5.1.tgz"
@@ -10277,7 +10284,7 @@ react-native-thumbnail-video@^0.1.2:
   resolved "https://registry.npmjs.org/react-native-thumbnail-video/-/react-native-thumbnail-video-0.1.2.tgz"
   integrity sha512-+dD8dIUxiZz/QaL+gOtmb3Co/VE0MK5s8el9fYXpuEZbQu882voz7ALJmEn5o7A62sDTT3mpR2UF1V0ioXTFKA==
 
-react-native-vector-icons@*, react-native-vector-icons@^10.1.0:
+react-native-vector-icons@*:
   version "10.1.0"
   resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-10.1.0.tgz"
   integrity sha512-fdQjCHIdoXmRoTZ5gvN1FmT4sGLQ2wmQiNZHKJQUYnE2tkIwjGnxNch+6Nd4lHAACvMWO7LOzBNot2u/zlOmkw==
